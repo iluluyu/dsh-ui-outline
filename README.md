@@ -22,11 +22,21 @@
 
 Requires dsh ≥ `0.1.0-rc.7` (keyed plugin-settings slot + open settings namespaces).
 
+From npm:
+
 ```sh
 dsh plugin --profile web add dsh-ui-outline
 ```
 
-Restart `dsh web` and reload the page. Update with `dsh plugin --profile web update dsh-ui-outline`; remove with `dsh plugin --profile web remove dsh-ui-outline`.
+Or straight from GitHub (pin a tag or branch if you like):
+
+```sh
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline
+# pinned to a tag/branch:
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
+```
+
+Both paths behave the same; update with `dsh plugin --profile web update dsh-ui-outline`, remove with `dsh plugin --profile web remove dsh-ui-outline`. Restart `dsh web` and reload the page to activate.
 
 ## Settings
 

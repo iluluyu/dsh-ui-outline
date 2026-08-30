@@ -22,11 +22,21 @@
 
 需要 dsh ≥ `0.1.0-rc.7`（keyed 插件设置槽位 + 开放的设置命名空间）。
 
+从 npm 安装：
+
 ```sh
 dsh plugin --profile web add dsh-ui-outline
 ```
 
-重启 `dsh web` 后刷新页面即可。更新：`dsh plugin --profile web update dsh-ui-outline`；卸载：`dsh plugin --profile web remove dsh-ui-outline`。
+或直接从 GitHub 安装（可钉住版本或分支）：
+
+```sh
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline
+# 钉住某个 tag/分支：
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
+```
+
+两种方式效果相同，更新/卸载命令一致：更新 `dsh plugin --profile web update dsh-ui-outline`，卸载 `dsh plugin --profile web remove dsh-ui-outline`。重启 `dsh web` 后刷新页面即可生效。
 
 ## 设置
 
