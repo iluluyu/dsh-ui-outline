@@ -1,4 +1,4 @@
-<p align="right"><a href="README.zh-CN.md">简体中文</a> · English</p>
+<p align="right"><a href="README.zh-CN.md">简体中文</a> · <a href="README.md">English</a></p>
 
 <h1><img src="docs/img/logo-marks.svg" width="26" alt="" valign="-4"> dsh-ui-outline</h1>
 
@@ -72,9 +72,11 @@ The card is bilingual zh/en, tracking the app locale. The settings namespace is 
 
 ## Credits & license
 
-- Design-language reference: the official **TurnNavigator** in [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) (MIT, © DeepSeek) — measured and honored; this plugin's implementation is original, with no code copied.
-- Runs inside dsh on **cordis** (plugin host) and **React** (provided by the host at runtime); settings schema via **@deepseek-ai/schemastery** (MIT).
-- This plugin ships no third-party code in its bundle. Everything involved is MIT; no transitive license obligations apply beyond retaining the notices of the software you already run.
+- Design language follows the **TurnNavigator** in the official [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) (MIT, © DeepSeek): rail geometry, reading-band centering, and hiding thresholds all match the official behavior.
+- The neighbor wave (nearby marks stretching with distance decay under the pointer) and drag-to-scrub were informed by the floating thread-navigation rail built into **OpenAI's ChatGPT desktop app** (Codex desktop).
+- Liquid-glass layering — separating highlight and refraction into CSS layers — was informed by [DevBehindYou/LiquidLens](https://github.com/DevBehindYou/LiquidLens) and [tomagranate/liquid-glass](https://github.com/tomagranate/liquid-glass) (both MIT); the implementation here is pure CSS, no displacement filters.
+- Runs on dsh: plugin host **cordis**, React runtime provided by the host; settings schema via **@deepseek-ai/schemastery** (MIT).
+- No third-party code is bundled; no transitive license obligations.
 
 MIT © iluluyu
 
@@ -94,3 +96,7 @@ npm run check        # syntax gate
 | `lib/client.js` | browser half: the rail + preview card (into `shell.overlay`) and the settings card (into `settings.plugin.item`) |
 
 Local dev: point the profile at the working copy (`"dsh-ui-outline": "link:/path/to/outline"`, `pnpm install` in both), restart `dsh web`, hard-reload.
+
+---
+
+**Keywords**: dsh plugin · dsh 插件 | deepseek-harness · DeepSeek Harness 插件 | turn navigation · 轮次导航 | thread navigator · 对话导航 | conversation outline · 会话大纲 | chat history · 对话记录 | sidebar rail · 侧边栏导航条 | glassmorphism · 玻璃拟态 | frosted glass · 毛玻璃 | liquid glass · 液态玻璃 | backdrop filter · 背景滤镜

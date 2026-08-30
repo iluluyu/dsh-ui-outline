@@ -1,4 +1,4 @@
-<p align="right">English · <a href="README.md">简体中文</a></p>
+<p align="right"><a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a></p>
 
 <h1><img src="docs/img/logo-marks.svg" width="26" alt="" valign="-4"> dsh-ui-outline</h1>
 
@@ -72,9 +72,11 @@ dsh plugin --profile web add dsh-ui-outline
 
 ## 致谢与许可
 
-- 设计语言参考：官方 [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) 中的 **TurnNavigator**（MIT，© DeepSeek）——经实测校准、心怀尊重；本插件为原创实现，未复制任何代码。
-- 运行于 dsh 之上，依赖 **cordis**（插件宿主）与 **React**（运行时由宿主提供）；设置 schema 基于 **@deepseek-ai/schemastery**（MIT）。
-- 本插件捆绑产物不含任何第三方代码；所涉组件均为 MIT，除保留你本就在运行的软件自身的许可声明外，无传递性义务。
+- 设计语言跟随官方 [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) 中的 **TurnNavigator**（MIT，© DeepSeek）：轨道几何、阅读带居中与隐藏阈值一并对齐官方行为。
+- 刻度的邻域波浪（悬停时邻近刻度随距离衰减伸长）与拖拽擦洗，参考了 **OpenAI ChatGPT 桌面版**（Codex desktop）内置的浮动轮次导航轨道。
+- 液态玻璃的“高光与折射分层”手法，参考了 [DevBehindYou/LiquidLens](https://github.com/DevBehindYou/LiquidLens) 与 [tomagranate/liquid-glass](https://github.com/tomagranate/liquid-glass)（均 MIT）；本插件的实现为纯 CSS，未使用位移滤镜。
+- 运行于 dsh 之上：插件宿主为 **cordis**，React 运行时由宿主提供；设置 schema 基于 **@deepseek-ai/schemastery**（MIT）。
+- 捆绑产物不含第三方代码，无传递性许可义务。
 
 MIT © iluluyu
 
@@ -94,3 +96,7 @@ npm run check        # 语法检查
 | `lib/client.js` | 浏览器侧：轨道 + 预览卡（注入 `shell.overlay`）与设置卡片（注入 `settings.plugin.item`） |
 
 本地开发：profile 依赖指向工作副本（`"dsh-ui-outline": "link:/path/to/outline"`，两侧各跑 `pnpm install`），重启 `dsh web` 后强制刷新。
+
+---
+
+**关键词**：dsh 插件 · dsh plugin | DeepSeek Harness 插件 · deepseek-harness | 轮次导航 · turn navigation | 对话导航 · thread navigator | 会话大纲 · conversation outline | 目录 · table of contents | 对话记录 · chat history | 侧边栏导航条 · sidebar rail | 玻璃拟态 · glassmorphism | 毛玻璃 · frosted glass | 液态玻璃 · liquid glass | 背景滤镜 · backdrop filter

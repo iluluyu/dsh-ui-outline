@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-outline",
   "version": "0.0.2",
-  "description": "Turn navigation rail for dsh web following the official TurnNavigator design: compact or loose mark spacing, left/right side, frosted/liquid-glass preview card",
+  "description": "Turn navigation rail for dsh web following the official TurnNavigator design · 轮次导航轨道（大纲/刻度/毛玻璃预览）",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -40,11 +40,31 @@
     "react": ">=18.0.0"
   },
   "keywords": [
-    "dsh-plugin",
-    "deepseek-harness",
+    "backdrop-filter",
+    "chat-history",
+    "conversation",
     "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "glassmorphism",
+    "navigator",
     "outline",
-    "navigation"
+    "rail",
+    "scroll",
+    "sidebar",
+    "thread-navigation",
+    "turn-navigation",
+    "会话",
+    "侧边栏",
+    "大纲",
+    "对话导航",
+    "对话记录",
+    "导航条",
+    "毛玻璃",
+    "液态玻璃",
+    "目录",
+    "轮次导航"
   ],
   "license": "MIT",
   "dependencies": {
