@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" role="img" aria-label="Turn outline rail: hover wave and per-turn preview card">
+  <!-- Theme-adaptive palette: official dsw tokens as measured in dsh web (light first-paint fallbacks, dark overrides) -->
+  <style>
+    .scene { fill: #f7f8fa; stroke: rgba(0, 0, 0, .06); }
+    .ink   { fill: #0f1115; }
+    .ink2  { fill: #61666b; }
+    .ink3  { fill: #81858c; }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .07); }
+    .bubble  { fill: rgba(15, 17, 21, .05); }
+    .bar     { fill: rgba(97, 102, 107, .32); }
+    .barDim  { fill: rgba(97, 102, 107, .18); }
+    .card    { fill: rgba(255, 255, 255, .72); }
+    .cardRing { stroke: rgba(0, 0, 0, .10); fill: none; }
+    .cardLight { fill: url(#heroLight); }
+    .markIdle  { fill: rgba(129, 133, 140, .40); }
+    .markOn    { fill: rgba(15, 17, 21, .62); }
+    .markHot   { fill: #0f1115; }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #17181a; stroke: rgba(255, 255, 255, .07); }
+      .ink   { fill: #f9fafb; }
+      .ink2  { fill: #a6abb2; }
+      .ink3  { fill: #adb2b8; }
+      .surface { fill: #1d1e20; stroke: rgba(255, 255, 255, .08); }
+      .bubble  { fill: rgba(249, 250, 251, .06); }
+      .bar     { fill: rgba(166, 171, 178, .34); }
+      .barDim  { fill: rgba(166, 171, 178, .18); }
+      .card    { fill: rgba(35, 35, 36, .78); }
+      .cardRing { stroke: rgba(255, 255, 255, .14); fill: none; }
+      .cardLight { fill: url(#heroLightDark); }
+      .markIdle  { fill: rgba(173, 178, 184, .40); }
+      .markOn    { fill: rgba(249, 250, 251, .62); }
+      .markHot   { fill: #f9fafb; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  </style>
+
+  <defs>
+    <!-- corner light entering from the conversation-facing (top-left) corner -->
+    <radialGradient id="heroLight" cx="18%" cy="14%" r="85%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.5)"/>
+      <stop offset="55%" stop-color="rgba(255,255,255,.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="heroLightDark" cx="18%" cy="14%" r="85%">
+      <stop offset="0%" stop-color="rgba(249,250,251,.14)"/>
+      <stop offset="55%" stop-color="rgba(249,250,251,.05)"/>
+      <stop offset="100%" stop-color="rgba(249,250,251,0)"/>
+    </radialGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,.14)" flood-opacity="1"/>
+    </filter>
+  </defs>
+
+  <!-- app surface -->
+  <rect class="scene" x="1" y="1" width="758" height="318" rx="14"/>
+
+  <!-- conversation column (right edge at x=560) -->
+  <rect class="surface" x="60" y="24" width="500" height="272" rx="12"/>
+
+  <!-- turn 1: user bubble + assistant lines -->
+  <rect class="bubble" x="322" y="52" width="206" height="24" rx="8"/>
+  <rect class="bar"     x="348" y="92" width="180" height="8" rx="4"/>
+  <rect class="barDim"  x="388" y="108" width="140" height="8" rx="4"/>
+
+  <!-- turn 2 (hovered): user bubble + assistant lines -->
+  <rect class="bubble" x="292" y="142" width="236" height="24" rx="8"/>
+  <rect class="bar"    x="322" y="182" width="206" height="8" rx="4"/>
+  <rect class="barDim" x="352" y="198" width="176" height="8" rx="4"/>
+
+  <!-- turn 3 (current): user bubble + streaming assistant lines -->
+  <rect class="bubble" x="342" y="232" width="186" height="24" rx="8"/>
+  <rect class="bar"    x="352" y="272" width="176" height="8" rx="4"/>
+
+  <!-- preview card: frost, corner light top-left, ring + shadow -->
+  <g filter="url(#cardShadow)">
+    <rect class="card" x="272" y="77" width="300" height="106" rx="18"/>
+    <rect class="cardLight" x="272" y="77" width="300" height="106" rx="18"/>
+    <rect class="cardRing" x="272.5" y="77.5" width="299" height="105" rx="17.5" stroke-width="1"/>
+    <!-- prompt: two strong lines -->
+    <rect class="ink" x="294" y="99"  width="196" height="9" rx="4.5"/>
+    <rect class="ink" x="294" y="115" width="146" height="9" rx="4.5"/>
+    <!-- response: two secondary lines -->
+    <rect class="ink2" x="294" y="140" width="226" height="8" rx="4"/>
+    <rect class="ink2" x="294" y="155" width="166" height="8" rx="4"/>
+  </g>
+
+  <!-- rail marks: 12px gutter from column, lengths are the wave (20 / 14 / 8 / 6) -->
+  <g>
+    <rect class="markIdle" x="572" y="69"  width="8"  height="2" rx="1"/>
+    <rect class="markIdle" x="572" y="99"  width="14" height="2" rx="1"/>
+    <rect class="markHot"  x="572" y="129" width="20" height="2" rx="1"/>
+    <rect class="markIdle" x="572" y="159" width="14" height="2" rx="1"/>
+    <rect class="markIdle" x="572" y="189" width="8"  height="2" rx="1"/>
+    <rect class="markOn"   x="572" y="219" width="6"  height="2" rx="1"/>
+  </g>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="One mark language, two densities, and the forgiving hit strip">
+  <style>
+    .scene { fill: #f7f8fa; stroke: rgba(0, 0, 0, .06); }
+    .ink  { fill: #0f1115; }
+    .ink2 { fill: #61666b; }
+    .ink3 { fill: #81858c; }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .07); }
+    .edge    { fill: rgba(0, 0, 0, .05); }
+    .strip   { fill: rgba(15, 17, 21, .04); }
+    .stripRing { stroke: rgba(15, 17, 21, .12); stroke-dasharray: 3 4; fill: none; }
+    .markIdle { fill: rgba(129, 133, 140, .40); }
+    .markOn   { fill: rgba(15, 17, 21, .62); }
+    .markHot  { fill: #0f1115; }
+    .guide    { stroke: #61666b; stroke-dasharray: 2 3; fill: none; }
+    .cursor   { fill: none; stroke: #61666b; stroke-width: 1.5; }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #17181a; stroke: rgba(255, 255, 255, .07); }
+      .ink  { fill: #f9fafb; }
+      .ink2 { fill: #a6abb2; }
+      .ink3 { fill: #adb2b8; }
+      .surface { fill: #1d1e20; stroke: rgba(255, 255, 255, .08); }
+      .edge    { fill: rgba(255, 255, 255, .07); }
+      .strip   { fill: rgba(249, 250, 251, .05); }
+      .stripRing { stroke: rgba(249, 250, 251, .16); stroke-dasharray: 3 4; fill: none; }
+      .markIdle { fill: rgba(173, 178, 184, .40); }
+      .markOn   { fill: rgba(249, 250, 251, .62); }
+      .markHot  { fill: #f9fafb; }
+      .guide    { stroke: #a6abb2; stroke-dasharray: 2 3; fill: none; }
+      .cursor   { fill: none; stroke: #a6abb2; stroke-width: 1.5; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .t  { font-size: 12.5px; fill: #61666b; }
+    .td { font-size: 12.5px; fill: #a6abb2; }
+    .lbl { font-size: 13px; font-weight: 600; fill: #0f1115; }
+    .lbld { font-size: 13px; font-weight: 600; fill: #f9fafb; }
+    .sub { font-size: 11.5px; fill: #81858c; }
+    .subd { font-size: 11.5px; fill: #adb2b8; }
+  </style>
+
+  <rect class="scene" x="1" y="1" width="758" height="298" rx="14"/>
+
+  <!-- ── panel A: compact ─────────────────────────────────────────── -->
+  <text x="52" y="42" font-size="13" font-weight="600"><tspan class="ink">compact</tspan><tspan class="ink2"> · 14 px pitch</tspan></text>
+  <text x="52" y="58" font-size="11.5" class="ink3">whole history in view, official compression</text>
+
+  <rect class="surface" x="52" y="74" width="300" height="150" rx="12"/>
+  <rect class="edge" x="300" y="74" width="52" height="150"/>
+  <!-- 9 marks, 14 px pitch: idle aligned, current turn color-highlighted -->
+  <g>
+    <rect class="markIdle" x="308" y="86"  width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="100" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="114" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="128" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="142" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="156" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="170" width="6" height="2" rx="1"/>
+    <rect class="markIdle" x="308" y="184" width="6" height="2" rx="1"/>
+    <rect class="markOn"   x="308" y="198" width="6" height="2" rx="1"/>
+  </g>
+  <line class="guide" x1="330" y1="86" x2="330" y2="200"/>
+  <text x="338" y="146" font-size="11" class="ink3" transform="rotate(90 338 146)">14px</text>
+
+  <!-- ── panel B: loose ───────────────────────────────────────────── -->
+  <text x="428" y="42" font-size="13" font-weight="600"><tspan class="ink">loose</tspan><tspan class="ink2"> · 30 px pitch</tspan></text>
+  <text x="428" y="58" font-size="11.5" class="ink3">one real row per turn, 44 × 30 px targets</text>
+
+  <rect class="surface" x="428" y="74" width="280" height="150" rx="12"/>
+  <rect class="edge" x="652" y="74" width="56" height="150"/>
+  <!-- 5 marks, 30 px pitch, hovered: the wave -->
+  <g>
+    <rect class="markIdle" x="660" y="84"  width="8"  height="2" rx="1"/>
+    <rect class="markIdle" x="660" y="114" width="14" height="2" rx="1"/>
+    <rect class="markHot"  x="660" y="144" width="20" height="2" rx="1"/>
+    <rect class="markIdle" x="660" y="174" width="14" height="2" rx="1"/>
+    <rect class="markIdle" x="660" y="204" width="8"  height="2" rx="1"/>
+  </g>
+  <line class="guide" x1="688" y1="84" x2="688" y2="206"/>
+  <text x="696" y="150" font-size="11" class="ink3" transform="rotate(90 696 150)">30px</text>
+
+  <!-- ── bottom: the forgiving hit strip ──────────────────────────── -->
+  <text x="52" y="254" font-size="13" font-weight="600"><tspan class="ink">forgiving hit strip</tspan><tspan class="ink2"> · click anywhere, land on a turn</tspan></text>
+
+  <rect class="strip" x="330" y="262" width="44" height="30" rx="8"/>
+  <rect class="stripRing" x="330.5" y="262.5" width="43" height="29" rx="7.5" stroke-width="1"/>
+  <!-- two marks 14px apart; the cursor sits between them, snaps to the nearer -->
+  <rect class="markIdle" x="338" y="269" width="6" height="2" rx="1"/>
+  <rect class="markIdle" x="338" y="283" width="6" height="2" rx="1"/>
+  <path class="cursor" d="M 366 272 l 0 5 l -2.6 -1.6 l 0 3.2 l 2.6 -1.6 l 0 5" />
+  <line class="guide" x1="344" y1="270" x2="362" y2="274" />
+  <text x="386" y="281" font-size="11.5" class="ink2">a click near a mark snaps to the closest turn — the 2 px line is never the target</text>
+  <text x="52" y="281" font-size="11.5" class="ink2">44 px wide</text>
+</svg>
