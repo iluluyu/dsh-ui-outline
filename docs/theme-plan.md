@@ -30,14 +30,28 @@
 
 | Variant | Card background | Backdrop | Border | Shadow / light | Feel |
 |---|---|---|---|---|---|
-| `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | `border-l2` | `dsw-shadow-lv2` | official preview panel |
-| `frost` (default) | `bg-layer-1` @ 78% alpha (66% dark) | `blur(14px) saturate(1.4)` | `border-l2` | `lv2` | macOS-like milk glass |
-| `liquid` | frost's `bg-layer-1` @ 78% alpha (66% dark), plus a neutral prompt-start radial | `blur(11px) saturate(1.24) brightness(.86) contrast(1.03)` (dark: `.74` / `1.06`) | same `border-l2` as frost | `lv2` + top light / low bottom rim | dimmed, readable liquid glass |
+| `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | 1px ring (`border-l2`) | `dsw-shadow-lv2` | official preview panel |
+| `frost` (default) | `bg-layer-1` @ 45% alpha (35% dark) | `blur(6px) saturate(1.35)` | 1px ring (`border-l2`) | `lv2` | transparent milk glass, page reads through |
+| `liquid` | `bg-layer-1` @ 42% alpha (32% dark) plus a corner radial | `blur(5px) saturate(1.3) brightness(.9) contrast(1.02)` (dark: `.8` / `1.05`) | 1px ring + uniform inner rim | `lv2` + corner radial light | dimmed, directionally lit liquid glass |
 
-The light source is radial at the primary prompt's text-start, not a fixed
-vertical gradient. Light and dark rules use their respective host tokens so a
-light host does not get a black “brand” tint and a dark host still receives a
-soft highlight.
+Corners are G2 where `corner-shape` exists: `squircle` at 18.4px, measured to cross
+the 45° diagonal where a 10px circle does (Chrome's squircle = superellipse(4):
+circle@100 → 29.3px vs squircle@100 → 15.9px, factor 1.84). Area-based matching
+is deliberately avoided — it reads visually smaller. Unsupported engines keep
+the official 10px G1 radius via `@supports` fallback.
+
+The outline is a 0-blur 1px-spread ring shadow, not a stroked border: a 1px
+border rasterizes ~3.6× denser near the squircle's diagonal apex than on the
+straight edges (measured), while the ring dilates the shape uniformly and peaks
+at only the geometric 45° minimum (~1.4×). Liquid's inner highlight is likewise
+a uniform inner ring — hard 1px inset lines clip unevenly where the corner cuts
+them.
+
+The light enters from the corner facing the conversation text — top-left beside a
+right rail, top-right beside a left rail (the preview mirrors with the rail),
+implemented with `--ol-light-x` / `--ol-light-deg` corner variables and a uniform
+inner rim; light and dark rules use their respective host tokens so a light host
+does not get a black “brand” tint and a dark host still receives a soft highlight.
 
 ## 3. Activation & Discovery (as shipped)
 
