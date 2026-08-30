@@ -17,8 +17,7 @@
   ],
   "scripts": {
     "prepublishOnly": "node --check lib/index.js && node --check lib/client.js",
-    "check": "node --check lib/index.js && node --check lib/client.js",
-    "parity": "python3 test/make-parity.py"
+    "check": "node --check lib/index.js && node --check lib/client.js"
   },
   "repository": {
     "type": "git",

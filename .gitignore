@@ -3,5 +3,3 @@ ref/
 .pi/
 pnpm-lock.yaml
 
-# posting drafts stay local, not for the repo
-docs/issue-1-reply.md
