@@ -7,10 +7,11 @@
       .hot  { fill: #f9fafb; }
     }
   </style>
-  <!-- the wave: one hovered mark stretched full-length, neighbors decaying -->
-  <rect class="mark" x="10" y="18" width="8"  height="3" rx="1.5"/>
-  <rect class="mark" x="10" y="28" width="14" height="3" rx="1.5"/>
+  <!-- the wave: one hovered mark stretched full-length, neighbors decaying.
+       Right-aligned, as the rail draws it against the column gutter. -->
+  <rect class="mark" x="26" y="18" width="8"  height="3" rx="1.5"/>
+  <rect class="mark" x="20" y="28" width="14" height="3" rx="1.5"/>
   <rect class="hot"  x="10" y="38" width="24" height="3" rx="1.5"/>
-  <rect class="mark" x="10" y="48" width="14" height="3" rx="1.5"/>
-  <rect class="mark" x="10" y="58" width="8"  height="3" rx="1.5"/>
+  <rect class="mark" x="20" y="48" width="14" height="3" rx="1.5"/>
+  <rect class="mark" x="26" y="58" width="8"  height="3" rx="1.5"/>
 </svg>

@@ -39,7 +39,18 @@ All three apply live and persist in the host settings document:
 | **Mark layout** | Compact · Loose | Compact |
 
 <p align="center">
-  <img src="docs/img/mark-language.svg" width="760" alt="Compact uses a 14px pitch with proportional compression; loose uses one 30px row per turn; the 44px hit strip snaps clicks to the nearest mark">
+  <img src="docs/img/side-mirror.svg" width="760" alt="The rail mirrors with the side setting: mark anchor, card opening, and glass light flip together">
+</p>
+
+<p align="center">
+  <img src="docs/img/materials.svg" width="760" alt="Preview card materials: none (opaque official token), frost (blurred translucent), liquid (corner light and inner rims)">
+
+<p align="center">
+  <img src="docs/img/mark-language.svg" width="760" alt="Compact uses a 14px pitch; loose uses one 30px row per turn; the same mark language in both">
+</p>
+
+<p align="center">
+  <img src="docs/img/hit-strip.svg" width="760" alt="Two frames: a click lands anywhere in the 44px strip, the nearest mark stretches to catch it — the 2px line is never the target">
 </p>
 
 The card is bilingual zh/en, tracking the app locale. The settings namespace is `outline`; a manual override looks like `outline: { side: left, material: frost, layout: loose }` in `~/.dsh/settings.yaml`. The plugin's `cordis.yml` row also carries a `config:` block — it layers *under* the user document, so profile owners can pin fleet-wide defaults that personal settings always override.

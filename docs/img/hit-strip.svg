@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 160" width="760" height="160" role="img" aria-label="The forgiving hit strip: clicks anywhere in the 44px strip, above or below, each lands on the nearest mark — no aiming required">
+  <!-- One scene, two clicks: the cursor clicks in the gap above the middle
+       mark, it stretches to catch; then clicks lower, and that gap's nearest
+       mark catches instead. Anywhere in the strip lands on a turn. -->
+  <style>
+    .scene { fill: #f7f8fa; stroke: rgba(0, 0, 0, .06); }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .07); }
+    .edge    { fill: rgba(0, 0, 0, .05); }
+    .strip   { fill: rgba(15, 17, 21, .04); }
+    .stripRing { stroke: rgba(15, 17, 21, .12); stroke-dasharray: 3 4; fill: none; }
+    .markIdle { fill: rgba(129, 133, 140, .40); }
+    .markHot  { fill: rgba(15, 17, 21, .90); }
+    .cursor  { fill: #ffffff; stroke: #0f1115; stroke-width: 1; stroke-linejoin: round; }
+    .ripple { fill: none; stroke: rgba(15, 17, 21, .45); stroke-width: 1.5; }
+    .tick   { stroke: rgba(97, 102, 107, .55); stroke-dasharray: 2 3; fill: none; }
+    .dim    { font-size: 11px; fill: #61666b; }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #17181a; stroke: rgba(255, 255, 255, .07); }
+      .surface { fill: #1d1e20; stroke: rgba(255, 255, 255, .08); }
+      .edge    { fill: rgba(255, 255, 255, .07); }
+      .strip   { fill: rgba(249, 250, 251, .05); }
+      .stripRing { stroke: rgba(249, 250, 251, .16); stroke-dasharray: 3 4; fill: none; }
+      .markIdle { fill: rgba(173, 178, 184, .40); }
+      .markHot  { fill: rgba(249, 250, 251, .90); }
+      .cursor  { fill: #0f1115; stroke: #f9fafb; stroke-width: 1; stroke-linejoin: round; }
+      .ripple { fill: none; stroke: rgba(249, 250, 251, .45); stroke-width: 1.5; }
+      .tick   { stroke: rgba(166, 171, 178, .55); stroke-dasharray: 2 3; fill: none; }
+      .dim    { font-size: 11px; fill: #a6abb2; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  </style>
+
+  <rect class="scene" x="1" y="1" width="758" height="158" rx="14"/>
+
+  <!-- a zoomed rail fragment: one 44px strip carrying six marks, 14px apart.
+       Surface and gutter edge share one rounded clip so the square-cornered
+       gutter never pokes past the panel's rounded corners. -->
+  <defs>
+    <clipPath id="clipPanel"><rect x="290" y="20" width="180" height="116" rx="12"/></clipPath>
+  </defs>
+  <g clip-path="url(#clipPanel)">
+    <rect class="surface" x="290" y="20" width="180" height="116" rx="12"/>
+    <rect class="edge" x="386" y="20" width="84" height="116"/>
+  </g>
+  <rect class="strip" x="404" y="30" width="44" height="96" rx="10"/>
+  <rect class="stripRing" x="404.5" y="30.5" width="43" height="95" rx="9.5" stroke-width="1"/>
+
+  <!-- plain marks -->
+  <rect class="markIdle" x="436" y="38" width="6" height="2" rx="1"/>
+  <rect class="markIdle" x="436" y="52" width="6" height="2" rx="1"/>
+  <rect class="markIdle" x="436" y="80" width="6" height="2" rx="1"/>
+  <rect class="markIdle" x="436" y="108" width="6" height="2" rx="1"/>
+
+  <!-- catcher A: mark at y=66 (nearest to the upper click) -->
+  <rect class="markIdle" x="436" y="66" width="6" height="2" rx="1"/>
+  <rect class="markHot" x="436" y="66" width="6" height="2" rx="1" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0;0;0;0;0;0" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="width" values="6;6;16;16;6;6;6;6;6;6;6" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x"    values="436;436;426;426;436;436;436;436;436;436;436" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- catcher B: mark at y=94 (nearest to the lower click) -->
+  <rect class="markIdle" x="436" y="94" width="6" height="2" rx="1"/>
+  <rect class="markHot" x="436" y="94" width="6" height="2" rx="1" opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0;0;0;0;1;1;0;0" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="width" values="6;6;6;6;6;6;6;16;16;6;6" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x"    values="436;436;436;436;436;436;436;426;426;436;436" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- click 1: cursor tip in the gap above mark y=66 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;1;0;0;0;0;0;0;0" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <circle class="ripple" cx="422" cy="60" r="2.75"/>
+    <path class="cursor" d="M 422 60 l 0 13.5 l 3.4 -3.2 l 2.1 4.4 l 2.6 -1.2 l -2.1 -4.4 l 4.6 -0.6 Z"/>
+  </g>
+
+  <!-- click 2: cursor tip in the gap below, nearer to mark y=94 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;1;0;0" keyTimes="0;.05;.1;.4;.48;.5;.55;.6;.9;.98;1" dur="5s" repeatCount="indefinite"/>
+    <circle class="ripple" cx="422" cy="97" r="2.75"/>
+    <path class="cursor" d="M 422 97 l 0 13.5 l 3.4 -3.2 l 2.1 4.4 l 2.6 -1.2 l -2.1 -4.4 l 4.6 -0.6 Z"/>
+  </g>
+
+  <!-- the only text left: the strip's width -->
+  <line class="tick" x1="404" y1="140" x2="448" y2="140"/>
+  <text x="426" y="153" text-anchor="middle" class="dim">44px</text>
+</svg>

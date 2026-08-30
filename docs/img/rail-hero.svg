@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" role="img" aria-label="Turn outline rail: hover wave and per-turn preview card">
-  <!-- Theme-adaptive palette: official dsw tokens as measured in dsh web (light first-paint fallbacks, dark overrides) -->
+  <!-- Theme-adaptive palette: official dsw tokens as measured in dsh web (light first-paint fallbacks, dark overrides).
+       Geometry matches the shipped rail: the 44px strip sits 12px inside the conversation column edge;
+       marks hug that edge and grow toward the text. The wave highlights the hovered mark and its
+       neighbors (hot 20px, near 14px, far 8px) via a stacked hot overlay animated on opacity.
+       Conversation turns render dsh-style: left-aligned prompt headings over response lines,
+       one turn per mark, six turns for six marks. SMIL loop: hold on turn 2, sweep to turn 3, rest, return. -->
   <style>
     .scene { fill: #f7f8fa; stroke: rgba(0, 0, 0, .06); }
     .ink   { fill: #0f1115; }
-    .ink2  { fill: #61666b; }
-    .ink3  { fill: #81858c; }
     .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .07); }
-    .bubble  { fill: rgba(15, 17, 21, .05); }
-    .bar     { fill: rgba(97, 102, 107, .32); }
-    .barDim  { fill: rgba(97, 102, 107, .18); }
+    .prompt  { fill: rgba(15, 17, 21, .46); }
+    .resp    { fill: rgba(97, 102, 107, .22); }
+    .respDim { fill: rgba(97, 102, 107, .13); }
     .card    { fill: rgba(255, 255, 255, .72); }
+    .cardSub { fill: rgba(15, 17, 21, .58); }
     .cardRing { stroke: rgba(0, 0, 0, .10); fill: none; }
     .cardLight { fill: url(#heroLight); }
     .markIdle  { fill: rgba(129, 133, 140, .40); }
@@ -18,13 +22,12 @@
     @media (prefers-color-scheme: dark) {
       .scene { fill: #17181a; stroke: rgba(255, 255, 255, .07); }
       .ink   { fill: #f9fafb; }
-      .ink2  { fill: #a6abb2; }
-      .ink3  { fill: #adb2b8; }
       .surface { fill: #1d1e20; stroke: rgba(255, 255, 255, .08); }
-      .bubble  { fill: rgba(249, 250, 251, .06); }
-      .bar     { fill: rgba(166, 171, 178, .34); }
-      .barDim  { fill: rgba(166, 171, 178, .18); }
+      .prompt  { fill: rgba(249, 250, 251, .44); }
+      .resp    { fill: rgba(166, 171, 178, .20); }
+      .respDim { fill: rgba(166, 171, 178, .12); }
       .card    { fill: rgba(35, 35, 36, .78); }
+      .cardSub { fill: rgba(249, 250, 251, .60); }
       .cardRing { stroke: rgba(255, 255, 255, .14); fill: none; }
       .cardLight { fill: url(#heroLightDark); }
       .markIdle  { fill: rgba(173, 178, 184, .40); }
@@ -54,43 +57,106 @@
   <!-- app surface -->
   <rect class="scene" x="1" y="1" width="758" height="318" rx="14"/>
 
-  <!-- conversation column (right edge at x=560) -->
+  <!-- conversation column: document-style turns, one per mark, centered block -->
   <rect class="surface" x="60" y="24" width="500" height="272" rx="12"/>
 
-  <!-- turn 1: user bubble + assistant lines -->
-  <rect class="bubble" x="322" y="52" width="206" height="24" rx="8"/>
-  <rect class="bar"     x="348" y="92" width="180" height="8" rx="4"/>
-  <rect class="barDim"  x="388" y="108" width="140" height="8" rx="4"/>
+  <!-- turn 1 (mark y=69) -->
+  <rect class="prompt" x="120" y="59" width="210" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="71" width="330" height="6" rx="3"/>
+  <rect class="respDim" x="120" y="81" width="250" height="6" rx="3"/>
+  <!-- turn 2 (mark y=99) -->
+  <rect class="prompt" x="120" y="89" width="180" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="101" width="300" height="6" rx="3"/>
+  <!-- turn 3 (mark y=129), hovered first -->
+  <rect class="prompt" x="120" y="119" width="250" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="131" width="340" height="6" rx="3"/>
+  <rect class="respDim" x="120" y="141" width="230" height="6" rx="3"/>
+  <!-- turn 4 (mark y=159) -->
+  <rect class="prompt" x="120" y="149" width="200" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="161" width="310" height="6" rx="3"/>
+  <!-- turn 5 (mark y=189) -->
+  <rect class="prompt" x="120" y="179" width="230" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="191" width="280" height="6" rx="3"/>
+  <rect class="respDim" x="120" y="201" width="190" height="6" rx="3"/>
+  <!-- turn 6 (mark y=219), current: response still streaming -->
+  <rect class="prompt" x="120" y="209" width="170" height="8" rx="4"/>
+  <rect class="resp"   x="120" y="221" width="220" height="6" rx="3"/>
 
-  <!-- turn 2 (hovered): user bubble + assistant lines -->
-  <rect class="bubble" x="292" y="142" width="236" height="24" rx="8"/>
-  <rect class="bar"    x="322" y="182" width="206" height="8" rx="4"/>
-  <rect class="barDim" x="352" y="198" width="176" height="8" rx="4"/>
-
-  <!-- turn 3 (current): user bubble + streaming assistant lines -->
-  <rect class="bubble" x="342" y="232" width="186" height="24" rx="8"/>
-  <rect class="bar"    x="352" y="272" width="176" height="8" rx="4"/>
-
-  <!-- preview card: frost, corner light top-left, ring + shadow -->
-  <g filter="url(#cardShadow)">
-    <rect class="card" x="272" y="77" width="300" height="106" rx="18"/>
-    <rect class="cardLight" x="272" y="77" width="300" height="106" rx="18"/>
-    <rect class="cardRing" x="272.5" y="77.5" width="299" height="105" rx="17.5" stroke-width="1"/>
-    <!-- prompt: two strong lines -->
-    <rect class="ink" x="294" y="99"  width="196" height="9" rx="4.5"/>
-    <rect class="ink" x="294" y="115" width="146" height="9" rx="4.5"/>
-    <!-- response: two secondary lines -->
-    <rect class="ink2" x="294" y="140" width="226" height="8" rx="4"/>
-    <rect class="ink2" x="294" y="155" width="166" height="8" rx="4"/>
+  <!-- preview card: frost, 10px gap from the 20px hot mark, corner light
+       top-left, ring + shadow. Slides with the wave below. -->
+  <g id="card">
+    <animateTransform attributeName="transform" type="translate"
+      values="0 0; 0 0; 0 30; 0 30; 0 30; 0 30; 0 0"
+      keyTimes="0; .34; .42; .66; .74; .90; 1" dur="4.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity"
+      values="1; 1; 1; 1; 0; 0; 1"
+      keyTimes="0; .34; .42; .66; .74; .90; 1" dur="4.2s" repeatCount="indefinite"/>
+    <g filter="url(#cardShadow)">
+      <rect class="card" x="218" y="77" width="300" height="106" rx="18"/>
+      <rect class="cardLight" x="218" y="77" width="300" height="106" rx="18"/>
+      <rect class="cardRing" x="218.5" y="77.5" width="299" height="105" rx="17.5" stroke-width="1"/>
+      <!-- prompt: two strong lines -->
+      <rect class="ink" x="240" y="99"  width="196" height="9" rx="4.5"/>
+      <rect class="ink" x="240" y="115" width="146" height="9" rx="4.5"/>
+      <!-- response: two secondary lines -->
+      <rect class="cardSub" x="240" y="140" width="226" height="7" rx="3.5"/>
+      <rect class="cardSub" x="240" y="153" width="166" height="7" rx="3.5"/>
+    </g>
   </g>
 
-  <!-- rail marks: 12px gutter from column, lengths are the wave (20 / 14 / 8 / 6) -->
+  <!-- rail marks: right-aligned at the column gutter (right edge x=548).
+       Base layer: idle color, geometry follows the 20/14/8/6 wave.
+       Hot layer: same geometry, hot color, opacity marks hot+near turns. -->
   <g>
-    <rect class="markIdle" x="572" y="69"  width="8"  height="2" rx="1"/>
-    <rect class="markIdle" x="572" y="99"  width="14" height="2" rx="1"/>
-    <rect class="markHot"  x="572" y="129" width="20" height="2" rx="1"/>
-    <rect class="markIdle" x="572" y="159" width="14" height="2" rx="1"/>
-    <rect class="markIdle" x="572" y="189" width="8"  height="2" rx="1"/>
-    <rect class="markOn"   x="572" y="219" width="6"  height="2" rx="1"/>
+    <!-- mark 1: far from both hover centers -->
+    <rect class="markIdle" y="69" height="2" rx="1" x="540" width="8">
+      <animate attributeName="width" values="8;8;6;6;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="540;540;542;542;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- mark 2: near turn 2 -->
+    <rect class="markIdle" y="99" height="2" rx="1" x="534" width="14">
+      <animate attributeName="width" values="14;14;8;8;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="534;534;540;540;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" y="99" height="2" rx="1" x="534" width="14" opacity="1">
+      <animate attributeName="opacity" values="1;1;0;0;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="14;14;8;8;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="534;534;540;540;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- mark 3: hot on turn 2, near turn 3 -->
+    <rect class="markIdle" y="129" height="2" rx="1" x="528" width="20">
+      <animate attributeName="width" values="20;20;14;14;6;6;20" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="528;528;534;534;542;542;528" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" y="129" height="2" rx="1" x="528" width="20" opacity="1">
+      <animate attributeName="opacity" values="1;1;1;1;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="20;20;14;14;6;6;20" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="528;528;534;534;542;542;528" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- mark 4: near turn 2, hot on turn 3 -->
+    <rect class="markIdle" y="159" height="2" rx="1" x="534" width="14">
+      <animate attributeName="width" values="14;14;20;20;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="534;534;528;528;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" y="159" height="2" rx="1" x="534" width="14" opacity="1">
+      <animate attributeName="opacity" values="1;1;1;1;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="14;14;20;20;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="534;534;528;528;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- mark 5: near turn 3 -->
+    <rect class="markIdle" y="189" height="2" rx="1" x="540" width="8">
+      <animate attributeName="width" values="8;8;14;14;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="540;540;534;534;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" y="189" height="2" rx="1" x="540" width="8" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0;0" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="8;8;14;14;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="540;540;534;534;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <!-- mark 6: current turn, rest length, color-only highlight -->
+    <rect class="markOn" y="219" height="2" rx="1" x="542" width="6">
+      <animate attributeName="width" values="6;6;8;8;6;6;6" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="542;542;540;540;542;542;542" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
   </g>
 </svg>
