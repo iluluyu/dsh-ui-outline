@@ -42,7 +42,7 @@ dsh plugin --profile web add dsh-ui-outline
   <img src="docs/img/mark-language.svg" width="760" alt="紧凑为 14px 间距加比例压缩；宽松为每轮 30px 行高；44px 点击条把点击吸附到最近刻度">
 </p>
 
-设置卡片中英双语、跟随应用语言。设置命名空间为 `outline`；手动覆盖形如 `~/.dsh/settings.yaml` 中的 `outline: { side: left, material: frost, layout: loose }`。
+设置卡片中英双语、跟随应用语言。设置命名空间为 `outline`；手动覆盖形如 `~/.dsh/settings.yaml` 中的 `outline: { side: left, material: frost, layout: loose }`。插件的 `cordis.yml` 行还带一个 `config:` 块——它垫在用户文档*之下*，供 profile 管理者钉住全局默认值，个人设置永远优先。
 
 ## 性能
 

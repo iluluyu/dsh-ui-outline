@@ -31,6 +31,7 @@ English primary; Chinese condensation appended. Do not post before `git push` + 
 ### First-class settings
 - New settings card under *Settings → Plugins → Plugin configuration*: **Side** (right/left, mirrored automatically), **Preview material** (none/frost/liquid), **Mark layout** (compact/loose). Bilingual zh/en, applies live.
 - Preferences persist in the host's settings document (`outline` namespace) — they follow you across browsers and machines. Requires dsh ≥ `0.1.0-rc.7`. Not localStorage.
+- The plugin's `cordis.yml` row now carries a `config:` block, registered as the namespace's composition (base) layer — profile owners can pin fleet-wide defaults that personal settings always override (the layered shape the settings cookbook prescribes).
 
 ### Performance (measured, not promised)
 - Scroll tracking: one rect read + binary search per frame; offsets refill only on conversation DOM change.
