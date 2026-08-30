@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-outline",
-  "version": "0.0.1",
-  "description": "Right-edge turn navigation for dsh web: one dash per user turn, hover to expand an outline panel, click to jump",
+  "version": "0.0.2",
+  "description": "Turn navigation rail for dsh web following the official TurnNavigator design: compact or loose mark spacing, left/right side, frosted/liquid-glass preview card",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -47,5 +47,8 @@
     "outline",
     "navigation"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  }
 }

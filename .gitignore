@@ -1,3 +1,4 @@
 node_modules/
 ref/
 .pi/
+pnpm-lock.yaml
