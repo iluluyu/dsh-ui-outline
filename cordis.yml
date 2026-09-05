@@ -12,3 +12,5 @@
         side: right
         material: frost
         layout: compact
+        frostLevel: balanced
+        liquidLevel: balanced

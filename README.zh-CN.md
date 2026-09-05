@@ -13,7 +13,7 @@
 - **与官方同源。** 轨道贴合会话列边缘（打开 details 面板也不冲突），垂直居中于当前阅读带，列宽不足 900px 时自动隐藏——这些行为与官方导航逐项一致。颜色、圆角、阴影、动效全部实时读取宿主设计 token。
 - **一套会呼吸的刻度。** 平时所有刻度等长对齐，当前轮只用颜色点亮；指针扫过时目标刻度伸至全长，邻近刻度随之起伏。两种密度、同一套语言——`compact` 紧凑（14px 间距，整段历史一屏可见）或 `loose` 宽松（每轮独占 30px 行高）。
 - **点击不挑位置。** 44px 宽的点击条上，点下即吸附到最近的可见轮次——不必瞄准那根 2px 细线。按住拖动即可擦洗整段会话；跳转落点轻闪一下即止，快速擦洗不留残影。
-- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——光从朝向会话的角落斜入。支持的浏览器上圆角升级为 G2 连续曲率（`corner-shape: squircle`，与官方 10px 圆弧对角线等效），外圈是一圈均匀的 1px 环。全部纯 CSS，绝不撑破页面。
+- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——光从朝向会话的角落斜入，边缘带一缕同向的色散彩边；两种玻璃各有轻盈/均衡/浓郁三档浓度，可读性与通透感随手可调。支持的浏览器上圆角升级为 G2 连续曲率（`corner-shape: squircle`，与官方 10px 圆弧对角线等效），外圈是一圈均匀的 1px 环。全部纯 CSS，绝不撑破页面。
 - **设置是一等公民。** 位于 *设置 → 插件 → 插件配置*，写入宿主设置文档——换浏览器、换机器，偏好都在。不走 localStorage。
 - **开销低到可以忽略。** 滚动每帧只读一次矩形、做一次二分查找；动画全部走合成器；指针移动合帧处理；大纲静止时，阅读期间零渲染。
 - **永不双轨。** 本轨道在场时官方导航自动退位；轮次不足 2（官方最小值）时本轨道让位、官方导航回归。
@@ -40,12 +40,13 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 
 ## 设置
 
-三项均即时生效，并写入宿主设置文档：
+所有设置即时生效，并写入宿主设置文档：
 
 | 设置 | 选项 | 默认 |
 |:--|:--|:--|
 | **位置** | 右侧 · 左侧 | 右侧 |
 | **预览材质** | 无 · 毛玻璃 · 液态玻璃 | 毛玻璃 |
+| **玻璃浓度** | 轻盈 · 均衡 · 浓郁（仅当选中对应玻璃材质时显示该字段） | 均衡 |
 | **刻度分布** | 紧凑 · 宽松 | 紧凑 |
 
 <p align="center">
@@ -53,7 +54,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 </p>
 
 <p align="center">
-  <img src="docs/img/materials.svg" width="760" alt="预览卡三种材质：无（官方不透明 token）、毛玻璃（模糊透底）、液态玻璃（角光加内缘）">
+  <img src="docs/img/materials.svg" width="760" alt="预览卡三种材质：无（官方不透明 token）、毛玻璃（模糊透底）、液态玻璃（角光与色散）">
 
 <p align="center">
   <img src="docs/img/mark-language.svg" width="760" alt="紧凑为 14px 间距的等长刻度；宽松为每轮 30px 行高，同一套刻度语言">
@@ -63,7 +64,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
   <img src="docs/img/hit-strip.svg" width="760" alt="两帧说明：点击落在 44px 点击条内任意位置，最近一刻度伸长接住点击，不必瞄准 2px 细线">
 </p>
 
-设置卡片中英双语、跟随应用语言。设置命名空间为 `outline`；也可以在 `~/.dsh/settings.yaml` 手动覆盖，例如 `outline: { side: left, material: frost, layout: loose }`。插件的 `cordis.yml` 里另有一个 `config:` 块——它垫在用户文档之下，供 profile 管理者钉住全局默认值，个人设置永远优先。
+设置卡片中英双语、跟随应用语言。设置命名空间为 `outline`；也可以在 `~/.dsh/settings.yaml` 手动覆盖，例如 `outline: { side: left, material: frost, layout: loose, frostLevel: dense }`。插件的 `cordis.yml` 里另有一个 `config:` 块——它垫在用户文档之下，供 profile 管理者钉住全局默认值，个人设置永远优先。
 
 ## 性能
 

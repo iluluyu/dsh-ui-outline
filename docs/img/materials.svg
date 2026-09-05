@@ -14,9 +14,11 @@
     .resp   { fill: rgba(97, 102, 107, .22); }
     .respDim{ fill: rgba(97, 102, 107, .13); }
     .none   { fill: #ffffff; }
-    .frost  { fill: rgba(255, 255, 255, .45); }
-    .liquid { fill: rgba(255, 255, 255, .42); }
+    .frost  { fill: rgba(255, 255, 255, .60); }
+    .liquid { fill: rgba(255, 255, 255, .65); }
     .ring   { stroke: rgba(0, 0, 0, .10); fill: none; }
+    .ringW  { stroke: rgba(255, 96, 80, .38); fill: none; }
+    .ringC  { stroke: rgba(96, 160, 255, .38); fill: none; }
     .lbl  { font-size: 13px; font-weight: 600; fill: #0f1115; }
     .lbl2 { font-size: 13px; font-weight: 600; fill: #61666b; }
     .fxF { filter: url(#fxFrost); }
@@ -31,9 +33,11 @@
       .resp   { fill: rgba(166, 171, 178, .22); }
       .respDim{ fill: rgba(166, 171, 178, .13); }
       .none   { fill: #232324; }
-      .frost  { fill: rgba(35, 35, 36, .35); }
-      .liquid { fill: rgba(35, 35, 36, .32); }
+      .frost  { fill: rgba(35, 35, 36, .60); }
+      .liquid { fill: rgba(35, 35, 36, .65); }
       .ring   { stroke: rgba(255, 255, 255, .14); fill: none; }
+      .ringW  { stroke: rgba(255, 96, 80, .40); fill: none; }
+      .ringC  { stroke: rgba(96, 160, 255, .40); fill: none; }
       .lbl  { font-size: 13px; font-weight: 600; fill: #f9fafb; }
       .lbl2 { font-size: 13px; font-weight: 600; fill: #a6abb2; }
       .fxL { filter: url(#fxLiquidD); }
@@ -70,14 +74,6 @@
     </filter>
     <clipPath id="clipF"><use href="#cardShape" transform="translate(305,88)"/></clipPath>
     <clipPath id="clipL"><use href="#cardShape" transform="translate(540,88)"/></clipPath>
-    <mask id="ringTopL" maskUnits="userSpaceOnUse" x="540" y="88" width="150" height="66">
-      <use href="#cardShape" transform="translate(540,88)" fill="none" stroke="#fff" stroke-width="9"/>
-      <rect x="530" y="121" width="170" height="40" fill="#000"/>
-    </mask>
-    <mask id="ringBotL" maskUnits="userSpaceOnUse" x="540" y="88" width="150" height="66">
-      <use href="#cardShape" transform="translate(540,88)" fill="none" stroke="#fff" stroke-width="9"/>
-      <rect x="530" y="88" width="170" height="33" fill="#000"/>
-    </mask>
   </defs>
 
   <rect class="scene" x="1" y="1" width="758" height="208" rx="14"/>
@@ -135,32 +131,13 @@
     <rect class="prompt" x="530" y="150" width="96"  height="8" rx="4"/>
     <rect class="resp"    x="530" y="178" width="150" height="6" rx="3"/>
   </g>
-  <!-- dimmed blurred backdrop, then the rim bands carry the same backdrop
-       squeezed 0.55 vertically: bars visibly compress at the glass edge -->
+  <!-- dimmed blurred backdrop -->
   <g class="fxL" clip-path="url(#clipL)">
     <rect class="prompt" x="530" y="70"  width="120" height="8" rx="4"/>
     <rect class="resp"    x="530" y="92"  width="168" height="6" rx="3"/>
     <rect class="respDim" x="530" y="124" width="128" height="6" rx="3"/>
     <rect class="prompt" x="530" y="150" width="96"  height="8" rx="4"/>
     <rect class="resp"    x="530" y="178" width="150" height="6" rx="3"/>
-  </g>
-  <g class="fxL" clip-path="url(#clipL)" mask="url(#ringTopL)">
-    <g transform="translate(0,92) scale(1,0.55) translate(0,-92)">
-      <rect class="prompt" x="530" y="70"  width="120" height="8" rx="4"/>
-    <rect class="resp"    x="530" y="92"  width="168" height="6" rx="3"/>
-    <rect class="respDim" x="530" y="124" width="128" height="6" rx="3"/>
-    <rect class="prompt" x="530" y="150" width="96"  height="8" rx="4"/>
-    <rect class="resp"    x="530" y="178" width="150" height="6" rx="3"/>
-    </g>
-  </g>
-  <g class="fxL" clip-path="url(#clipL)" mask="url(#ringBotL)">
-    <g transform="translate(0,149) scale(1,0.55) translate(0,-149)">
-      <rect class="prompt" x="530" y="70"  width="120" height="8" rx="4"/>
-    <rect class="resp"    x="530" y="92"  width="168" height="6" rx="3"/>
-    <rect class="respDim" x="530" y="124" width="128" height="6" rx="3"/>
-    <rect class="prompt" x="530" y="150" width="96"  height="8" rx="4"/>
-    <rect class="resp"    x="530" y="178" width="150" height="6" rx="3"/>
-    </g>
   </g>
   <g filter="url(#fxShadow)">
     <use href="#cardShape" transform="translate(540,88)" class="liquid"/>
@@ -169,6 +146,10 @@
       <rect class="sheen" x="540" y="88" width="150" height="66"/>
     </g>
     <use href="#cardShape" transform="translate(540,88)" fill="none" class="ring" stroke-width="1"/>
+    <!-- chromatic dispersion: warm fringe toward the lit (top-left) corner,
+         cool fringe opposite — sub-pixel offsets, riding the same ring -->
+    <use href="#cardShape" transform="translate(539.4,87.4)" fill="none" class="ringW" stroke-width="1"/>
+    <use href="#cardShape" transform="translate(540.6,88.6)" fill="none" class="ringC" stroke-width="1"/>
     <rect class="ink" x="556" y="102" width="98" height="7" rx="3.5"/>
     <rect class="ink" x="556" y="114" width="70" height="7" rx="3.5"/>
     <rect class="sub" x="556" y="130" width="112" height="6" rx="3"/>
