@@ -6,12 +6,14 @@
 > variants ship as one of three segmented options (`none | frost | liquid`) on
 > the settings card, applied to the per-turn preview card only (the resting
 > rail stays bare marks, matching the official TurnNavigator). **The liquid
-> finish is pure CSS**: frost's token base, a veil preset (see below), a
-> radial highlight from the prompt text-start, and sub-pixel chromatic rim
-> fringes — warm on the lit corner's edges, cool on the far corner — no inner
-> rim (an outer ring + inset rim read as a double border), and no tight
-> `0 0 1px` contact halo in dark (it rasterized as a hidden second outline).
-> The first SVG feDisplacementMap experiment leaked a 300×150 default-sized
+> finish is pure CSS**: frost's token base, a veil preset (see below),
+> and a directional corner light whose chromaticism lives in the
+> background layers — a warm-white lit corner and a faint cool far-corner
+> wash. Rim experiments are recorded below: an inset rim read as a double
+> border, a tight `0 0 1px` contact halo rasterized as a hidden dark line
+> in dark theme, and sub-pixel offset color fringes rasterized as detached
+> colored line segments with a hairline gap — all three are gone; the rim
+> stays a single neutral ring. The first SVG feDisplacementMap experiment leaked a 300×150 default-sized
 > host into the page, so it was removed rather than patched. `frost` is the
 > default. The original research note follows.
 
@@ -35,7 +37,7 @@
 |---|---|---|---|---|---|
 | `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | 1px ring (`border-l2`) | `dsw-shadow-lv2` | official preview panel |
 | `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px ring (`border-l2`); dark drops the lv2 contact halo (hidden second outline) | `lv2` (dark: ring + soft drop) | transparent-to-milk glass per density |
-| `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a corner radial | `blur(10–14px) saturate(1.6)` (dark `1.5 brightness(.85) contrast(1.05)`) | 1px ring + sub-pixel warm/cool chromatic fringes (`±0.6px` offset, alpha .15/.17) | `lv2` + corner radial light | directionally lit, faintly dispersive liquid glass |
+| `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | `blur(10–14px) saturate(1.6)` (dark `1.5 brightness(.85) contrast(1.05)`) | 1px ring (same as frost; colored rim experiments rejected — see below) | `lv2` + corner radial light | directionally lit, faintly chromatic liquid glass |
 
 Corners are G2 where `corner-shape` exists: `squircle` at 18.4px, measured to cross
 the 45° diagonal where a 10px circle does (Chrome's squircle = superellipse(4):
@@ -46,19 +48,26 @@ the official 10px G1 radius via `@supports` fallback.
 The outline is a 0-blur 1px-spread ring shadow, not a stroked border: a 1px
 border rasterizes ~3.6× denser near the squircle's diagonal apex than on the
 straight edges (measured), while the ring dilates the shape uniformly and peaks
-at only the geometric 45° minimum (~1.4×). Liquid's dispersion rides the same
-ring: two extra ring shadows in warm red / cool blue, displaced ±0.6px toward
-and away from the lit corner, painted *under* the neutral ring — only the
-sub-pixel sliver poking past it shows, so the color reads as the ring's own
-edge and never as a second outline. An earlier inset-rim variant was removed:
-two concentric lines (outer ring + inner rim) read as a double border, and in
-dark theme the lv2 token's `0 0 1px` contact halo added a hidden dark line
-outside the light ring — both are gone.
+at only the geometric 45° minimum (~1.4×).
+
+**Rim experiments, all rejected** (kept here so they are not retried):
+1. *Inset rim* — an outer ring plus `inset 0 0 0 1px` white rim reads as two
+   concentric borders (the original "double border" complaint).
+2. *Dark contact halo* — the lv2 token's `0 0 1px` shadow hugging a light ring
+   in dark theme rasterizes as a parallel dark line, a hidden second outline
+   (confirmed by pixel luminance profiling: page 18 → dip 14 → ring 54).
+3. *Offset chromatic fringes* — two ring shadows in warm red / cool blue
+displaced ±0.6px render at 1× as detached colored line segments beside the
+   ring with a semi-transparent hairline gap between them; integrated at 3×
+   zoom, artifacted at native resolution. Dispersion therefore moved into the
+   background stack, which follows the squircle exactly and can never read as
+   a second outline: the lit-corner radial is warm-white
+   (`rgba(255,245,240,…)`), and the directional linear gradient carries a
+   faint cool stop (`rgba(120,170,255,.06)`) at the far corner.
 
 The light enters from the corner facing the conversation text — top-left beside a
 right rail, top-right beside a left rail (the preview mirrors with the rail),
-implemented with `--ol-light-x` / `--ol-light-deg` corner variables (and
-`--ol-dis-warm` / `--ol-dis-cool` for the mirrored fringes); light and dark
+implemented with `--ol-light-x` / `--ol-light-deg` corner variables; light and dark
 rules use their respective host tokens so a light host does not get a black
 “brand” tint and a dark host still receives a soft highlight.
 

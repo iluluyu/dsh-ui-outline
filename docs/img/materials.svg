@@ -17,8 +17,6 @@
     .frost  { fill: rgba(255, 255, 255, .60); }
     .liquid { fill: rgba(255, 255, 255, .65); }
     .ring   { stroke: rgba(0, 0, 0, .10); fill: none; }
-    .ringW  { stroke: rgba(255, 96, 80, .38); fill: none; }
-    .ringC  { stroke: rgba(96, 160, 255, .38); fill: none; }
     .lbl  { font-size: 13px; font-weight: 600; fill: #0f1115; }
     .lbl2 { font-size: 13px; font-weight: 600; fill: #61666b; }
     .fxF { filter: url(#fxFrost); }
@@ -36,8 +34,6 @@
       .frost  { fill: rgba(35, 35, 36, .60); }
       .liquid { fill: rgba(35, 35, 36, .65); }
       .ring   { stroke: rgba(255, 255, 255, .14); fill: none; }
-      .ringW  { stroke: rgba(255, 96, 80, .40); fill: none; }
-      .ringC  { stroke: rgba(96, 160, 255, .40); fill: none; }
       .lbl  { font-size: 13px; font-weight: 600; fill: #f9fafb; }
       .lbl2 { font-size: 13px; font-weight: 600; fill: #a6abb2; }
       .fxL { filter: url(#fxLiquidD); }
@@ -146,10 +142,6 @@
       <rect class="sheen" x="540" y="88" width="150" height="66"/>
     </g>
     <use href="#cardShape" transform="translate(540,88)" fill="none" class="ring" stroke-width="1"/>
-    <!-- chromatic dispersion: warm fringe toward the lit (top-left) corner,
-         cool fringe opposite — sub-pixel offsets, riding the same ring -->
-    <use href="#cardShape" transform="translate(539.4,87.4)" fill="none" class="ringW" stroke-width="1"/>
-    <use href="#cardShape" transform="translate(540.6,88.6)" fill="none" class="ringC" stroke-width="1"/>
     <rect class="ink" x="556" y="102" width="98" height="7" rx="3.5"/>
     <rect class="ink" x="556" y="114" width="70" height="7" rx="3.5"/>
     <rect class="sub" x="556" y="130" width="112" height="6" rx="3"/>

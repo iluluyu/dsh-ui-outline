@@ -13,7 +13,7 @@
 - **Official DNA.** The rail hugs the conversation column edge (the details panel never collides), centers on the live reading band, and hides below a 900px column — exactly like the shipped navigator. Every color, radius, shadow, and motion curve resolves live from the host's design tokens.
 - **A living mark language.** Idle ticks rest perfectly aligned; the current turn is highlighted by color alone; hovering sweeps a neighbor wave. One language, two densities — `compact` (14px pitch, whole history in view) or `loose` (one real 30px row per turn).
 - **Forgiving input.** The strip is 44px wide and snaps every click to the nearest visible turn — the 2px line is never the target. Drag to scrub the whole conversation; a quiet landing flash marks click-arrivals, while fast scrubs stay animation-free.
-- **Glass, done carefully.** The per-turn preview card in three finishes: `none` (official opaque tokens), `frost` (default), or `liquid` with a soft light entering from the conversation-facing corner and a faint directional chromatic rim. Each glass comes in three densities — airy, balanced, dense — trading transparency for legibility. Corners are G2-continuous where supported (`corner-shape: squircle`, diagonal-matched to the official 10px radius), outlined by a uniform 1px ring. Pure CSS — never overflows the page.
+- **Glass, done carefully.** The per-turn preview card in three finishes: `none` (official opaque tokens), `frost` (default), or `liquid` with a soft light entering from the conversation-facing corner, a warm lit corner and a faint cool far-corner wash. Each glass comes in three densities — airy, balanced, dense — trading transparency for legibility. Corners are G2-continuous where supported (`corner-shape: squircle`, diagonal-matched to the official 10px radius), outlined by a uniform 1px ring. Each finish keeps exactly one rim line; liquid's chromatic touch (warm lit corner, faint cool far corner) lives in the glass body itself, never on the rim. Pure CSS — never overflows the page.
 - **First-class settings.** Lives in *Settings → Plugins → Plugin configuration*, persisted in the host's settings document — preferences follow you across browsers and machines. Not localStorage.
 - **Cheaper than a shadow.** Scrolling costs one rect read plus a binary search per frame; every animation is compositor-only; pointer moves coalesce to one job per frame; a settled outline re-renders nothing while you read.
 - **Never two rails.** While this rail is up, the official one stands down — and below two turns (the official minimum) this one stands down instead.
@@ -54,7 +54,7 @@ All settings apply live and persist in the host settings document:
 </p>
 
 <p align="center">
-  <img src="docs/img/materials.svg" width="760" alt="Preview card materials: none (opaque official token), frost (blurred translucent), liquid (corner light and chromatic rim)">
+  <img src="docs/img/materials.svg" width="760" alt="Preview card materials: none (opaque official token), frost (blurred translucent), liquid (corner light with a warm/cool chromatic wash)">
 
 <p align="center">
   <img src="docs/img/mark-language.svg" width="760" alt="Compact uses a 14px pitch; loose uses one 30px row per turn; the same mark language in both">
