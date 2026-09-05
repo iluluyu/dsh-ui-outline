@@ -14,8 +14,8 @@
     .resp   { fill: rgba(97, 102, 107, .22); }
     .respDim{ fill: rgba(97, 102, 107, .13); }
     .none   { fill: #ffffff; }
-    .frost  { fill: rgba(255, 255, 255, .60); }
-    .liquid { fill: rgba(255, 255, 255, .65); }
+    .frost  { fill: rgba(255, 255, 255, .50); }
+    .liquid { fill: rgba(255, 255, 255, .50); }
     .ring   { stroke: rgba(0, 0, 0, .10); fill: none; }
     .lbl  { font-size: 13px; font-weight: 600; fill: #0f1115; }
     .lbl2 { font-size: 13px; font-weight: 600; fill: #61666b; }
@@ -31,8 +31,8 @@
       .resp   { fill: rgba(166, 171, 178, .22); }
       .respDim{ fill: rgba(166, 171, 178, .13); }
       .none   { fill: #232324; }
-      .frost  { fill: rgba(35, 35, 36, .60); }
-      .liquid { fill: rgba(35, 35, 36, .65); }
+      .frost  { fill: rgba(35, 35, 36, .50); }
+      .liquid { fill: rgba(35, 35, 36, .50); }
       .ring   { stroke: rgba(255, 255, 255, .14); fill: none; }
       .lbl  { font-size: 13px; font-weight: 600; fill: #f9fafb; }
       .lbl2 { font-size: 13px; font-weight: 600; fill: #a6abb2; }

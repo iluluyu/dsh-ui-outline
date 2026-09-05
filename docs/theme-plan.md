@@ -71,22 +71,36 @@ implemented with `--ol-light-x` / `--ol-light-deg` corner variables; light and d
 rules use their respective host tokens so a light host does not get a black
 “brand” tint and a dark host still receives a soft highlight.
 
-## 2b. Veil presets (density settings)
+## 2b. Glass parameters (transparency + blur)
 
 Calibration anchor: Apple's iOS 26 `regular` material reverse-engineers to a
-**~72% veil over blur ≈5.4px, saturate ≈1.8** — readability comes from the
-tint veil, not a heavy blur; community web reproductions sit at tint
-0.06–0.40 with blur 20–40px and only the top of that range reads legible over
-code blocks. The card exposes one three-step preset per glass material
-(`airy | balanced | dense`, default balanced); the field is served only while
-its material is selected (progressive disclosure). Each step is one
-veil+blur pair consumed through `--ol-veil` / `--ol-blur` custom properties:
+**~72% veil over blur ≈5.4px, saturate ≈1.8** — readable, but on request the
+ladder leans translucent: the shipped presets top out at 2/3 veil and airy
+sits near a third. The card exposes, per glass material (served only while
+that material is selected — progressive disclosure):
 
-| Preset | frost veil (light/dark) | frost blur | liquid veil (light/dark) | liquid blur |
-|---|---|---|---|---|
-| airy | 48% / 44% | 12px | 52% / 48% | 10px |
-| balanced | 60% / 60% | 14px | 65% / 65% | 12px |
-| dense | 72% / 68% | 16px | 74% / 70% | 14px |
+- a four-chip row: 清透/Airy, 标准/Standard, 浓郁/Dense (each snaps BOTH the
+  transparency and the blur) plus 自定义/Custom, which expands two sliders;
+- 透明度/transparency (20–95%, step 5; the veil is 100 − t) and
+  虚化半径/blur radius (0–24px, step 1) sliders — the custom path; a stored
+  value pair matching no preset keeps the sliders expanded on reopen.
+
+Slider writes are debounced (140ms trailing) into one settings write per
+drag pause; preset clicks write immediately. One transparency serves both
+themes (the dark veil token is darker, so equal percentages dim more in
+dark — natural and intended). Background dimming is deliberately NOT a
+third knob: in light theme the white veil is the wash, in dark the dark
+veil is the dim — a brightness control would duplicate the veil's job.
+
+| Preset | frost t / blur | liquid t / blur |
+|---|---|---|
+| airy 清透 | 70% / 8px | 65% / 8px |
+| standard 标准 | 50% / 12px | 50% / 12px |
+| dense 浓郁 | 35% / 16px | 38% / 16px |
+
+Airy is the readability floor for the secondary gray line (measured in
+review); further transparency asks should move blur or text tone, not the
+veil.
 
 ## 3. Activation & Discovery (as shipped)
 
