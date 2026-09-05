@@ -35,9 +35,9 @@
 
 | Variant | Card background | Backdrop | Border | Shadow / light | Feel |
 |---|---|---|---|---|---|
-| `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | 1px ring (`border-l2`) | `dsw-shadow-lv2` | official preview panel |
-| `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px ring (`border-l2`); dark drops the lv2 contact halo (hidden second outline) | `lv2` (dark: ring + soft drop) | transparent-to-milk glass per density |
-| `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | `blur(10–14px) saturate(1.6)` (dark `1.5 brightness(.85) contrast(1.05)`) | 1px ring (same as frost; colored rim experiments rejected — see below) | `lv2` + corner radial light | directionally lit, faintly chromatic liquid glass |
+| `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | 1px border (`border-l2`) | `dsw-shadow-lv2` | official preview panel |
+| `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px border (`border-l2`) | `lv2` | transparent-to-milk glass per density |
+| `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | Chromium: SDF displacement lens (§2c) after a light blur, `saturate(1.5)`; others: `blur(2–8px) saturate(1.5)` fallback | 1px border (`border-l2`) | `lv2` + corner radial light | directionally lit, edge-refracting liquid glass |
 
 Corners are G2 where `corner-shape` exists: `squircle` at 18.4px, measured to cross
 the 45° diagonal where a 10px circle does (Chrome's squircle = superellipse(4):
@@ -45,10 +45,15 @@ circle@100 → 29.3px vs squircle@100 → 15.9px, factor 1.84). Area-based match
 is deliberately avoided — it reads visually smaller. Unsupported engines keep
 the official 10px G1 radius via `@supports` fallback.
 
-The outline is a 0-blur 1px-spread ring shadow, not a stroked border: a 1px
-border rasterizes ~3.6× denser near the squircle's diagonal apex than on the
-straight edges (measured), while the ring dilates the shape uniformly and peaks
-at only the geometric 45° minimum (~1.4×).
+The outline is a real `1px` border (`var(--dsw-alias-border-l2)`), not a
+ring shadow. The original implementation used a 0-blur 1px-spread ring
+shadow (`box-shadow: 0 0 0 1px`) and that was the root cause of the
+recurring "gap between the border and the glass" (reported three times):
+the ring paints OUTSIDE the border box while the glass clips INSIDE it, so
+any anti-aliased half pixel becomes a constructive seam. A real border is
+painted in the border box itself, adjacent to the clipped glass by
+construction — pixel-verified: page 18 → border 54 → glass 30 with no seam
+band between them.
 
 **Rim experiments, all rejected** (kept here so they are not retried):
 1. *Inset rim* — an outer ring plus `inset 0 0 0 1px` white rim reads as two
@@ -57,13 +62,20 @@ at only the geometric 45° minimum (~1.4×).
    in dark theme rasterizes as a parallel dark line, a hidden second outline
    (confirmed by pixel luminance profiling: page 18 → dip 14 → ring 54).
 3. *Offset chromatic fringes* — two ring shadows in warm red / cool blue
-displaced ±0.6px render at 1× as detached colored line segments beside the
+   displaced ±0.6px render at 1× as detached colored line segments beside the
    ring with a semi-transparent hairline gap between them; integrated at 3×
    zoom, artifacted at native resolution. Dispersion therefore moved into the
    background stack, which follows the squircle exactly and can never read as
    a second outline: the lit-corner radial is warm-white
    (`rgba(255,245,240,…)`), and the directional linear gradient carries a
    faint cool stop (`rgba(120,170,255,.06)`) at the far corner.
+4. *Per-channel CA inside the displacement filter* — running three
+   `feDisplacementMap`s at ×0.94/×1/×1.06 scale and recomposing channels
+   additively produces true chromatic aberration, but any hard content edge
+   inside the rim renders it as saturated yellow/pink line pairs, and lone
+   G-channel rows read green — physically impossible for glass and
+   indistinguishable from colored outlines. The shipped lens uses a single
+   neutral displacement; the fold itself sells the glass.
 
 The light enters from the corner facing the conversation text — top-left beside a
 right rail, top-right beside a left rail (the preview mirrors with the rail),
@@ -94,32 +106,63 @@ veil is the dim — a brightness control would duplicate the veil's job.
 
 | Preset | frost t / blur | liquid t / blur |
 |---|---|---|
-| airy 清透 | 70% / 8px | 65% / 8px |
-| standard 标准 | 50% / 12px | 50% / 12px |
-| dense 浓郁 | 35% / 16px | 38% / 16px |
+| airy 清透 | 70% / 8px | 70% / 2px |
+| standard 标准 | 50% / 12px | 50% / 5px |
+| dense 浓郁 | 35% / 16px | 35% / 8px |
 
 Airy is the readability floor for the secondary gray line (measured in
 review); further transparency asks should move blur or text tone, not the
-veil.
+veil. Liquid's blur ladder sits far below frost's (2/5/8px): liquid is a
+lens, not heavy frost — the refraction below needs comparatively sharp
+backdrop to bend.
+
+## 2c. Edge refraction (the liquid lens)
+
+Liquid alone runs the backdrop through a real displacement lens, following
+the LiquidLens / liquid-glass technique: a per-pixel rounded-rect SDF is
+rasterized once to a 300×106 canvas (normals from central-difference
+gradients, R/G = 128 + 127·n over an 11px rim), cached as a data URL, and
+consumed by one `feDisplacementMap` (scale 18) after a light pre-blur
+(`std = max(0.5, blur/2)` — liquid stays clear, unlike frost). The result:
+content near the card edge is pulled inward and vertically compressed — the
+thick-lens fold — verified in review on both themes (bottom/right edges fold
+background text; edges over flat background show nothing, as real glass
+would).
+
+Delivery: a 0×0 absolutely-positioned SVG host (`#ol-fx-host`, aria-hidden,
+body-level) holds the filter and is mounted only while `material: liquid`;
+`backdrop-filter: url(#ol-liquid-fx)` is selected via a `data-refract` root
+attribute gated at module load. Detection note: bare `CSS` is unreliable
+inside the dsh loader's module scope (measured: `CSS.supports is not a
+function` there while the page console has it) — the check goes through
+`globalThis` with a defensive optional call, and requires Chromium brands
+(`url()` backdrop filters are Chromium-only anyway). Non-Chromium engines
+never mount the host and keep the plain `blur() saturate()` liquid from the
+`@supports` fallback — the glass still works, minus the fold.
 
 ## 3. Activation & Discovery (as shipped)
 
 - Settings card (Settings → Plugins → Plugin configuration), `material` field;
   the rail root carries `data-material` and CSS selects the card finish live.
-  Each glass material additionally serves a `frostLevel` / `liquidLevel` field
-  (airy | balanced | dense) only while that material is active; the rail root
-  carries `data-frost-level` / `data-liquid-level` accordingly.
-- No runtime UA gate, SVG host, injected filter, or body attribute exists.
-  Browsers without `backdrop-filter` simply render the token-tinted surface.
+  Each glass material additionally serves its `frostTransparency` /
+  `frostBlur` / `liquidTransparency` / `liquidBlur` pair only while that
+  material is active (four preset chips + custom sliders; see §2b).
+- Refraction is capability-gated at module load (Chromium brands + backdrop
+  filter support, via `globalThis` — see §2c); engines that fail the gate
+  never see `data-refract` or the SVG host and fall back to plain
+  `blur() saturate()` liquid.
 - Defaults stay `frost`; `none` remains available for exact opaque official
   treatment.
 
 ## 4. Compatibility & Performance
 
-- Liquid has no injected DOM or SVG/filter graph. The preview is a fixed-size
-  CSS layer, so it cannot create document overflow or a second scrollbar.
-- The only runtime work is one native `backdrop-filter` while the ≤300×106px
-  preview is visible. There is no resize regeneration, animation loop, or
-  material on the resting rail.
+- Liquid mounts exactly one extra element while active: the 0×0 SVG filter
+  host (never focusable, aria-hidden, no paint area — it cannot create
+  overflow or a scrollbar); the preview itself stays a fixed-size CSS layer.
+- Runtime work while the ≤300×106px preview is visible: one native
+  `backdrop-filter` chain (Chromium: blur + one displacement + saturate).
+  Measured on this machine: 60–61 FPS through randomized hover sweeps, heap
+  flat at ~38 MB. There is no resize regeneration, animation loop, or
+  material on the resting rail; switching away from liquid removes the host.
 - The response line uses `label-secondary` and 12.5px/19px metrics rather than
   caption gray; the effect stays readable over both frost and liquid surfaces.

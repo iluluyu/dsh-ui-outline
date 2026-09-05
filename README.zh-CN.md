@@ -13,7 +13,7 @@
 - **与官方同源。** 轨道贴合会话列边缘（打开 details 面板也不冲突），垂直居中于当前阅读带，列宽不足 900px 时自动隐藏——这些行为与官方导航逐项一致。颜色、圆角、阴影、动效全部实时读取宿主设计 token。
 - **一套会呼吸的刻度。** 平时所有刻度等长对齐，当前轮只用颜色点亮；指针扫过时目标刻度伸至全长，邻近刻度随之起伏。两种密度、同一套语言——`compact` 紧凑（14px 间距，整段历史一屏可见）或 `loose` 宽松（每轮独占 30px 行高）。
 - **点击不挑位置。** 44px 宽的点击条上，点下即吸附到最近的可见轮次——不必瞄准那根 2px 细线。按住拖动即可擦洗整段会话；跳转落点轻闪一下即止，快速擦洗不留残影。
-- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——光从朝向会话的角落斜入（暖白角光、远角一抹冷调）；两种玻璃各有清透/标准/浓郁三档预设，还可自定义透明度与虚化半径。支持的浏览器上圆角升级为 G2 连续曲率（`corner-shape: squircle`，与官方 10px 圆弧对角线等效），外圈是一圈均匀的 1px 环——每种材质都只有一条描边线，液态的彩色倾向落在玻璃体内而非描边上。全部纯 CSS，绝不撑破页面。
+- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——光从朝向会话的角落斜入（暖白角光、远角一抹冷调）；Chromium 上液态玻璃的背景还会经过一道真实位移透镜（SDF 法线图 + `feDisplacementMap`），卡片边缘处的背景内容会被弯折拉入玻璃——厚透镜折叠，其他引擎回落普通模糊。两种玻璃各有清透/标准/浓郁三档预设，还可自定义透明度与虚化半径。每种材质都只有一条描边线：真实 1px border 与玻璃面严丝合缝（不再用外环投影，杜绝缝隙）。绝不撑破页面。
 - **设置是一等公民。** 位于 *设置 → 插件 → 插件配置*，写入宿主设置文档——换浏览器、换机器，偏好都在。不走 localStorage。
 - **开销低到可以忽略。** 滚动每帧只读一次矩形、做一次二分查找；动画全部走合成器；指针移动合帧处理；大纲静止时，阅读期间零渲染。
 - **永不双轨。** 本轨道在场时官方导航自动退位；轮次不足 2（官方最小值）时本轨道让位、官方导航回归。
@@ -85,7 +85,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 
 - 设计语言跟随官方 [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) 中的 **TurnNavigator**（MIT，© DeepSeek）：轨道几何、阅读带居中与隐藏阈值一并对齐官方行为。
 - 刻度的邻域波浪（悬停时邻近刻度随距离衰减伸长）与拖拽擦洗，参考了 **OpenAI ChatGPT 桌面版**（Codex desktop）内置的浮动轮次导航轨道。
-- 液态玻璃的“高光与折射分层”手法，参考了 [DevBehindYou/LiquidLens](https://github.com/DevBehindYou/LiquidLens) 与 [tomagranate/liquid-glass](https://github.com/tomagranate/liquid-glass)（均 MIT）；本插件的实现为纯 CSS，未使用位移滤镜。
+- 液态玻璃的“高光与折射分层”与位移透镜手法（SDF 法线图 + 背景位移滤镜），参考了 [DevBehindYou/LiquidLens](https://github.com/DevBehindYou/LiquidLens) 与 [tomagranate/liquid-glass](https://github.com/tomagranate/liquid-glass)（均 MIT）；本插件为独立实现，并实测后刻意采用中性（无色散）透镜——按通道拆分的色散会在文字硬边上产生彩边。
 - 运行于 dsh 之上：插件宿主为 **cordis**，React 运行时由宿主提供；设置 schema 基于 **@deepseek-ai/schemastery**（MIT）。
 - 捆绑产物不含第三方代码，无传递性许可义务。
 
