@@ -46,7 +46,7 @@ All settings apply live and persist in the host settings document:
 |:--|:--|:--|
 | **Side** | Right · Left | Right |
 | **Preview material** | None · Frosted · Liquid glass | Frosted |
-| **Glass parameters** | Presets: Airy · Standard · Dense + Custom (transparency / blur-radius sliders, shown only while its material is selected) | Standard |
+| **Glass parameters** | Presets: Airy 70% · Standard 50% · Misty 30% + Custom (transparency / blur-radius sliders, shown only while its material is selected) | Standard |
 | **Mark layout** | Compact · Loose | Compact |
 
 <p align="center">

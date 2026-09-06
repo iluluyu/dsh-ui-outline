@@ -115,8 +115,9 @@ ladder leans translucent: the shipped presets top out at 2/3 veil and airy
 sits near a third. The card exposes, per glass material (served only while
 that material is selected — progressive disclosure):
 
-- a four-chip row: 清透/Airy, 标准/Standard, 浓郁/Dense (each snaps BOTH the
-  transparency and the blur) plus 自定义/Custom, which expands two sliders;
+- a four-chip row: 清透/Airy, 标准/Standard, 朦胧/Misty (each labeled with
+  its transparency — 70% / 50% / 30% — and snapping BOTH the transparency
+  and the blur) plus 自定义/Custom, which expands two sliders;
 - 透明度/transparency (20–95%, step 5; the veil is 100 − t) and
   虚化半径/blur radius (0–24px, step 1) sliders — the custom path; a stored
   value pair matching no preset keeps the sliders expanded on reopen.
@@ -130,14 +131,17 @@ veil is the dim — a brightness control would duplicate the veil's job.
 
 | Preset | frost t / blur | liquid t / blur |
 |---|---|---|
-| airy 清透 | 70% / 8px | 70% / 2px |
+| airy 清透 | 70% / 4px | 70% / 2px |
 | standard 标准 | 50% / 12px | 50% / 5px |
-| dense 浓郁 | 35% / 16px | 35% / 8px |
+| misty 朦胧 | 30% / 16px | 30% / 8px |
 
-Airy is the readability floor for the secondary gray line (measured in
-review); further transparency asks should move blur or text tone, not the
-veil. Liquid's blur ladder sits far below frost's (2/5/8px): liquid is a
-lens, not heavy frost — the refraction below needs comparatively sharp
+Airy frost is the user's own historical tune (70%/4px), restored as the
+aesthetics-first setting per request — the ladder reads as clean
+30/50/70 on the chips. 浓郁/Dense was renamed 朦胧/Misty: "dense/rich"
+read as a premium recommendation when it is in fact the MOST veiled,
+least readable step; the percentage labels carry the actual numbers.
+Liquid's blur ladder still sits far below frost's (2/5/8px): liquid is a
+lens, not heavy frost — the refraction needs comparatively sharp
 backdrop to bend.
 
 ## 2c. Edge refraction (the liquid lens)
