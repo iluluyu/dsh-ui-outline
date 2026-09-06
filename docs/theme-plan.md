@@ -39,15 +39,29 @@
 | `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px border (`border-l2`) | `lv2` | transparent-to-milk glass per density |
 | `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | Chromium: SDF displacement lens (§2c) after a light blur, `saturate(1.5)`; others: `blur(2–8px) saturate(1.5)` fallback | 1px border (`border-l2`) | `lv2` + corner radial light | directionally lit, edge-refracting liquid glass |
 
-Corners are G2 where `corner-shape` exists — written as `superellipse(4)`,
-NOT the `squircle` keyword: in Chrome 152 the keyword parses
-(`CSS.supports` → true) but computes to `superellipse(2)`, a plain circular
-corner — the G2 upgrade silently never rendered until this was caught by
-corner-arc fitting in review. The 18.4px radius is measured to cross the
-45° diagonal where a 10px circle does (superellipse(4): circle@100 →
-29.3px vs squircle@100 → 15.9px, factor 1.84). Area-based matching
-is deliberately avoided — it reads visually smaller. Unsupported engines keep
-the official 10px G1 radius via `@supports` fallback.
+Corners are plain `border-radius: 18.4px` circles — the radius the card has
+effectively rendered as all along. The whole corner-shape (G2) direction was
+explored and abandoned, with three measured findings so it is not retried:
+
+1. The `squircle` keyword parses (`CSS.supports` → true) but silently
+   computes to `superellipse(2)` in Chrome 152 — a plain circle — so the
+   original "G2 upgrade" never actually rendered.
+2. The explicit `superellipse(4)` DOES render, but at 18.4px it hugs the
+   corner box so tightly it reads as a ~10px circle ("corners shrank"), and
+   scaling the radius up (34px, apex-parity with an 18.4 circle) collapses
+   the *perceived* radius to ~6px: a superellipse(4) runs nearly flush with
+   the corner box's straight edges and only turns over near the diagonal —
+   apex parity at one point does not carry the perceived roundness.
+3. Chrome 152's *default* `corner-shape` computes to `superellipse(1.5)`,
+   which pulls every undeclared radius inward — this is the look the card
+   always had (18.4px + n=1.5 ≈ perceived ~10px), i.e. "the user's corner".
+   Overriding to a true `round` at 18.4px would render visibly larger than
+   anything the user has seen, so nothing is declared: the default plus
+   18.4px reproduces the familiar look byte-for-byte.
+
+The fold map's SDF is circular at the same 18.4px (`FX_R = 18.4`), keeping
+the refraction band concentric with the rendered edge within ~1px at the
+diagonals.
 
 The outline is a real `1px` border (`var(--dsw-alias-border-l2)`), not a
 ring shadow. The original implementation used a 0-blur 1px-spread ring
@@ -134,12 +148,14 @@ its measured parameters:
 
 | Parameter | Value | Source |
 |---|---|---|
-| rim profile | Snell: squircle height `f(u)=(1-(1-u)⁴)^¼` → slope → θ₁ → Snell (n=1.5) → `tan(θ₁-θ₂)`, 128 samples, normalized (peaks AT the edge, tapers inward) | LiquidLens `buildProfile` |
+| rim profile | Snell: squircle height `f(u)=(1-(1-u)⁴)^¼` → slope → θ₁ → Snell (n=1.5) → `tan(θ₁-θ₂)`, 128 samples, normalized (peaks AT the edge, tapers inward); from t=0.45 to 1 the value is multiplied by a quintic smootherstep tail window (f(1)=0, f'(1)=0, monotone) — see below | LiquidLens `buildProfile` + tail window |
 | bezel width | 22px | LiquidLens default / Panel `depth` |
 | map | 600×212 canvas (2× supersampled), rounded-rect SDF, forward-difference normals, R/G = 128 ± 127·n·mag | tomagranate `dpr: 2` |
 | displacement | single `feDisplacementMap`, scale 18 | LiquidLens `refraction: 18` |
 | pre-blur | `std = clamp(blur/2, 0.5, 3)` — blur above ~4 erases the lens, so the slider's upper half stops adding frost while refraction is on | LiquidLens "keep LOW (0-4)" |
-| saturation | 1.8 (also in the CSS fallback) | LiquidLens `saturation: 1.8` |
+| saturation | 1.55 (also in the CSS fallback) — 1.8 measured as a banding amplifier on our tint stack | LiquidLens `saturation: 1.8`, reduced |
+| melt | `feGaussianBlur std 0.6` immediately AFTER the displacement — dissolves the 8-bit displacement field's quantization steps (λ=1px gain ≈ 0.0001%) without touching the fold (λ≥8px gain ≥ 80%) | this project |
+| dither | `feTurbulence 0.8` + ±1-level zero-centered arithmetic composite at chain end — breaks up 8-bit contour banding in the refracted backdrop | this project |
 | rim light | directional 1px gradient glint ON the border (`::before`, `inset: -1px`, `corner-shape: inherit`, mask xor ring), bright at the lit corner, gone by mid-edge | LiquidLens `::before` ring |
 | a11y gate | `prefers-reduced-transparency: reduce` skips the lens | LiquidLens |
 
@@ -149,6 +165,20 @@ makes the fold read as glass. The rim-light ring initially sat at `inset: 0`
 (padding box) and traced a concentric arc 1px inside the border arc —
 visible as a split "double arc" at every corner in review; `inset: -1px`
 puts the 1px frame exactly on the border line, where light belongs.
+
+**The inner-card seam (断崖修复).** The bare Snell tail dies within a few
+pixels (compression ratio ≈ 0.19–0.24 px/px at t≈0.35–0.4) and then hits
+the hard `depth < RIM` branch — the distortion field has a perceptible
+END, which read (fold-on/off diff evidence) as the edge of a smaller card
+nested inside a bigger one, the 22px annulus between them being the
+"断层". Two measures close it: the quintic tail window above lands the
+profile at zero with zero slope (content-scale factor eases to 1 over the
+last ~11px — verified inner-boundary differential ≤ 0.13 px/px, t≥0.9
+≤ 0.001), and the 0.6px post-displacement melt buries the 8-bit field's
+residual single-level steps (max 0.141 px/px quantized, gone after melt at
+λ=1px gain 0.0001%). Narrowing the bezel or dropping the scale was
+considered and rejected: both just re-steepen every tail gradient ∝ 1/RIM
+and globally weaken the lens — painkillers, not the C1 fix.
 
 Delivery: a 0×0 absolutely-positioned SVG host (`#ol-fx-host`, aria-hidden,
 body-level) holds the filter and is mounted only while `material: liquid`;

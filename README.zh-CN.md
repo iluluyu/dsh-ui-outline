@@ -78,7 +78,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 
 - 设计 token（`--dsw-alias-*`）优先从宿主页面实时读取，官方首帧值兜底——主题切换、未来的 token 调整都自动跟上。
 - 轨道锚点、阅读带几何、预览交互对齐官方 TurnNavigator；刻度语言（等长静息 + 颜色高亮 + 波浪）与 14/30px 两档密度是本插件自己的取舍。
-- G2 圆角：18.4px 的 `corner-shape: superellipse(4)`——与官方 10px G1 圆弧对角线等效（`squircle` 关键字在 Chrome 152 里能解析却静默回落普通圆角，显式函数才真正生效）；不支持的浏览器回落官方 10px 圆角。
+- 18.4px 普通圆角——本卡事实上一贯渲染的样子。（G2 `corner-shape` 升级曾实测探索后放弃：`squircle` 关键字在 Chrome 152 静默回落普通圆；显式 `superellipse(4)` 在任何对齐尺度下都会坍缩感知半径；且 Chrome 默认 `corner-shape` 本就是 `superellipse(1.5)`，即用户熟悉的观感——详见 docs/theme-plan.md。）
 - 全程尊重系统的“减少动态效果”偏好。
 
 ## 致谢与许可
