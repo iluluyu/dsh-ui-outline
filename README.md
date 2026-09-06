@@ -78,7 +78,7 @@ The card is bilingual zh/en, tracking the app locale. The settings namespace is 
 
 - Design tokens (`--dsw-alias-*`) resolve live from the host page with the official first-paint fallbacks, so theme changes and future token updates are picked up automatically.
 - The rail anchor, reading-band geometry, and preview interaction follow the official TurnNavigator. The mark language (aligned rest + color highlight + wave) and the 14/30px density split are this plugin's own ergonomics.
-- G2 corners: `corner-shape: squircle` with an 18.4px radius — measured diagonal-equivalent to the official 10px G1 arc (Chrome's squircle measures as superellipse(4)). Browsers without support fall back to the official 10px.
+- G2 corners: `corner-shape: superellipse(4)` at an 18.4px radius — measured diagonal-equivalent to the official 10px G1 arc. (The `squircle` keyword parses but silently computes to a plain circular corner in Chrome 152 — the explicit function is what actually renders.) Browsers without support fall back to the official 10px.
 - Reduced motion is respected throughout.
 
 ## Credits & license

@@ -39,9 +39,13 @@
 | `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px border (`border-l2`) | `lv2` | transparent-to-milk glass per density |
 | `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | Chromium: SDF displacement lens (§2c) after a light blur, `saturate(1.5)`; others: `blur(2–8px) saturate(1.5)` fallback | 1px border (`border-l2`) | `lv2` + corner radial light | directionally lit, edge-refracting liquid glass |
 
-Corners are G2 where `corner-shape` exists: `squircle` at 18.4px, measured to cross
-the 45° diagonal where a 10px circle does (Chrome's squircle = superellipse(4):
-circle@100 → 29.3px vs squircle@100 → 15.9px, factor 1.84). Area-based matching
+Corners are G2 where `corner-shape` exists — written as `superellipse(4)`,
+NOT the `squircle` keyword: in Chrome 152 the keyword parses
+(`CSS.supports` → true) but computes to `superellipse(2)`, a plain circular
+corner — the G2 upgrade silently never rendered until this was caught by
+corner-arc fitting in review. The 18.4px radius is measured to cross the
+45° diagonal where a 10px circle does (superellipse(4): circle@100 →
+29.3px vs squircle@100 → 15.9px, factor 1.84). Area-based matching
 is deliberately avoided — it reads visually smaller. Unsupported engines keep
 the official 10px G1 radius via `@supports` fallback.
 
@@ -76,6 +80,12 @@ band between them.
    G-channel rows read green — physically impossible for glass and
    indistinguishable from colored outlines. The shipped lens uses a single
    neutral displacement; the fold itself sells the glass.
+5. *Soft cool/warm chroma inset washes* (LiquidLens-style `inset 1px 1px 6px
+   rgba(120,170,255,.12)` + warm opposite) — individually subtle, but
+   stacked over the refracted backdrop they amplified 8-bit color banding
+   into visible contour steps (the "色彩断层" report). Removed; the chromatic
+   character stays in the background gradients, which dither through the
+   veil instead of banding on top of the lens.
 
 The light enters from the corner facing the conversation text — top-left beside a
 right rail, top-right beside a left rail (the preview mirrors with the rail),
@@ -118,16 +128,27 @@ backdrop to bend.
 
 ## 2c. Edge refraction (the liquid lens)
 
-Liquid alone runs the backdrop through a real displacement lens, following
-the LiquidLens / liquid-glass technique: a per-pixel rounded-rect SDF is
-rasterized once to a 300×106 canvas (normals from central-difference
-gradients, R/G = 128 + 127·n over an 11px rim), cached as a data URL, and
-consumed by one `feDisplacementMap` (scale 18) after a light pre-blur
-(`std = max(0.5, blur/2)` — liquid stays clear, unlike frost). The result:
-content near the card edge is pulled inward and vertically compressed — the
-thick-lens fold — verified in review on both themes (bottom/right edges fold
-background text; edges over flat background show nothing, as real glass
-would).
+Liquid alone runs the backdrop through a real displacement lens — an
+independent re-implementation of the LiquidLens technique, now aligned to
+its measured parameters:
+
+| Parameter | Value | Source |
+|---|---|---|
+| rim profile | Snell: squircle height `f(u)=(1-(1-u)⁴)^¼` → slope → θ₁ → Snell (n=1.5) → `tan(θ₁-θ₂)`, 128 samples, normalized (peaks AT the edge, tapers inward) | LiquidLens `buildProfile` |
+| bezel width | 22px | LiquidLens default / Panel `depth` |
+| map | 600×212 canvas (2× supersampled), rounded-rect SDF, forward-difference normals, R/G = 128 ± 127·n·mag | tomagranate `dpr: 2` |
+| displacement | single `feDisplacementMap`, scale 18 | LiquidLens `refraction: 18` |
+| pre-blur | `std = clamp(blur/2, 0.5, 3)` — blur above ~4 erases the lens, so the slider's upper half stops adding frost while refraction is on | LiquidLens "keep LOW (0-4)" |
+| saturation | 1.8 (also in the CSS fallback) | LiquidLens `saturation: 1.8` |
+| rim light | directional 1px gradient glint ON the border (`::before`, `inset: -1px`, `corner-shape: inherit`, mask xor ring), bright at the lit corner, gone by mid-edge | LiquidLens `::before` ring |
+| a11y gate | `prefers-reduced-transparency: reduce` skips the lens | LiquidLens |
+
+A plain smoothstep magnitude was the first attempt — its flat top read as
+a smeared band, not a lens; the Snell profile's edge-hugging peak is what
+makes the fold read as glass. The rim-light ring initially sat at `inset: 0`
+(padding box) and traced a concentric arc 1px inside the border arc —
+visible as a split "double arc" at every corner in review; `inset: -1px`
+puts the 1px frame exactly on the border line, where light belongs.
 
 Delivery: a 0×0 absolutely-positioned SVG host (`#ol-fx-host`, aria-hidden,
 body-level) holds the filter and is mounted only while `material: liquid`;
