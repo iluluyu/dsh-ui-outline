@@ -1,21 +1,24 @@
 # Theme Plan: Liquid Glass / Frosted Glass Variants
 
-> **SHIPPED** (0.0.2, as the `material` setting; veil presets + dispersion pending
-> release). This plan's localStorage / WEB_SETTINGS_NAMESPACES constraint is
-> historical — rc.7+ opens settings namespaces to third-party plugins, so the
-> variants ship as one of three segmented options (`none | frost | liquid`) on
-> the settings card, applied to the per-turn preview card only (the resting
-> rail stays bare marks, matching the official TurnNavigator). **The liquid
-> finish is pure CSS**: frost's token base, a veil preset (see below),
-> and a directional corner light whose chromaticism lives in the
-> background layers — a warm-white lit corner and a faint cool far-corner
-> wash. Rim experiments are recorded below: an inset rim read as a double
-> border, a tight `0 0 1px` contact halo rasterized as a hidden dark line
-> in dark theme, and sub-pixel offset color fringes rasterized as detached
-> colored line segments with a hairline gap — all three are gone; the rim
-> stays a single neutral ring. The first SVG feDisplacementMap experiment leaked a 300×150 default-sized
-> host into the page, so it was removed rather than patched. `frost` is the
-> default. The original research note follows.
+> **SHIPPED** (0.0.2 as the `material` setting; the 0.0.3 round — folded-
+> inside SDF fix, crossing-axes preset ladder, neutral Fresnel finish — is
+> in-tree pending release). This plan's localStorage /
+> WEB_SETTINGS_NAMESPACES constraint is historical — rc.7+ opens settings
+> namespaces to third-party plugins, so the variants ship as one of three
+> segmented options (`none | frost | liquid`) on the settings card, applied
+> to the per-turn preview card only (the resting rail stays bare marks,
+> matching the official TurnNavigator). The liquid finish is CSS plus one
+> 0×0 SVG filter: frost's token base, a neutral cool-white corner sheen
+> with a faint cool far-corner wash, and — on Chromium — a real SDF
+> displacement lens at the rim (§2c). Rim experiments are recorded below:
+> an inset rim read as a double border, a tight `0 0 1px` contact halo
+> rasterized as a hidden dark line in dark theme, and sub-pixel offset
+> color fringes rasterized as detached colored line segments with a
+> hairline gap — all three are gone; the rim stays a single neutral ring
+> plus the Fresnel glint. The first SVG feDisplacementMap experiment
+> leaked a 300×150 default-sized host into the page, so it was removed
+> rather than patched. `frost` is the default. The original research note
+> follows.
 
 ## 1. Background
 
@@ -36,8 +39,8 @@
 | Variant | Card background | Backdrop | Border | Shadow / light | Feel |
 |---|---|---|---|---|---|
 | `none` | `var(--dsw-alias-bg-layer-1)` opaque | none | 1px border (`border-l2`) | `dsw-shadow-lv2` | official preview panel |
-| `frost` (default) | `bg-layer-1` veil preset: 48/60/72% airy→dense (dark 44/60/68) | `blur(12–16px) saturate(1.5)` (dark `1.4`) | 1px border (`border-l2`) | `lv2` | transparent-to-milk glass per density |
-| `liquid` | same veil system (52/65/74% light, 48/65/70% dark) plus a warm-white corner radial and a faint cool far-corner wash | Chromium: SDF displacement lens (§2c) after a light blur, `saturate(1.5)`; others: `blur(2–8px) saturate(1.5)` fallback | 1px border (`border-l2`) | `lv2` + corner radial light | directionally lit, edge-refracting liquid glass |
+| `frost` (default) | `bg-layer-1` veil, preset ladder t85/t70/t48 (veil = 100−t) | `blur(0–24px) saturate(1.5)` (dark `1.4`) | 1px border (`border-l2`) | `lv2` | airy → balanced → deep-fog glass |
+| `liquid` | same veil ladder + a neutral cool-white corner sheen and a faint cool far-corner wash | Chromium: SDF displacement lens (§2c) after a light blur, `saturate(1.6)`; others: `blur(0–24px) saturate(1.6)` fallback | 1px border (`border-l2`) | `lv2` + corner sheen + strict Fresnel rim glint | clear, edge-refracting liquid glass |
 
 Corners are plain `border-radius: 18.4px` circles — the radius the card has
 effectively rendered as all along. The whole corner-shape (G2) direction was
@@ -100,6 +103,16 @@ band between them.
    into visible contour steps (the "色彩断层" report). Removed; the chromatic
    character stays in the background gradients, which dither through the
    veil instead of banding on top of the lens.
+6. *Warm lit-corner radial* (`rgba(255,245,240,.30)`, 140×90) — carried over
+   from the original plan, rejected in the 0.0.3 taste review: over the
+   white veil it read as tea-stain yellowing, and against dsh's cool dark
+   palette it clashed ("半透明黄斑"). The sheen is now neutral cool-white,
+   smaller (100×50) and fainter (.16 light / .08 dark).
+7. *High-peak rim light with a far-corner re-brighten* (white .50 → .10 →
+   .06 bounce) — washed the near border white over light borders and read
+   as a neon filament over dark veils. Replaced by a strict one-way Fresnel
+   falloff: peak .30 (light) / .16 (dark), .06/.03 at 22%, fully transparent
+   by 45% of the way around — no back-corner bounce.
 
 The light enters from the corner facing the conversation text — top-left beside a
 right rail, top-right beside a left rail (the preview mirrors with the rail),
@@ -109,11 +122,39 @@ rules use their respective host tokens so a light host does not get a black
 
 ## 2b. Glass parameters (transparency + blur)
 
-Calibration anchor: Apple's iOS 26 `regular` material reverse-engineers to a
-**~72% veil over blur ≈5.4px, saturate ≈1.8** — readable, but on request the
-ladder leans translucent: the shipped presets top out at 2/3 veil and airy
-sits near a third. The card exposes, per glass material (served only while
-that material is selected — progressive disclosure):
+The ladder runs on **two crossing axes, not one sliding density dial**:
+
+- 清透/airy maximizes the TRANSPARENCY axis — see-through glass with a
+  gentle defocus;
+- 朦胧/misty maximizes the BLUR axis — real fog whose colors still glow
+  through (the veil is capped ≤45% so it can never collapse into the opaque
+  milk-wall the old t30 step ended at);
+- 标准/standard is the balance point. It anchored on Apple's iOS 26
+  `regular` material (reverse-engineered ≈ t72 / blur 5.4 / saturate 1.8)
+  through 0.0.3 — both review rounds scored that anchor above every shipped
+  preset — until the live user called it "too conservative" and the 0.0.4
+  taste ballot moved it airier to 80/6: the background's color temperature
+  shows through while text stays planted (the iOS anchor remains on the
+  reference row of the visual harness as a calibration point).
+
+Calibration history: the 0.0.2 ladder (70/4 · 50/12 · 30/16) slid ONE axis
+— transparency and blur moved together, and pixel measurement showed the
+frost steps nearly indistinguishable in light theme (adjacent-preset mean
+pixel diff ≈ 20/15) while 朦胧 at veil 70% measured within ~5 luminance
+points of the opaque `none` card — a milk wall, not glass. The crossing
+ladder measures 28–44 per adjacent step and keeps every step legibly glass.
+The 0.0.4 user-feedback round re-tuned frost toward beauty (standard
+70/7 → 80/6, misty 48/16 → 55/18 — the 18px blur dissolves the color
+bands into pure color-temperature glow; review tied 50/16 vs 55/18 and
+the Fresnel-strict 55/18 won on silkiness), lifted liquid·airy's blur
+floor 2 → 3 and its veil 15 → 20% for subtitle readability, and nudged
+frost·airy's defocus 4 → 3. Rounds 5–6 then closed the liquid·airy
+readability tail (75/4 — veil is the knob) and re-spaced liquid's
+standard to 65/6 after a patrol flagged airy/standard reading as one
+step when they differed by veil alone.
+
+The card exposes, per glass material (served only while that material is
+selected — progressive disclosure):
 
 - a four-chip row: 清透/Airy, 标准/Standard, 朦胧/Misty (each snaps BOTH the
   transparency and the blur; names only — percentages were shown on the
@@ -128,22 +169,30 @@ drag pause; preset clicks write immediately. One transparency serves both
 themes (the dark veil token is darker, so equal percentages dim more in
 dark — natural and intended). Background dimming is deliberately NOT a
 third knob: in light theme the white veil is the wash, in dark the dark
-veil is the dim — a brightness control would duplicate the veil's job.
+veil is the dim — a brightness control would duplicate the veil's job
+(and 0.0.3 removed the stray dark-liquid `brightness(.85)` on exactly
+this principle: it dimmed the freshly fixed edge lens for no benefit).
 
 | Preset | frost t / blur | liquid t / blur |
 |---|---|---|
-| airy 清透 | 70% / 4px | 70% / 2px |
-| standard 标准 | 50% / 12px | 50% / 5px |
-| misty 朦胧 | 30% / 16px | 30% / 8px |
+| airy 清透 | 85% / 3px | 75% / 4px |
+| standard 标准 | 80% / 6px | 65% / 6px |
+| misty 朦胧 | 55% / 18px | 50% / 10px |
 
-Airy frost is the user's own historical tune (70%/4px), restored as the
-aesthetics-first setting per request — the ladder reads as clean
-30/50/70 on the chips. 浓郁/Dense was renamed 朦胧/Misty: "dense/rich"
-read as a premium recommendation when it is in fact the MOST veiled,
-least readable step; the percentage labels carry the actual numbers.
-Liquid's blur ladder still sits far below frost's (2/5/8px): liquid is a
-lens, not heavy frost — the refraction needs comparatively sharp
-backdrop to bend.
+Liquid's airy floor took two user rounds to walk 85/2 → 80/3 → 75/4,
+and the measurable lesson is that the readable knob is the VEIL, not
+blur — the subtitle's interference is low-frequency color bands, which
+blur barely touches (the round-5 A/B: +1 blur was imperceptible, +5 veil
+was the structural fix). Standard then dropped to 65/6 (round-6 final):
+at 70/4 it differed from 75/4 airy by veil alone and the two chips read
+as one — the ladder needs both axes moving, the same lesson frost taught.
+Misty sits on the slider lattice (50/10) with a veil clearer than frost's
+misty — a dark veil with no frost grain to break it read as a flat gray
+slab (round-3 A/B), while t50 still lets the fog glow through. The preset
+id `dense` was renamed `misty` alongside — the label had already moved,
+"dense/rich" read as a premium recommendation when it is the most veiled
+step. Namespace defaults track the STANDARD preset of each material
+(80/6, 65/6).
 
 ## 2c. Edge refraction (the liquid lens)
 
@@ -154,14 +203,14 @@ its measured parameters:
 | Parameter | Value | Source |
 |---|---|---|
 | rim profile | Snell: squircle height `f(u)=(1-(1-u)⁴)^¼` → slope → θ₁ → Snell (n=1.5) → `tan(θ₁-θ₂)`, 128 samples, normalized (peaks AT the edge, tapers inward); from t=0.45 to 1 the value is multiplied by a quintic smootherstep tail window (f(1)=0, f'(1)=0, monotone) — see below | LiquidLens `buildProfile` + tail window |
-| bezel width | 22px | LiquidLens default / Panel `depth` |
+| bezel width | 16px | taste ballot (see below) |
 | map | 600×212 canvas (2× supersampled), rounded-rect SDF, forward-difference normals, R/G = 128 ± 127·n·mag | tomagranate `dpr: 2` |
-| displacement | single `feDisplacementMap`, scale 18 | LiquidLens `refraction: 18` |
+| displacement | single `feDisplacementMap`, scale 18 | LiquidLens `refraction: 18`; ballot-confirmed |
 | pre-blur | `std = clamp(blur/2, 0.5, 3)` — blur above ~4 erases the lens, so the slider's upper half stops adding frost while refraction is on | LiquidLens "keep LOW (0-4)" |
-| saturation | 1.55 (also in the CSS fallback) — 1.8 measured as a banding amplifier on our tint stack | LiquidLens `saturation: 1.8`, reduced |
+| saturation | 1.6, everywhere (CSS fallback and filter chain — they disagreed 1.55/1.8 through 0.0.2) | compromise between LiquidLens 1.8 and the 1.55 banding-reduction |
 | melt | `feGaussianBlur std 0.6` immediately AFTER the displacement — dissolves the 8-bit displacement field's quantization steps (λ=1px gain ≈ 0.0001%) without touching the fold (λ≥8px gain ≥ 80%) | this project |
-| dither | `feTurbulence 0.8` + ±1-level zero-centered arithmetic composite at chain end — breaks up 8-bit contour banding in the refracted backdrop | this project |
-| rim light | directional 1px gradient glint ON the border (`::before`, `inset: -1px`, `corner-shape: inherit`, mask xor ring), bright at the lit corner, gone by mid-edge | LiquidLens `::before` ring |
+| dither | `feTurbulence 0.8` + ±1-level zero-centered arithmetic composite at chain end — breaks up 8-bit contour banding in the refracted backdrop (the ballot's no-dither variant showed 2–5 visible contour steps) | this project |
+| rim light | strict one-way Fresnel 1px glint ON the border (`::before`, `inset: -1px`, `corner-shape: inherit`, mask xor ring): peak .30 light / .16 dark at the lit corner, .06/.03 at 22%, transparent by 45% — no back-corner bounce | ballot (D variant) |
 | a11y gate | `prefers-reduced-transparency: reduce` skips the lens | LiquidLens |
 
 A plain smoothstep magnitude was the first attempt — its flat top read as
@@ -171,19 +220,47 @@ makes the fold read as glass. The rim-light ring initially sat at `inset: 0`
 visible as a split "double arc" at every corner in review; `inset: -1px`
 puts the 1px frame exactly on the border line, where light belongs.
 
-**The inner-card seam (断崖修复).** The bare Snell tail dies within a few
+**The inner-seam tail work (historical, 0.0.2 — see the SDF bug below
+for why the seam existed at all).** The bare Snell tail dies within a few
 pixels (compression ratio ≈ 0.19–0.24 px/px at t≈0.35–0.4) and then hits
-the hard `depth < RIM` branch — the distortion field has a perceptible
+the hard `depth < RIM` branch — the distortion field had a perceptible
 END, which read (fold-on/off diff evidence) as the edge of a smaller card
-nested inside a bigger one, the 22px annulus between them being the
-"断层". Two measures close it: the quintic tail window above lands the
-profile at zero with zero slope (content-scale factor eases to 1 over the
-last ~11px — verified inner-boundary differential ≤ 0.13 px/px, t≥0.9
-≤ 0.001), and the 0.6px post-displacement melt buries the 8-bit field's
-residual single-level steps (max 0.141 px/px quantized, gone after melt at
-λ=1px gain 0.0001%). Narrowing the bezel or dropping the scale was
-considered and rejected: both just re-steepen every tail gradient ∝ 1/RIM
-and globally weaken the lens — painkillers, not the C1 fix.
+nested inside a bigger one. Two measures closed it: the quintic tail
+window lands the profile at zero with zero slope (content-scale factor
+eases to 1 over the last ~40% of the band — verified inner-boundary
+differential ≤ 0.13 px/px, t≥0.9 ≤ 0.001), and the 0.6px post-displacement
+melt buries the 8-bit field's residual single-level steps. Both survive
+the SDF fix — they now smooth the terminus of a band that actually hugs
+the edge.
+
+**The folded-inside SDF bug (0.0.3, the real 断层 root cause).** Through
+all of 0.0.2 the straight-edge branch of the map's rounded-rect SDF
+omitted the final `− R` of the IQ formula (while the superellipse corner
+branch was exact) — every straight-edge distance was offset +R, so the
+whole fold band sat 18.4px INSIDE the card: the visible rim stayed flat
+neutral gray while an invisible warp lived under the text, and the corner
+arcs bent against dead-straight edges. Decoding the generated map showed
+the displacement signal only at 20–32px depth (G-channel dip to 21 at the
+true edge = none). The historical "nested-card annulus seam" above was
+this bug's shadow — the misplaced band's terminus read as an inner card
+edge, and the tail-window/melt work masked its end instead of exposing
+that the band itself was in the wrong place. Fix: one character class —
+`… + Math.max(qy, 0) − R` — after which the fold peaks AT the edge
+(G ≈ 21 at depth 0) and the lens finally renders where eyes look for it.
+(Cross-validated: pixel-decode measurement, an independent full report,
+and an A/B with the displacement baked at scale 0 vs 18 into the initial
+DOM — mutating a live filter's scale does not reliably re-render a
+CSS-referenced backdrop filter, so such A/Bs must come from fresh loads.)
+
+**The optics ballot.** With the fold finally on the edge, three tunings —
+A RIM14/SCALE10, B RIM16/SCALE18, C RIM22/SCALE26 — went to a blind taste
+review (3× corner zooms, light + dark): A lost all materiality, C
+compressed corner strokes into jelly and moiré'd grid lines in dark, B
+won as "perceptibly bent, never jelly" — text strokes entering the rim
+bend 1–2px with structure intact, and the dark-theme fold reads as a soft
+caustic contour light. The same review moved the finish to a neutral
+cool-white sheen + strict Fresnel rim (both above) and kept the dither on
+(its no-dither variant grew visible 8-bit contour steps).
 
 Delivery: a 0×0 absolutely-positioned SVG host (`#ol-fx-host`, aria-hidden,
 body-level) holds the filter and is mounted only while `material: liquid`;

@@ -2,18 +2,18 @@
 
 <h1><img src="docs/img/logo-marks.svg" width="26" alt="" valign="-4"> dsh-ui-outline</h1>
 
-> 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）web 端打造的轮次导航轨道——沿用官方 TurnNavigator 的设计语言，同时把官方没给你的选择权交还给你。
+> 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）web 端打造的轮次导航轨道——沿用官方 TurnNavigator 的设计语言，把官方没给你的选择权交还给你。
 
 <p align="center">
-  <img src="docs/img/rail-hero.svg" width="760" alt="会话旁的轨道：悬停时刻度伸至全长、带动邻近波浪，玻璃预览卡展示该轮的提问与回答">
+  <img src="docs/img/rail-hero.svg" width="760" alt="会话旁的轨道：悬停时刻度伸至全长、带动邻近波浪，液态玻璃预览卡展示该轮的提问与回答">
 </p>
 
 ## 为什么
 
 - **与官方同源。** 轨道贴合会话列边缘（打开 details 面板也不冲突），垂直居中于当前阅读带，列宽不足 900px 时自动隐藏——这些行为与官方导航逐项一致。颜色、圆角、阴影、动效全部实时读取宿主设计 token。
-- **一套会呼吸的刻度。** 平时所有刻度等长对齐，当前轮只用颜色点亮；指针扫过时目标刻度伸至全长，邻近刻度随之起伏。两种密度、同一套语言——`compact` 紧凑（14px 间距，整段历史一屏可见）或 `loose` 宽松（每轮独占 30px 行高）。
+- **一套会呼吸的刻度。** 静息时刻度等长对齐，当前轮只用颜色点亮；指针扫过时目标刻度伸至全长，邻近刻度随之起伏。两种密度、同一套语言——`compact` 紧凑（14px 间距，整段历史一屏可见）或 `loose` 宽松（每轮独占 30px 行高）。
 - **点击不挑位置。** 44px 宽的点击条上，点下即吸附到最近的可见轮次——不必瞄准那根 2px 细线。按住拖动即可擦洗整段会话；跳转落点轻闪一下即止，快速擦洗不留残影。
-- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——光从朝向会话的角落斜入（暖白角光、远角一抹冷调）；Chromium 上液态玻璃的背景还会经过一道真实位移透镜（SDF 法线图 + `feDisplacementMap`），卡片边缘处的背景内容会被弯折拉入玻璃——厚透镜折叠，其他引擎回落普通模糊。两种玻璃各有清透/标准/浓郁三档预设，还可自定义透明度与虚化半径。每种材质都只有一条描边线：真实 1px border 与玻璃面严丝合缝（不再用外环投影，杜绝缝隙）。绝不撑破页面。
+- **玻璃做足了细节。** 预览卡三种质感任选：`none`（官方不透明 token）、`frost` 毛玻璃（默认）、`liquid` 液态玻璃——一枚中性冷白光斑从朝向会话的角落斜入，菲涅尔细亮线勾住边缘；Chromium 上液态玻璃的背景还会经过一道真实位移透镜（SDF 法线图 + `feDisplacementMap`），卡片边缘处的背景内容会被弯折拉入玻璃——厚透镜折叠，其他引擎回落普通模糊。两种玻璃各有清透/标准/朦胧三档预设，还可自定义透明度与虚化半径。每种材质都只有一条描边线：真实 1px border 与玻璃面严丝合缝（不再用外环投影，杜绝缝隙）。绝不撑破页面。
 - **设置是一等公民。** 位于 *设置 → 插件 → 插件配置*，写入宿主设置文档——换浏览器、换机器，偏好都在。不走 localStorage。
 - **开销低到可以忽略。** 滚动每帧只读一次矩形、做一次二分查找；动画全部走合成器；指针移动合帧处理；大纲静止时，阅读期间零渲染。
 - **永不双轨。** 本轨道在场时官方导航自动退位；轮次不足 2（官方最小值）时本轨道让位、官方导航回归。
@@ -36,7 +36,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline
 dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 ```
 
-两种方式效果相同，更新/卸载命令一致：更新 `dsh plugin --profile web update dsh-ui-outline`，卸载 `dsh plugin --profile web remove dsh-ui-outline`。重启 `dsh web` 后刷新页面即可生效。
+两种方式效果完全一致，更新/卸载命令相同：更新 `dsh plugin --profile web update dsh-ui-outline`，卸载 `dsh plugin --profile web remove dsh-ui-outline`。重启 `dsh web` 后刷新页面即可生效。
 
 ## 设置
 
@@ -54,7 +54,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 </p>
 
 <p align="center">
-  <img src="docs/img/materials.svg" width="760" alt="预览卡三种材质：无（官方不透明 token）、毛玻璃（模糊透底）、液态玻璃（角光与冷暖色散）">
+  <img src="docs/img/materials.svg" width="760" alt="预览卡三种材质：无（官方不透明 token）、毛玻璃（面纱+模糊）、液态玻璃（中性角光、菲涅尔边缘光与边缘透镜）">
 
 <p align="center">
   <img src="docs/img/mark-language.svg" width="760" alt="紧凑为 14px 间距的等长刻度；宽松为每轮 30px 行高，同一套刻度语言">

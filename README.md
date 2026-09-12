@@ -2,18 +2,18 @@
 
 <h1><img src="docs/img/logo-marks.svg" width="26" alt="" valign="-4"> dsh-ui-outline</h1>
 
-> The turn rail for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) web — the official TurnNavigator design language, plus the choices the official rail doesn't give you.
+> A turn rail for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) web — the official TurnNavigator design language, plus the choices the official rail doesn't give you.
 
 <p align="center">
-  <img src="docs/img/rail-hero.svg" width="760" alt="The rail beside the conversation: a hovered mark stretches full-length with a neighbor wave, and a frosted preview card shows that turn's prompt and response">
+  <img src="docs/img/rail-hero.svg" width="760" alt="The rail beside the conversation: a hovered mark stretches full-length with a neighbor wave, and a liquid-glass preview card shows that turn's prompt and response">
 </p>
 
 ## Why
 
 - **Official DNA.** The rail hugs the conversation column edge (the details panel never collides), centers on the live reading band, and hides below a 900px column — exactly like the shipped navigator. Every color, radius, shadow, and motion curve resolves live from the host's design tokens.
-- **A living mark language.** Idle ticks rest perfectly aligned; the current turn is highlighted by color alone; hovering sweeps a neighbor wave. One language, two densities — `compact` (14px pitch, whole history in view) or `loose` (one real 30px row per turn).
+- **A living mark language.** Idle ticks rest in perfect alignment; the current turn is highlighted by color alone; hovering sweeps a neighbor wave. One language, two densities — `compact` (14px pitch, whole history in view) or `loose` (one real 30px row per turn).
 - **Forgiving input.** The strip is 44px wide and snaps every click to the nearest visible turn — the 2px line is never the target. Drag to scrub the whole conversation; a quiet landing flash marks click-arrivals, while fast scrubs stay animation-free.
-- **Glass, done carefully.** The per-turn preview card in three finishes: `none` (official opaque tokens), `frost` (default), or `liquid` with a soft light entering from the conversation-facing corner, a warm lit corner and a faint cool far-corner wash. On Chromium, liquid runs the backdrop through a real displacement lens (an SDF normal map consumed by `feDisplacementMap`), so content near the card edge bends into the glass — the thick-lens fold; other engines keep a plain blur fallback. Each finish keeps exactly one rim line: a real 1px border flush against the glass (no ring-shadow gap). Each glass ships three presets — airy, standard, dense — plus custom transparency and blur-radius sliders. Never overflows the page.
+- **Glass, done carefully.** The per-turn preview card in three finishes: `none` (official opaque tokens), `frost` (default), or `liquid`, where a neutral glint enters from the conversation-facing corner and a Fresnel-thin rim catches the edge. On Chromium, liquid runs the backdrop through a real displacement lens (an SDF normal map consumed by `feDisplacementMap`), so content near the card edge bends into the glass — the thick-lens fold; other engines keep a plain blur fallback. Each finish keeps exactly one rim line: a real 1px border flush against the glass (no ring-shadow gap). Each glass ships three presets — airy (transparency axis) · standard (the balance point) · misty (blur axis) — plus custom transparency and blur-radius sliders. Never overflows the page.
 - **First-class settings.** Lives in *Settings → Plugins → Plugin configuration*, persisted in the host's settings document — preferences follow you across browsers and machines. Not localStorage.
 - **Cheaper than a shadow.** Scrolling costs one rect read plus a binary search per frame; every animation is compositor-only; pointer moves coalesce to one job per frame; a settled outline re-renders nothing while you read.
 - **Never two rails.** While this rail is up, the official one stands down — and below two turns (the official minimum) this one stands down instead.
@@ -36,7 +36,7 @@ dsh plugin --profile web add github:iluluyu/dsh-ui-outline
 dsh plugin --profile web add github:iluluyu/dsh-ui-outline#v0.0.2
 ```
 
-Both paths behave the same; update with `dsh plugin --profile web update dsh-ui-outline`, remove with `dsh plugin --profile web remove dsh-ui-outline`. Restart `dsh web` and reload the page to activate.
+Both paths behave identically; update with `dsh plugin --profile web update dsh-ui-outline`, remove with `dsh plugin --profile web remove dsh-ui-outline`. Restart `dsh web` and reload the page to activate.
 
 ## Settings
 
@@ -54,7 +54,7 @@ All settings apply live and persist in the host settings document:
 </p>
 
 <p align="center">
-  <img src="docs/img/materials.svg" width="760" alt="Preview card materials: none (opaque official token), frost (blurred translucent), liquid (corner light with a warm/cool chromatic wash)">
+  <img src="docs/img/materials.svg" width="760" alt="Preview card materials: none (opaque official token), frost (veil + blur), liquid (neutral corner glint, Fresnel rim, and the edge lens)">
 
 <p align="center">
   <img src="docs/img/mark-language.svg" width="760" alt="Compact uses a 14px pitch; loose uses one 30px row per turn; the same mark language in both">

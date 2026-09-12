@@ -33,37 +33,63 @@
   </style>
 
   <defs>
-    <!-- conversation-facing corner light: top-left for side=right -->
-    <radialGradient id="lightR" cx="16%" cy="12%" r="80%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.5)"/>
-      <stop offset="55%" stop-color="rgba(255,255,255,.12)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    <!-- liquid corner glint (real client params, scaled): a small neutral
+         breath at the conversation-facing corner — top-left for side=right -->
+    <radialGradient id="lightR" gradientUnits="objectBoundingBox" cx=".17" cy=".18" r=".75">
+      <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.045)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
-    <radialGradient id="lightRD" cx="16%" cy="12%" r="80%">
-      <stop offset="0%" stop-color="rgba(249,250,251,.14)"/>
-      <stop offset="55%" stop-color="rgba(249,250,251,.05)"/>
-      <stop offset="100%" stop-color="rgba(249,250,251,0)"/>
+    <radialGradient id="lightRD" gradientUnits="objectBoundingBox" cx=".17" cy=".18" r=".75">
+      <stop offset="0%" stop-color="rgba(255,255,255,.09)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.025)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
     <!-- mirrored: top-right for side=left -->
-    <radialGradient id="lightL" cx="84%" cy="12%" r="80%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.5)"/>
-      <stop offset="55%" stop-color="rgba(255,255,255,.12)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    <radialGradient id="lightL" gradientUnits="objectBoundingBox" cx=".83" cy=".18" r=".75">
+      <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.045)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
-    <radialGradient id="lightLD" cx="84%" cy="12%" r="80%">
-      <stop offset="0%" stop-color="rgba(249,250,251,.14)"/>
-      <stop offset="55%" stop-color="rgba(249,250,251,.05)"/>
-      <stop offset="100%" stop-color="rgba(249,250,251,0)"/>
+    <radialGradient id="lightLD" gradientUnits="objectBoundingBox" cx=".83" cy=".18" r=".75">
+      <stop offset="0%" stop-color="rgba(255,255,255,.09)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.025)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
+    <!-- one-way Fresnel rim from the same corner -->
+    <linearGradient id="rimR" x1="0" y1="0" x2=".74" y2=".67">
+      <stop offset="0%" stop-color="rgba(255,255,255,.8)"/>
+      <stop offset="22%" stop-color="rgba(255,255,255,.17)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="rimRD" x1="0" y1="0" x2=".74" y2=".67">
+      <stop offset="0%" stop-color="rgba(249,250,251,.42)"/>
+      <stop offset="22%" stop-color="rgba(249,250,251,.08)"/>
+      <stop offset="45%" stop-color="rgba(249,250,251,0)"/>
+    </linearGradient>
+    <linearGradient id="rimL" x1="1" y1="0" x2=".26" y2=".67">
+      <stop offset="0%" stop-color="rgba(255,255,255,.8)"/>
+      <stop offset="22%" stop-color="rgba(255,255,255,.17)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="rimLD" x1="1" y1="0" x2=".26" y2=".67">
+      <stop offset="0%" stop-color="rgba(249,250,251,.42)"/>
+      <stop offset="22%" stop-color="rgba(249,250,251,.08)"/>
+      <stop offset="45%" stop-color="rgba(249,250,251,0)"/>
+    </linearGradient>
     <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,.14)" flood-opacity="1"/>
     </filter>
     <style>
       .lightR { fill: url(#lightR); }
       .lightL { fill: url(#lightL); }
+      .rimR { stroke: url(#rimR); fill: none; }
+      .rimL { stroke: url(#rimL); fill: none; }
       @media (prefers-color-scheme: dark) {
         .lightR { fill: url(#lightRD); }
         .lightL { fill: url(#lightLD); }
+        .rimR { stroke: url(#rimRD); }
+        .rimL { stroke: url(#rimLD); }
       }
     </style>
   </defs>
@@ -72,7 +98,7 @@
 
   <!-- mirror axis -->
   <line class="axis" x1="380" y1="48" x2="380" y2="222"/>
-  <text x="380" y="36" text-anchor="middle" class="cap">⇄ mirror · 镜像</text>
+  <text x="380" y="36" text-anchor="middle" class="cap">↔ mirror · 镜像</text>
 
   <!-- ── scene A: side=right ─────────────────────────────────────── -->
   <text x="60" y="40" class="capInk">side · right</text>
@@ -86,11 +112,12 @@
   <rect class="markIdle" x="314" y="166" width="14" height="2" rx="1"/>
   <rect class="markIdle" x="322" y="196" width="6"  height="2" rx="1"/>
 
-  <!-- card opens left; light from top-left -->
+  <!-- card opens left; glint + rim from top-left -->
   <g filter="url(#cardShadow)">
     <rect class="card" x="178" y="104" width="120" height="66" rx="14"/>
     <rect class="lightR" x="178" y="104" width="120" height="66" rx="14"/>
     <rect class="cardRing" x="178.5" y="104.5" width="119" height="65" rx="13.5" stroke-width="1"/>
+    <rect class="rimR" x="178.5" y="104.5" width="119" height="65" rx="13.5" stroke-width="1.2"/>
     <rect class="ink" x="192" y="118" width="78" height="7" rx="3.5"/>
     <rect class="ink" x="192" y="130" width="56" height="7" rx="3.5"/>
     <rect class="sub" x="192" y="146" width="88" height="6" rx="3"/>
@@ -108,11 +135,12 @@
   <rect class="markIdle" x="432" y="166" width="14" height="2" rx="1"/>
   <rect class="markIdle" x="432" y="196" width="6"  height="2" rx="1"/>
 
-  <!-- card opens right; light from top-right -->
+  <!-- card opens right; glint + rim from top-right -->
   <g filter="url(#cardShadow)">
     <rect class="card" x="462" y="104" width="120" height="66" rx="14"/>
     <rect class="lightL" x="462" y="104" width="120" height="66" rx="14"/>
     <rect class="cardRing" x="462.5" y="104.5" width="119" height="65" rx="13.5" stroke-width="1"/>
+    <rect class="rimL" x="462.5" y="104.5" width="119" height="65" rx="13.5" stroke-width="1.2"/>
     <rect class="ink" x="476" y="118" width="78" height="7" rx="3.5"/>
     <rect class="ink" x="476" y="130" width="56" height="7" rx="3.5"/>
     <rect class="sub" x="476" y="146" width="88" height="6" rx="3"/>
