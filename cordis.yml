@@ -12,7 +12,7 @@
         side: right
         material: frost
         layout: compact
-        frostTransparency: 50
-        frostBlur: 12
-        liquidTransparency: 50
-        liquidBlur: 5
+        frostTransparency: 80
+        frostBlur: 6
+        liquidTransparency: 65
+        liquidBlur: 6
