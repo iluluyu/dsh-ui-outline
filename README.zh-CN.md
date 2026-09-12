@@ -5,7 +5,7 @@
 > 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）web 端打造的轮次导航轨道——沿用官方 TurnNavigator 的设计语言，把官方没给你的选择权交还给你。
 
 <p align="center">
-  <img src="docs/img/rail-hero.svg" width="760" alt="会话旁的轨道：悬停时刻度伸至全长、带动邻近波浪，液态玻璃预览卡展示该轮的提问与回答">
+  <img src="docs/img/rail-hero.svg?v=3" width="760" alt="会话旁的轨道：悬停时刻度伸至全长、带动邻近波浪，液态玻璃预览卡展示该轮的提问与回答">
 </p>
 
 ## 为什么

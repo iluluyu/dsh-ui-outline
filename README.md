@@ -5,7 +5,7 @@
 > A turn rail for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) web — the official TurnNavigator design language, plus the choices the official rail doesn't give you.
 
 <p align="center">
-  <img src="docs/img/rail-hero.svg" width="760" alt="The rail beside the conversation: a hovered mark stretches full-length with a neighbor wave, and a liquid-glass preview card shows that turn's prompt and response">
+  <img src="docs/img/rail-hero.svg?v=3" width="760" alt="The rail beside the conversation: a hovered mark stretches full-length with a neighbor wave, and a liquid-glass preview card shows that turn's prompt and response">
 </p>
 
 ## Why
