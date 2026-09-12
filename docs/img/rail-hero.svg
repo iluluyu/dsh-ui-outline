@@ -1,67 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" role="img" aria-label="Turn outline rail: hover wave and per-turn liquid-glass preview card">
-  <!-- Theme-adaptive palette: official dsw tokens as measured in dsh web (light first-paint fallbacks, dark overrides).
-       Geometry matches the shipped rail: the 44px strip sits 12px inside the conversation column edge;
-       marks hug that edge and grow toward the text. The wave highlights the hovered mark and its
-       neighbors (hot 20px, near 14px, far 8px) via a stacked hot overlay animated on opacity.
-       Conversation turns render dsh-style: left-aligned prompt headings over response lines,
-       one turn per mark, six turns for six marks. SMIL loop: hold on turn 2, sweep to turn 3, rest, return. -->
+  <!-- Redesigned hero. Composition: the conversation column fills the frame
+       (568px wide) with turn-grouped bars; the rail hugs its right edge with
+       a legible mark ladder; the liquid card floats on a visible lens blur.
+       Real lighting params from lib/client.js, illustratively strengthened:
+       neutral corner glint, one-way Fresnel rim, thick-lens fold band. -->
   <style>
-    .scene { fill: #f7f8fa; stroke: rgba(0, 0, 0, .06); }
+    .scene { fill: #edf0f3; stroke: rgba(0, 0, 0, .08); }
     .ink   { fill: #0f1115; }
-    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .07); }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .09); }
     .prompt  { fill: rgba(15, 17, 21, .46); }
-    .resp    { fill: rgba(97, 102, 107, .22); }
-    .respDim { fill: rgba(97, 102, 107, .13); }
-    .card    { fill: rgba(255, 255, 255, .35); }
-    .cardSub { fill: rgba(15, 17, 21, .58); }
-    .cardRing { stroke: rgba(0, 0, 0, .10); fill: none; }
+    .resp    { fill: rgba(97, 102, 107, .24); }
+    .respDim { fill: rgba(97, 102, 107, .14); }
+    .card    { fill: rgba(255, 255, 255, .28); }
+    .cardSub { fill: rgba(15, 17, 21, .55); }
+    .cardRing { stroke: rgba(0, 0, 0, .14); fill: none; }
     .glint   { fill: url(#heroGlint); }
     .sheen   { fill: url(#heroSheen); }
     .rim     { stroke: url(#heroRim); }
-    .foldBar { fill: rgba(97,102,107,.85); } .foldBar2 { fill: rgba(97,102,107,.5); }
+    .foldBar { fill: rgba(97,102,107,.62); } .foldBar2 { fill: rgba(97,102,107,.38); }
     .markIdle  { fill: rgba(129, 133, 140, .40); }
-    .markOn    { fill: rgba(15, 17, 21, .62); }
-    .markHot   { fill: #0f1115; }
+    .markOn    { fill: #0f1115; }
+    .markHot   { fill: rgba(15, 17, 21, .70); }
     @media (prefers-color-scheme: dark) {
-      .scene { fill: #17181a; stroke: rgba(255, 255, 255, .07); }
+      .scene { fill: #101113; stroke: rgba(255, 255, 255, .09); }
       .ink   { fill: #f9fafb; }
-      .surface { fill: #1d1e20; stroke: rgba(255, 255, 255, .08); }
+      .surface { fill: #1c1d1f; stroke: rgba(255, 255, 255, .10); }
       .prompt  { fill: rgba(249, 250, 251, .44); }
-      .resp    { fill: rgba(166, 171, 178, .20); }
-      .respDim { fill: rgba(166, 171, 178, .12); }
-      .card    { fill: rgba(35, 35, 36, .35); }
-      .cardSub { fill: rgba(249, 250, 251, .60); }
-      .cardRing { stroke: rgba(255, 255, 255, .14); fill: none; }
+      .resp    { fill: rgba(166, 171, 178, .24); }
+      .respDim { fill: rgba(166, 171, 178, .14); }
+      .card    { fill: rgba(35, 35, 36, .32); }
+      .cardSub { fill: rgba(249, 250, 251, .58); }
+      .cardRing { stroke: rgba(255, 255, 255, .15); fill: none; }
       .glint   { fill: url(#heroGlintD); }
-      .sheen   { fill: url(#heroSheen); }
       .rim     { stroke: url(#heroRimD); }
       .foldBar { fill: rgba(166,171,178,.85); } .foldBar2 { fill: rgba(166,171,178,.5); }
-      .markIdle  { fill: rgba(173, 178, 184, .40); }
-      .markOn    { fill: rgba(249, 250, 251, .62); }
-      .markHot   { fill: #f9fafb; }
+      .markIdle  { fill: rgba(173, 178, 184, .38); }
+      .markOn    { fill: #f9fafb; }
+      .markHot   { fill: #d9dde2; }
     }
     text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .linkA  { fill: #3B7CFF; }
+    .markOnA { fill: #3B7CFF; }
+    @media (prefers-color-scheme: dark) {
+      .linkA  { fill: #6EA8FF; }
+      .markOnA { fill: #6EA8FF; }
+    }
   </style>
 
   <defs>
-    <!-- liquid card lighting, real params from lib/client.js: neutral corner
-         glint (100x50 @ 26,14) entering from the conversation-facing corner,
-         132deg sheen falling to a faint cool wash, one-way Fresnel rim on
-         the border, and the thick-lens fold band at the left edge -->
-    <radialGradient id="heroGlint" gradientUnits="userSpaceOnUse" cx="244" cy="91" r="80" gradientTransform="scale(1,0.5)">
-      <stop offset="0%" stop-color="rgba(255,255,255,.42)"/>
-      <stop offset="45%" stop-color="rgba(255,255,255,.08)"/>
+    <radialGradient id="heroGlint" gradientUnits="userSpaceOnUse" cx="330" cy="110" r="70" gradientTransform="scale(1,0.5)">
+      <stop offset="0%" stop-color="rgba(255,255,255,.34)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.09)"/>
       <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
-    <radialGradient id="heroGlintD" gradientUnits="userSpaceOnUse" cx="244" cy="91" r="80" gradientTransform="scale(1,0.5)">
-      <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
-      <stop offset="45%" stop-color="rgba(255,255,255,.04)"/>
+    <radialGradient id="heroGlintD" gradientUnits="userSpaceOnUse" cx="330" cy="110" r="70" gradientTransform="scale(1,0.5)">
+      <stop offset="0%" stop-color="rgba(255,255,255,.12)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.05)"/>
       <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
     <linearGradient id="heroSheen" x1="0" y1="0" x2=".74" y2=".67">
-      <stop offset="0%" stop-color="rgba(255,255,255,.10)"/>
+      <stop offset="0%" stop-color="rgba(255,255,255,.12)"/>
       <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="100%" stop-color="rgba(120,170,255,.04)"/>
+      <stop offset="100%" stop-color="rgba(120,170,255,.06)"/>
     </linearGradient>
     <linearGradient id="heroRim" x1="0" y1="0" x2=".74" y2=".67">
       <stop offset="0%" stop-color="rgba(255,255,255,1)"/>
@@ -77,48 +77,46 @@
       <stop offset="0%" stop-color="rgba(255,255,255,.34)"/>
       <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
     </linearGradient>
-    <filter id="heroLens"><feGaussianBlur stdDeviation="6"/><feColorMatrix type="saturate" values="1.6"/></filter>
+    <filter id="heroLens"><feGaussianBlur stdDeviation="8"/><feColorMatrix type="saturate" values="1.6"/></filter>
     <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,.14)" flood-opacity="1"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,.18)" flood-opacity="1"/>
     </filter>
-    <clipPath id="clipCard"><rect x="218" y="77" width="300" height="106" rx="18"/></clipPath>
+    <filter id="markGlow" x="-120%" y="-400%" width="340%" height="900%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.4" flood-color="#60A5FA" flood-opacity=".75"/>
+    </filter>
+    <filter id="markGlowL" x="-120%" y="-400%" width="340%" height="900%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2563EB" flood-opacity=".55"/>
+    </filter>
+    <clipPath id="clipCard"><rect x="304" y="96" width="280" height="104" rx="18"/></clipPath>
   </defs>
 
-  <!-- app surface -->
   <rect class="scene" x="1" y="1" width="758" height="318" rx="14"/>
 
-  <!-- conversation column: document-style turns, one per mark, centered block -->
-  <rect class="surface" x="60" y="24" width="500" height="272" rx="12"/>
+  <!-- conversation column, turn-grouped bars -->
+  <rect class="surface" x="56" y="24" width="640" height="272" rx="12"/>
+  <g>
+    <rect class="prompt" x="104" y="48" width="200" height="8" rx="4"/>
+    <rect class="resp" x="104" y="60" width="320" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="70" width="240" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="90" width="170" height="8" rx="4"/>
+    <rect class="resp" x="104" y="102" width="300" height="6" rx="3"/>
+    <rect class="prompt" x="104" y="132" width="240" height="8" rx="4"/>
+    <rect class="resp" x="104" y="144" width="340" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="154" width="220" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="174" width="190" height="8" rx="4"/>
+    <rect class="resp" x="104" y="186" width="310" height="6" rx="3"/>
+    <rect class="prompt" x="104" y="216" width="220" height="8" rx="4"/>
+    <rect class="resp" x="104" y="228" width="280" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="238" width="180" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="258" width="160" height="8" rx="4"/>
+    <rect class="resp" x="104" y="270" width="230" height="6" rx="3"/>
+  </g>
 
-  <!-- turn 1 (mark y=69) -->
-  <rect class="prompt" x="120" y="59" width="210" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="71" width="330" height="6" rx="3"/>
-  <rect class="respDim" x="120" y="81" width="250" height="6" rx="3"/>
-  <!-- turn 2 (mark y=99) -->
-  <rect class="prompt" x="120" y="89" width="180" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="101" width="300" height="6" rx="3"/>
-  <!-- turn 3 (mark y=129), hovered first -->
-  <rect class="prompt" x="120" y="119" width="250" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="131" width="340" height="6" rx="3"/>
-  <rect class="respDim" x="120" y="141" width="230" height="6" rx="3"/>
-  <!-- turn 4 (mark y=159) -->
-  <rect class="prompt" x="120" y="149" width="200" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="161" width="310" height="6" rx="3"/>
-  <!-- turn 5 (mark y=189) -->
-  <rect class="prompt" x="120" y="179" width="230" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="191" width="280" height="6" rx="3"/>
-  <rect class="respDim" x="120" y="201" width="190" height="6" rx="3"/>
-  <!-- turn 6 (mark y=219), current: response still streaming -->
-  <rect class="prompt" x="120" y="209" width="170" height="8" rx="4"/>
-  <rect class="resp"   x="120" y="221" width="220" height="6" rx="3"/>
-
-  <!-- preview card: liquid glass, 10px gap from the 20px hot mark. The
-       backdrop under it runs through the lens chain (blur + saturate), the
-       veil rides above, and the lighting layers land last: glint, sheen,
-       fold band, Fresnel rim. Slides with the wave below. -->
+  <!-- liquid-glass preview card: floats left of the rail with 10px gap from
+       the hot mark; backdrop visibly bent through the lens chain -->
   <g id="card">
     <animateTransform attributeName="transform" type="translate"
-      values="0 0; 0 0; 0 30; 0 30; 0 30; 0 30; 0 0"
+      values="0 0; 0 0; 0 38; 0 38; 0 38; 0 38; 0 0"
       keyTimes="0; .34; .42; .66; .74; .90; 1" dur="4.2s" repeatCount="indefinite"/>
     <animate attributeName="opacity"
       values="1; 1; 1; 1; 0; 0; 1"
@@ -126,88 +124,66 @@
     <g filter="url(#cardShadow)">
       <g clip-path="url(#clipCard)">
         <g filter="url(#heroLens)">
-          <rect class="prompt" x="120" y="89" width="180" height="8" rx="4"/>
-          <rect class="resp"   x="120" y="101" width="300" height="6" rx="3"/>
-          <rect class="prompt" x="120" y="119" width="250" height="8" rx="4"/>
-          <rect class="resp"   x="120" y="131" width="340" height="6" rx="3"/>
-          <rect class="respDim" x="120" y="141" width="230" height="6" rx="3"/>
+          <rect class="prompt" x="104" y="90" width="170" height="8" rx="4"/>
+          <rect class="resp" x="104" y="102" width="300" height="6" rx="3"/>
+          <rect class="prompt" x="104" y="132" width="240" height="8" rx="4"/>
+          <rect class="resp" x="104" y="144" width="340" height="6" rx="3"/>
+          <rect class="respDim" x="104" y="154" width="220" height="5" rx="2.5"/>
+          <rect class="prompt" x="104" y="174" width="190" height="8" rx="4"/>
+          <rect class="resp" x="104" y="186" width="310" height="6" rx="3"/>
         </g>
-        <rect class="card" x="218" y="77" width="300" height="106" rx="18"/>
-        <!-- thick-lens fold: backdrop bars squeezed into the left band -->
-        <rect x="218" y="77" width="26" height="106" fill="url(#heroFold)"/>
-        <rect class="foldBar"  x="218.5" y="92"  width="24" height="3.6" rx="1.8"/>
-        <rect class="foldBar2" x="218.5" y="97.8"  width="22" height="2.4" rx="1.2"/>
-        <rect class="foldBar"  x="218.5" y="126" width="24" height="3.6" rx="1.8"/>
-        <rect class="foldBar2" x="218.5" y="131.8" width="22" height="2.4" rx="1.2"/>
-        <rect class="foldBar"  x="218.5" y="160" width="24" height="3.6" rx="1.8"/>
-        <rect class="glint" x="218" y="77" width="300" height="106" rx="18"/>
-        <rect class="sheen" x="218" y="77" width="300" height="106" rx="18"/>
+        <rect class="card" x="304" y="96" width="280" height="104" rx="18"/>
+        <rect x="304" y="96" width="26" height="104" fill="url(#heroFold)"/>
+        <rect class="foldBar"  x="304.5" y="112" width="24" height="3.6" rx="1.8"/>
+        <rect class="foldBar2" x="304.5" y="117.8" width="22" height="2.4" rx="1.2"/>
+        <rect class="foldBar"  x="304.5" y="146" width="24" height="3.6" rx="1.8"/>
+        <rect class="foldBar2" x="304.5" y="151.8" width="22" height="2.4" rx="1.2"/>
+        <rect class="foldBar"  x="304.5" y="180" width="24" height="3.6" rx="1.8"/>
+        <rect class="glint" x="304" y="96" width="280" height="104" rx="18"/>
+        <rect class="sheen" x="304" y="96" width="280" height="104" rx="18"/>
       </g>
-      <rect class="cardRing" x="218.5" y="77.5" width="299" height="105" rx="17.5" stroke-width="1"/>
-      <!-- Fresnel rim: light catching the border, brightest at the lit corner -->
-      <rect x="218.5" y="77.5" width="299" height="105" rx="17.5" fill="none" class="rim" stroke-width="1.7"/>
-      <!-- prompt: two strong lines -->
-      <rect class="ink" x="240" y="99"  width="196" height="9" rx="4.5"/>
-      <rect class="ink" x="240" y="115" width="146" height="9" rx="4.5"/>
-      <!-- response: two secondary lines -->
-      <rect class="cardSub" x="240" y="140" width="226" height="7" rx="3.5"/>
-      <rect class="cardSub" x="240" y="153" width="166" height="7" rx="3.5"/>
+      <rect class="cardRing" x="304.5" y="96.5" width="279" height="103" rx="17.5" stroke-width="1"/>
+      <rect x="304.5" y="96.5" width="279" height="103" rx="17.5" fill="none" class="rim" stroke-width="1.7"/>
+      <rect class="ink" x="330" y="116" width="190" height="9" rx="4.5"/>
+      <rect class="ink" x="330" y="132" width="140" height="9" rx="4.5"/>
+      <rect class="linkA" x="330" y="150" width="88" height="5" rx="2.5"/>
+      <rect class="cardSub" x="330" y="165" width="210" height="7" rx="3.5"/>
+      <rect class="cardSub" x="330" y="178" width="150" height="7" rx="3.5"/>
     </g>
   </g>
 
-  <!-- rail marks: right-aligned at the column gutter (right edge x=548).
-       Base layer: idle color, geometry follows the 20/14/8/6 wave.
-       Hot layer: same geometry, hot color, opacity marks hot+near turns. -->
+  <!-- rail: mark ladder hugging the column edge (right-aligned x_end=688) -->
   <g>
-    <!-- mark 1: far from both hover centers -->
-    <rect class="markIdle" y="69" height="2" rx="1" x="540" width="8">
-      <animate attributeName="width" values="8;8;6;6;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="540;540;542;542;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markIdle" x="681" y="52" width="7" height="2.5" rx="1.25">
+      <animate attributeName="width" values="7;7;9;9;7;7" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="681;681;679;679;681;681" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <!-- mark 2: near turn 2 -->
-    <rect class="markIdle" y="99" height="2" rx="1" x="534" width="14">
-      <animate attributeName="width" values="14;14;8;8;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="534;534;540;540;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markIdle" x="672" y="94" width="16" height="2.5" rx="1.25">
+      <animate attributeName="width" values="16;16;14;14;16;16" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="672;672;674;674;672;672" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <rect class="markHot" y="99" height="2" rx="1" x="534" width="14" opacity="1">
-      <animate attributeName="opacity" values="1;1;0;0;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="width" values="14;14;8;8;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="534;534;540;540;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markHot" x="672" y="94" width="16" height="2.5" rx="1.25">
+      <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="16;16;14;14;16;16" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="672;672;674;674;672;672" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <!-- mark 3: hot on turn 2, near turn 3 -->
-    <rect class="markIdle" y="129" height="2" rx="1" x="528" width="20">
-      <animate attributeName="width" values="20;20;14;14;6;6;20" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="528;528;534;534;542;542;528" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markIdle" x="677" y="136" width="11" height="2.5" rx="1.25">
+      <animate attributeName="width" values="11;11;22;22;11;11" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="677;677;666;666;677;677" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <rect class="markHot" y="129" height="2" rx="1" x="528" width="20" opacity="1">
-      <animate attributeName="opacity" values="1;1;1;1;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="width" values="20;20;14;14;6;6;20" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="528;528;534;534;542;542;528" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markHot" x="677" y="136" width="11" height="2.5" rx="1.25" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="11;11;22;22;11;11" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="677;677;666;666;677;677" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <!-- mark 4: near turn 2, hot on turn 3 -->
-    <rect class="markIdle" y="159" height="2" rx="1" x="534" width="14">
-      <animate attributeName="width" values="14;14;20;20;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="534;534;528;528;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markIdle" x="680" y="178" width="8" height="2.5" rx="1.25">
+      <animate attributeName="width" values="8;8;14;14;8;8" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="680;680;674;674;680;680" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <rect class="markHot" y="159" height="2" rx="1" x="534" width="14" opacity="1">
-      <animate attributeName="opacity" values="1;1;1;1;0;0;1" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="width" values="14;14;20;20;6;6;14" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="534;534;528;528;542;542;534" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
+    <rect class="markIdle" x="681.5" y="220" width="6.5" height="2.5" rx="1.25">
+      <animate attributeName="width" values="6.5;6.5;9;9;6.5;6.5" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="681.5;681.5;679;679;681.5;681.5" keyTimes="0;.34;.42;.66;.74;1" dur="4.2s" repeatCount="indefinite"/>
     </rect>
-    <!-- mark 5: near turn 3 -->
-    <rect class="markIdle" y="189" height="2" rx="1" x="540" width="8">
-      <animate attributeName="width" values="8;8;14;14;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="540;540;534;534;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-    </rect>
-    <rect class="markHot" y="189" height="2" rx="1" x="540" width="8" opacity="0">
-      <animate attributeName="opacity" values="0;0;1;1;0;0;0" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="width" values="8;8;14;14;6;6;8" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="540;540;534;534;542;542;540" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-    </rect>
-    <!-- mark 6: current turn, rest length, color-only highlight -->
-    <rect class="markOn" y="219" height="2" rx="1" x="542" width="6">
-      <animate attributeName="width" values="6;6;8;8;6;6;6" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-      <animate attributeName="x" values="542;542;540;540;542;542;542" keyTimes="0;.34;.42;.66;.74;.90;1" dur="4.2s" repeatCount="indefinite"/>
-    </rect>
+    <rect class="markOnA" x="672" y="261" width="16" height="4" rx="2"/>
   </g>
 </svg>
