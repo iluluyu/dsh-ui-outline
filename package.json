@@ -1,6 +1,6 @@
 {
   "name": "dsh-ui-outline",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Turn navigation rail for dsh web following the official TurnNavigator design · 轮次导航轨道（大纲/刻度/毛玻璃预览）",
   "type": "module",
   "main": "lib/index.js",
