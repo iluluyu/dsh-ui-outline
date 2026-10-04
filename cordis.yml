@@ -1,18 +1,15 @@
-# dsh-ui-outline — one loader row over the shipped Web composition:
-# the node half registers the `outline` settings namespace with this row's
-# config as its composition (base) layer; the browser half (dsh.client row)
-# serves the navigation rail and the settings card.
+# dsh-ui-outline — one loader row. The row Config is the composition base;
+# the browser half (platform: web, also what the desktop shell embeds)
+# serves the rail and the settings card.
 - insert:
     - id: outline
       name: 'dsh-ui-outline'
-      # Composition-layer defaults for the `outline` namespace. The settings
-      # card's user layer always overrides these per user (and travels with
-      # the account); profile owners may pin fleet-wide defaults here.
+      # Composition-layer defaults. A saved user layer overrides these.
       config:
         side: right
         material: frost
         layout: compact
         frostTransparency: 80
         frostBlur: 6
-        liquidTransparency: 65
-        liquidBlur: 6
+        liquidTransparency: 75
+        liquidBlur: 4
