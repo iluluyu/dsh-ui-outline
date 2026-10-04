@@ -15,6 +15,9 @@ Requires dsh `0.2.1`.
 
 ```sh
 dsh plugin --profile web add dsh-ui-outline
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline
+dsh plugin --profile web add .   # run from the plugin directory; relative paths are anchored to the invoking directory
+dsh plugin --profile web add file:/absolute/path/to/plugin
 ```
 
 Restart `dsh web` and reload. Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.

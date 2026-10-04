@@ -15,6 +15,9 @@
 
 ```sh
 dsh plugin --profile web add dsh-ui-outline
+dsh plugin --profile web add github:iluluyu/dsh-ui-outline
+dsh plugin --profile web add .   # 插件目录下执行（相对路径相对当前执行位置）
+dsh plugin --profile web add file:/absolute/path/to/plugin
 ```
 
 重启 `dsh web` 并刷新页面。卸载：`dsh plugin --profile web remove dsh-ui-outline`。
