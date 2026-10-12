@@ -8,6 +8,7 @@ A turn navigation rail for [DeepSeek Harness](https://github.com/deepseek-ai/dee
 
 - **Mark layout**: `compact` (official 10px pitch, scrolls when overflowing) or `loose` (30px row per turn).
 - **Preview material**: `none` (opaque official card), `frost` (default: veil + bright rim + extra blur), or `liquid` (thin lens with the same bright rim + subtle blur, translucent with no reflection or SVG).
+- **Conversation search**: `⌘F` / `Ctrl+F` opens a Spotlight-style centered overlay that live-searches every turn's prompt and final response (whitespace AND tokens, match highlighting, ±30-char context windows); the surface follows the preview-card material. ↑↓ to select, ↵ to jump with the landing flash, esc or outside-click to close. Long conversations stay smooth: the index builds in background slices on first open, scanning is sliced behind a 60ms debounce, and only the newest 50 hits are shown.
 
 ## Install
 
