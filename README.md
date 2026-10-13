@@ -6,7 +6,7 @@
 
 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 打造的轮次导航轨与会话搜索。
 
-<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline 导航轨与毛玻璃预览总览"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline 导航轨与毛玻璃预览总览"></p>
 
 [安装](#安装) · [设置](#设置)
 
@@ -14,13 +14,13 @@
 
 轨道贴合会话列边缘，停靠左缘或右缘完全由你决定。两种刻度密度各展所长：**宽松**排布刻度疏朗直观、轮次一眼可数；**紧凑**排布则能将上百轮对话容纳于一屏，超出后亦可在轨内平滑滚动。整条轨道具宽域磁吸，无需费力瞄准细线；随手点击或按住拖动，皆可连续自如地穿梭其间。
 
-<p align="center"><img src="docs/img/rail-placement.svg" width="640" alt="左侧宽松与右侧紧凑两种排布场景"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-placement.svg" width="640" alt="左侧宽松与右侧紧凑两种排布场景"></p>
 
 ## 悬停预览，滚轮速览
 
 鼠标拂过刻度，玻璃预览卡便浮现该轮的提问与回答，不必跳转即可确认上下文。在轨道上滑动滚轮可逐轮步进：虚线游标与预览卡紧随指尖移动，而**当前正在阅读的会话主体始终原地不动**。锁定目标后轻点或回车直达，落点伴有闪光指示——先探查、再落定，长对话里无需反复翻页。
 
-<p align="center"><img src="docs/img/rail-interactions.svg" width="640" alt="悬停预览卡与滚轮逐轮步进：会话原地待命，游标与预览随心漫游"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-interactions.svg" width="640" alt="悬停预览卡与滚轮逐轮步进：会话原地待命，游标与预览随心漫游"></p>
 
 ## 列再窄，导航也不退场
 
@@ -32,9 +32,9 @@
 
 三种材质并排看：不透明、毛玻璃、液态玻璃——同一轮内容，不同质感。
 
-<p align="center"><img src="docs/img/material-comparison.svg" width="640" alt="none / frost / liquid 三种材质对比"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/material-comparison.svg" width="640" alt="none / frost / liquid 三种材质对比"></p>
 
-<p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="胶囊搜索条沿同等圆角向下生长为玻璃结果卡片"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/search-spotlight.svg" width="640" alt="胶囊搜索条沿同等圆角向下生长为玻璃结果卡片"></p>
 
 <details>
 <summary><b>交互细节</b></summary>

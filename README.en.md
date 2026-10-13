@@ -6,7 +6,7 @@ Never lose your place in long conversations. Place the rail your way, keep navig
 
 A turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
-<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="Overview of turn navigation rail and frosted glass preview"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-hero.svg" width="700" alt="Overview of turn navigation rail and frosted glass preview"></p>
 
 [Install](#install) · [Settings](#settings)
 
@@ -14,13 +14,13 @@ A turn navigation rail and conversation search for [DeepSeek Harness](https://gi
 
 The rail hugs either edge of the conversation column, letting you combine docking side and tick density to match your reading habits. As illustrated below, **loose** density keeps ticks spaced and countable at a glance, while **compact** density accommodates hundreds of turns within a single viewport with smooth internal scrolling. The hit strip offers generous magnetic snapping so you never have to target thin lines—click anywhere or drag freely to glide across the session.
 
-<p align="center"><img src="docs/img/rail-placement.svg" width="640" alt="Loose on left edge and compact on right edge placement scenarios"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-placement.svg" width="640" alt="Loose on left edge and compact on right edge placement scenarios"></p>
 
 ## Hover previews, wheel-speed browsing
 
 Hover over any tick to reveal a frosted glass card showing that turn's prompt and response, confirming context before you jump. Rolling the wheel over the rail steps through turns sequentially: the dashed cursor and preview card travel with your scroll while **the conversation itself remains completely still**. Once you spot your target, click or press Enter to land with a subtle flash—glance first, commit second, eliminating weary back-and-forth paging in long sessions.
 
-<p align="center"><img src="docs/img/rail-interactions.svg" width="640" alt="Hover preview and wheel stepping: conversation stays put while cursor and preview walk"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-interactions.svg" width="640" alt="Hover preview and wheel stepping: conversation stays put while cursor and preview walk"></p>
 
 ## Navigation that stays in narrow columns
 
@@ -32,9 +32,9 @@ Press the shortcut to call up a Spotlight search bar; on the first keystroke, th
 
 Three materials side by side — opaque, frosted glass, and liquid glass — over the same turn:
 
-<p align="center"><img src="docs/img/material-comparison.svg" width="640" alt="none / frost / liquid material comparison"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/material-comparison.svg" width="640" alt="none / frost / liquid material comparison"></p>
 
-<p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="Capsule search bar expanding downward into a glass result card"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/search-spotlight.svg" width="640" alt="Capsule search bar expanding downward into a glass result card"></p>
 
 <details>
 <summary><b>Interaction details</b></summary>
