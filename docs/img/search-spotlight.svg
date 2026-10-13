@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="Cmd+F search. An empty 52px capsule with a centered Search placeholder grows in height into a result card; the 26px corner radius never changes. The selected row is a 48px pill. Arrow keys select, Enter jumps, Esc closes.">
+  <title>Cmd+F search</title>
+  <desc>Empty query capsule, height-only morph, and the opened result card with a selected pill, hit highlight, and keyboard footer.</desc>
+  <style>
+    text { font-family: system-ui, sans-serif; }
+    .scene { fill: #edf0f3; }
+    .card { fill: #fff; }
+    .ink { fill: #0f1115; }
+    .mute { fill: #81858c; }
+    .sub { fill: #61666b; }
+  </style>
+  <defs>
+    <filter id="lift" x="-30%" y="-40%" width="160%" height="190%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".16"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".08"/>
+    </filter>
+    <linearGradient id="rim" x1="0" y1="0" x2=".85" y2=".9">
+      <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+      <stop offset=".42" stop-color="#fff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4d6bfe" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#4d6bfe" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ghostFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".52" stop-color="#fff" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".82"/>
+    </linearGradient>
+    <clipPath id="clipCap"><rect x="28" y="36" width="488" height="52" rx="26"/></clipPath>
+    <clipPath id="clipCard"><rect x="28" y="150" width="488" height="176" rx="26"/></clipPath>
+    <clipPath id="clipGrow"><rect x="20" y="88" width="504" height="48"/></clipPath>
+  </defs>
+
+  <rect class="scene" x="1" y="1" width="878" height="338" rx="16"/>
+
+  <text class="ink" x="28" y="28" font-size="20" font-weight="600">Empty query</text>
+  <text class="sub" x="532" y="28" text-anchor="middle" font-size="20" font-weight="600">52px</text>
+  <text class="ink" x="568" y="28" font-size="20" font-weight="600">Shortcut</text>
+
+
+  <!-- ===== empty capsule: 52px stadium, rx = half height ===== -->
+  <g filter="url(#lift)">
+    <rect class="card" x="28" y="36" width="488" height="52" rx="26"/>
+  </g>
+  <g clip-path="url(#clipCap)">
+    <rect fill="url(#sheen)" x="28" y="36" width="488" height="26"/>
+  </g>
+  <!-- stroke path is inset 0.5px; rx 25.5 shares the corner center (x+26, y+26) and is itself a semicircle -->
+  <rect x="28.5" y="36.5" width="487" height="51" rx="25.5" fill="none" stroke="rgba(0,0,0,.1)"/>
+  <rect x="28.5" y="36.5" width="487" height="51" rx="25.5" fill="none" stroke="url(#rim)" stroke-width="1.6"/>
+  <g fill="none" stroke="#81858c" stroke-width="1.5" stroke-linecap="round">
+    <circle cx="51" cy="62" r="4.75"/>
+    <path d="M55.65 66.65 L59.25 70.25"/>
+  </g>
+  <text class="mute" x="272" y="62" text-anchor="middle" dominant-baseline="middle" font-size="21">Search</text>
+
+  <!-- 52px ticks sit clear of the stadium bulge and of the growth arrow -->
+  <g stroke="#61666b" stroke-width="1.25" fill="none" stroke-linecap="round">
+    <line x1="520" y1="36" x2="532" y2="36"/>
+    <line x1="532" y1="36" x2="532" y2="88"/>
+    <line x1="520" y1="88" x2="532" y2="88"/>
+  </g>
+
+  <!-- ghost continues the same plate below the capsule; drawn after so the shadow does not muddy the seam -->
+  <g clip-path="url(#clipGrow)">
+    <rect x="28" y="36" width="488" height="96" rx="26" fill="url(#ghostFill)" stroke="#81858c" stroke-width="1.25" stroke-dasharray="4 3.5" stroke-linejoin="round"/>
+    <line x1="36" y1="100" x2="508" y2="100" stroke="rgba(0,0,0,.08)"/>
+    <rect x="48" y="108" width="32" height="14" rx="6" fill="rgba(0,0,0,.05)"/>
+    <rect x="90" y="111" width="56" height="7" rx="3.5" fill="rgba(15,17,21,.16)"/>
+    <rect x="154" y="108" width="36" height="14" rx="3" fill="rgba(77,107,254,.2)"/>
+    <rect x="198" y="111" width="40" height="7" rx="3.5" fill="rgba(15,17,21,.1)"/>
+  </g>
+
+  <!-- height transition, below the 52px bracket. Radius does not travel. -->
+  <g fill="none" stroke="#4d6bfe" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="528" y1="104" x2="536" y2="104"/>
+    <line x1="532" y1="104" x2="532" y2="124"/>
+    <path d="M528 120 l4 6 4-6"/>
+  </g>
+  <path d="M264 136 l8 7 8-7" fill="none" stroke="#4d6bfe" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="ink" x="548" y="108" font-size="20" font-weight="600">First keystroke</text>
+  <text class="sub" x="548" y="130" font-size="20">Height only · radius stays 26</text>
+
+  <!-- ⌘F / Ctrl+F, scaled 1.35x about its center -->
+  <g transform="translate(668 62) scale(1.35) translate(-668 -62)">
+    <rect x="568" y="47.5" width="38" height="32" rx="8" fill="rgba(0,0,0,.08)"/>
+    <rect x="568" y="46" width="38" height="32" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)"/>
+    <g transform="translate(578.2 53.2) scale(.72)" fill="none" stroke="#0f1115" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/>
+    </g>
+    <rect x="612" y="47.5" width="32" height="32" rx="8" fill="rgba(0,0,0,.08)"/>
+    <rect x="612" y="46" width="32" height="32" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)"/>
+    <text class="ink" x="628" y="62" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="600">F</text>
+    <text class="sub" x="660" y="62" text-anchor="middle" dominant-baseline="middle" font-size="16">/</text>
+    <rect x="676" y="47.5" width="54" height="32" rx="8" fill="rgba(0,0,0,.08)"/>
+    <rect x="676" y="46" width="54" height="32" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)"/>
+    <text class="ink" x="703" y="62" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="600">Ctrl</text>
+    <rect x="736" y="47.5" width="32" height="32" rx="8" fill="rgba(0,0,0,.08)"/>
+    <rect x="736" y="46" width="32" height="32" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)"/>
+    <text class="ink" x="752" y="62" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="600">F</text>
+  </g>
+
+  <!-- ===== opened card: same 26px plate, two strokes on the 25.5 inset ===== -->
+  <g filter="url(#lift)">
+    <rect class="card" x="28" y="150" width="488" height="176" rx="26"/>
+  </g>
+  <g clip-path="url(#clipCard)">
+    <rect fill="url(#sheen)" x="28" y="150" width="488" height="36"/>
+  </g>
+  <rect x="28.5" y="150.5" width="487" height="175" rx="25.5" fill="none" stroke="rgba(0,0,0,.1)"/>
+  <rect x="28.5" y="150.5" width="487" height="175" rx="25.5" fill="none" stroke="url(#rim)" stroke-width="1.6"/>
+
+  <g fill="none" stroke="#81858c" stroke-width="1.5" stroke-linecap="round">
+    <circle cx="51" cy="176" r="4.75"/>
+    <path d="M55.65 180.65 L59.25 184.25"/>
+  </g>
+  <text class="ink" x="68" y="176" dominant-baseline="middle" font-size="21">rail</text>
+  <rect fill="#4d6bfe" x="118" y="167" width="2" height="18" rx="1"/>
+  <text class="sub" x="500" y="176" text-anchor="end" dominant-baseline="middle" font-size="20" font-weight="500">2 hits</text>
+  <line x1="28" y1="202.5" x2="516" y2="202.5" stroke="rgba(0,0,0,.1)"/>
+
+  <!-- selected row: true pill, rx = half of 48 -->
+  <rect x="36" y="209" width="472" height="48" rx="24" fill="rgba(77,107,254,.1)"/>
+  <rect x="48" y="219" width="44" height="28" rx="7" fill="rgba(0,0,0,.05)"/>
+  <text class="sub" x="70" y="233" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="500">#3</text>
+  <text class="ink" x="104" y="224" dominant-baseline="middle" font-size="20">…keep the</text>
+  <rect x="216" y="213" width="52" height="22" rx="3" fill="rgba(77,107,254,.24)"/>
+  <text class="ink" x="242" y="224" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">rail</text>
+  <text class="ink" x="278" y="224" dominant-baseline="middle" font-size="20">in view</text>
+  <text class="sub" x="104" y="246" dominant-baseline="middle" font-size="20">stays in narrow columns</text>
+
+  <!-- next hit, no pill -->
+  <rect x="48" y="262" width="44" height="28" rx="7" fill="rgba(0,0,0,.05)"/>
+  <text class="sub" x="70" y="276" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="500">#8</text>
+  <text class="ink" x="104" y="276" dominant-baseline="middle" font-size="20">…scroll the</text>
+  <rect x="228" y="265" width="52" height="22" rx="3" fill="rgba(77,107,254,.24)"/>
+  <text class="ink" x="254" y="276" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">rail</text>
+  <text class="ink" x="290" y="276" dominant-baseline="middle" font-size="20">to preview</text>
+
+  <line x1="28" y1="298.5" x2="516" y2="298.5" stroke="rgba(0,0,0,.1)"/>
+  <text class="sub" x="272" y="312" text-anchor="middle" dominant-baseline="middle" font-size="20">↑↓ Select · ↵ Jump · Esc Close</text>
+
+  <g stroke="#61666b" stroke-width="1.25" fill="none" stroke-linecap="round">
+    <line x1="522" y1="209" x2="534" y2="209"/>
+    <line x1="534" y1="209" x2="534" y2="257"/>
+    <line x1="522" y1="257" x2="534" y2="257"/>
+  </g>
+  <text class="sub" x="548" y="233" dominant-baseline="middle" font-size="20" font-weight="600">48px pill · rx 24</text>
+</svg>

@@ -6,13 +6,28 @@ Find your place in long conversations. Position the rail your way, keep it in na
 
 A turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
-<p align="center"><img src="docs/img/rail-hero.svg" width="700"></p>
+<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline overview"></p>
+
+[Install](#install) · [Settings](#settings)
 
 ## A rail that fits how you read
 
-Dock the rail to either edge of the conversation column and pick a tick density: **compact** keeps long conversations in view, **loose** gives every turn its own row.
+Dock the rail to either edge of the conversation column and pick between two tick densities:
 
-The hit strip is wide, so you never aim at a thin tick; hold and drag to browse. Hover previews a turn's prompt and response; scroll the wheel to step through turns one by one, and click to jump.
+- **Compact `compact`**: 10px spacing — dozens or hundreds of turns stay in view, scrolling inside the rail when they overflow. Docking side and density are independent choices.
+- **Loose `loose`**: a 30px row per turn, sparse enough to count at a glance.
+
+The 44px hit strip snaps clicks to the nearest turn, so you never aim at a thin tick; hold and drag to browse continuously.
+
+<p align="center"><img src="docs/img/rail-placement.svg" width="640" alt="Left/right docking and compact/loose densities"></p>
+
+## Hover previews, wheel-speed browsing
+
+Hover any tick and a glass preview card appears beside the rail with that turn's prompt and final response — confirm it is the right one before going there.
+
+Scroll the wheel over the rail to step through turns: the wave and preview card follow the cursor while **the conversation itself stays put**. Found it? Click (or focus and press Enter) to jump, with a landing flash at the destination. Browse first, commit second — far less back-and-forth paging in long conversations.
+
+<p align="center"><img src="docs/img/rail-interactions.svg" width="640" alt="Hover preview, wheel stepping, and click-to-jump"></p>
 
 ## Navigation that stays in narrow columns
 
@@ -20,16 +35,23 @@ Opening a sidebar or split-screen hides the official turn rail; this one stays a
 
 ## ⌘F / Ctrl+F to search the conversation
 
-A Spotlight-style overlay: an empty query shows a track-shaped capsule bar; the first keystroke expands it into a result card. Whitespace AND matching, highlighted hits with context excerpts; `↑` `↓` to select, `↵` to jump with a landing flash, `Esc` or an outside click to close. Long conversations stay smooth.
+A Spotlight-style overlay: an empty query shows a track-shaped capsule bar; the first keystroke expands it downward into a result card.
 
-Preview cards and the search overlay come in opaque, frosted glass, and liquid glass.
+- **Whitespace AND matching**: terms split on spaces, every term must hit — Chinese and English alike.
+- **Highlighted hits**: each result shows a context excerpt of that turn's prompt/response (30 characters either side) with the matched terms highlighted.
+- **Keyboard first**: `↑` `↓` to select, `↵` to jump with a landing flash, `Esc` or an outside click to close.
+- **Smooth on long conversations**: the index builds in background slices, input is debounced, and the newest 50 matches are shown.
+
+Preview cards and the search overlay come in opaque, frosted glass, and liquid glass, with live-tunable parameters.
+
+<p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="The capsule bar expanding into a result card"></p>
 
 <details>
 <summary><b>Interaction details</b></summary>
 
-- Tick density: compact at 10px spacing (scrolls inside the rail when turns overflow) or loose at 30px per turn; the 44px hit strip snaps clicks to the nearest turn.
-- Wheel stepping: starts at the current turn, previews one turn at a time while the conversation stays put; click to jump.
-- Search overlay: a 52px capsule sharing one 26px corner radius across both states (G2 continuous-curvature superellipse ends); ±30 characters of context per hit; the index builds in background slices on first open behind a 60ms input debounce, showing the newest 50 matches.
+- The search capsule is 52px high and shares one 26px corner radius across both states; the morph is a pure height growth with the radius never changing.
+- Wheel stepping: starts at the current turn; 100 normalized scroll units per step with a 150ms idle remainder reset; drags and focus take the cursor over instantly.
+- A 60ms input debounce plus sliced scanning keeps first-keystroke-to-results latency independent of conversation length.
 - Liquid-glass search keeps a minimum effective blur of 10px for readability.
 
 </details>
@@ -59,7 +81,7 @@ Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
 
 ## Settings
 
-Open **Plugins → dsh-ui-outline**.
+Open **Plugins → dsh-ui-outline**; every option applies live.
 
 | Setting | Options and defaults |
 | --- | --- |

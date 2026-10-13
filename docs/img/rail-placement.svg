@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Place the turn rail on either edge and pick a density. Left: docked on the left edge, loose 30px pitch, one row per turn. Right: docked on the right edge, compact 10px pitch, ends fading where the rail scrolls inside its frame.">
+  <title>Rail placement</title>
+  <desc>Two conversation columns. Left edge with a loose 30px tick pitch, right edge with a compact 10px pitch and faded scroll ends. Same marks: 6px idle lines, the current turn in ink, a hover wave on the compact rail.</desc>
+  <style>
+    text { font-family: system-ui, sans-serif; }
+    .scene { fill: #edf0f3; }
+    .col { fill: #fff; stroke: rgba(0,0,0,.1); stroke-width: 1; }
+    .prompt { fill: rgba(15,17,21,.46); }
+    .resp { fill: rgba(97,102,107,.24); }
+    .dim { fill: rgba(97,102,107,.14); }
+    .idle { fill: #81858c; }
+    .on { fill: #0f1115; fill-opacity: .7; }
+    .hot { fill: #0f1115; }
+    .near { fill: #0f1115; fill-opacity: .55; }
+    .ink { fill: #0f1115; }
+    .sub { fill: #61666b; }
+    .card { fill: #fff; }
+  </style>
+  <defs>
+    <!-- 24px end fade: compact overflow scrolls inside the frame, it does not compress. -->
+    <linearGradient id="endFade" gradientUnits="userSpaceOnUse" x1="840" y1="56" x2="840" y2="244">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".128" stop-color="#fff" stop-opacity="1"/>
+      <stop offset=".872" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="scrollFade" maskUnits="userSpaceOnUse">
+      <rect x="820" y="56" width="48" height="188" fill="url(#endFade)"/>
+    </mask>
+  </defs>
+
+  <rect class="scene" x="1" y="1" width="878" height="258" rx="16"/>
+
+  <!-- settings chips: edge and pitch are independent knobs -->
+  <rect class="col" x="122" y="16" width="200" height="28" rx="14"/>
+  <text x="222" y="30" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">
+    <tspan class="sub">edge: </tspan><tspan fill="#4d6bfe">L</tspan><tspan class="sub"> · pitch: </tspan><tspan fill="#4d6bfe">30px</tspan>
+  </text>
+  <rect class="col" x="558" y="16" width="200" height="28" rx="14"/>
+  <text x="658" y="30" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">
+    <tspan class="sub">edge: </tspan><tspan fill="#4d6bfe">R</tspan><tspan class="sub"> · pitch: </tspan><tspan fill="#4d6bfe">10px</tspan>
+  </text>
+
+  <!-- ===== left edge, loose 30px row ===== -->
+  <rect class="col" x="16" y="56" width="412" height="188" rx="12"/>
+  <g>
+    <rect class="prompt" x="46" y="66" width="280" height="8" rx="4"/>
+    <rect class="resp" x="46" y="77" width="200" height="6" rx="3"/>
+    <rect class="prompt" x="46" y="96" width="220" height="8" rx="4"/>
+    <rect class="resp" x="46" y="107" width="310" height="6" rx="3"/>
+    <rect class="prompt" x="46" y="126" width="300" height="8" rx="4"/>
+    <rect class="resp" x="46" y="137" width="240" height="6" rx="3"/>
+    <rect class="prompt" x="46" y="156" width="260" height="8" rx="4"/>
+    <rect class="resp" x="46" y="167" width="180" height="6" rx="3"/>
+    <rect class="prompt" x="46" y="186" width="340" height="8" rx="4"/>
+    <rect class="resp" x="46" y="197" width="210" height="6" rx="3"/>
+    <rect class="prompt" x="46" y="216" width="190" height="8" rx="4"/>
+    <rect class="resp" x="46" y="227" width="270" height="6" rx="3"/>
+  </g>
+  <!-- EDGE_GAP 12, left-aligned, rest 6px of the 20px mark, pitch 30, centered on each row -->
+  <g>
+    <rect class="idle" x="28" y="73.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="28" y="103.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="on" x="28" y="133.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="28" y="163.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="28" y="193.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="28" y="223.75" width="6" height="2.5" rx="1.25"/>
+  </g>
+
+  <!-- ===== right edge, compact 10px pitch, hover wave, faded scroll ends ===== -->
+  <rect class="col" x="452" y="56" width="412" height="188" rx="12"/>
+  <g>
+    <rect class="prompt" x="468" y="68" width="300" height="8" rx="4"/>
+    <rect class="resp" x="468" y="80" width="220" height="6" rx="3"/>
+    <rect class="dim" x="468" y="90" width="140" height="5" rx="2.5"/>
+    <rect class="prompt" x="468" y="104" width="250" height="8" rx="4"/>
+    <rect class="resp" x="468" y="116" width="330" height="6" rx="3"/>
+    <rect class="prompt" x="468" y="134" width="340" height="8" rx="4"/>
+    <rect class="resp" x="468" y="146" width="200" height="6" rx="3"/>
+    <rect class="dim" x="468" y="156" width="110" height="5" rx="2.5"/>
+    <rect class="prompt" x="468" y="172" width="280" height="8" rx="4"/>
+    <rect class="resp" x="468" y="184" width="180" height="6" rx="3"/>
+    <rect class="prompt" x="468" y="202" width="210" height="8" rx="4"/>
+    <rect class="resp" x="468" y="214" width="290" height="6" rx="3"/>
+    <rect class="dim" x="468" y="224" width="100" height="5" rx="2.5"/>
+  </g>
+  <!-- right-aligned, pitch 10. Ends fade: the frame scrolls. Hover sweeps to 20px. -->
+  <g mask="url(#scrollFade)">
+    <rect class="idle" x="846" y="68.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="78.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="88.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="98.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="108.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="844" y="118.75" width="8" height="2.5" rx="1.25"/>
+    <rect class="near" x="840" y="128.75" width="12" height="2.5" rx="1.25"/>
+    <rect class="near" x="836" y="138.75" width="16" height="2.5" rx="1.25"/>
+    <rect class="hot" x="832" y="148.75" width="20" height="2.5" rx="1.25"/>
+    <rect class="near" x="836" y="158.75" width="16" height="2.5" rx="1.25"/>
+    <rect class="near" x="840" y="168.75" width="12" height="2.5" rx="1.25"/>
+    <rect class="idle" x="844" y="178.75" width="8" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="188.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="on" x="846" y="198.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="208.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="218.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="idle" x="846" y="228.75" width="6" height="2.5" rx="1.25"/>
+  </g>
+  <!-- pointer on the hot mark, just outside the column edge -->
+  <path d="M856 150 l11 4.2-4.6 1.1 3.1 5.6-2.1 1.15-3.1-5.6-3.9 2.3z" fill="#0f1115" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
+</svg>
