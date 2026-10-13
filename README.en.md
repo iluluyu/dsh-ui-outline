@@ -2,49 +2,35 @@
 
 # dsh-ui-outline
 
-Find your place in long conversations. Position the rail your way, keep it in narrow columns, and search with ⌘F / Ctrl+F.
+Never lose your place in long conversations. Place the rail your way, keep navigation in narrow columns, and search instantly with ⌘F / Ctrl+F.
 
 A turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
-<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline overview"></p>
+<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="Overview of turn navigation rail and frosted glass preview"></p>
 
 [Install](#install) · [Settings](#settings)
 
 ## A rail that fits how you read
 
-Dock the rail to either edge of the conversation column and pick between two tick densities:
+The rail hugs either edge of the conversation column, letting you combine docking side and tick density to match your reading habits. As illustrated below, **loose** density keeps ticks spaced and countable at a glance, while **compact** density accommodates hundreds of turns within a single viewport with smooth internal scrolling. The hit strip offers generous magnetic snapping so you never have to target thin lines—click anywhere or drag freely to glide across the session.
 
-- **Compact `compact`**: 10px spacing — dozens or hundreds of turns stay in view, scrolling inside the rail when they overflow. Docking side and density are independent choices.
-- **Loose `loose`**: a 30px row per turn, sparse enough to count at a glance.
-
-The 44px hit strip snaps clicks to the nearest turn, so you never aim at a thin tick; hold and drag to browse continuously.
-
-<p align="center"><img src="docs/img/rail-placement.svg" width="640" alt="Left/right docking and compact/loose densities"></p>
+<p align="center"><img src="docs/img/rail-placement.svg" width="640" alt="Loose on left edge and compact on right edge placement scenarios"></p>
 
 ## Hover previews, wheel-speed browsing
 
-Hover any tick and a glass preview card appears beside the rail with that turn's prompt and final response — confirm it is the right one before going there.
+Hover over any tick to reveal a frosted glass card showing that turn's prompt and response, confirming context before you jump. Rolling the wheel over the rail steps through turns sequentially: the dashed cursor and preview card travel with your scroll while **the conversation itself remains completely still**. Once you spot your target, click or press Enter to land with a subtle flash—glance first, commit second, eliminating weary back-and-forth paging in long sessions.
 
-Scroll the wheel over the rail to step through turns: the wave and preview card follow the cursor while **the conversation itself stays put**. Found it? Click (or focus and press Enter) to jump, with a landing flash at the destination. Browse first, commit second — far less back-and-forth paging in long conversations.
-
-<p align="center"><img src="docs/img/rail-interactions.svg" width="640" alt="Hover preview, wheel stepping, and click-to-jump"></p>
+<p align="center"><img src="docs/img/rail-interactions.svg" width="640" alt="Hover preview and wheel stepping: conversation stays put while cursor and preview walk"></p>
 
 ## Navigation that stays in narrow columns
 
-Opening a sidebar or split-screen hides the official turn rail; this one stays at the column edge by default, so quick jumps never disappear. Prefer it hidden? Change the narrow-column setting — an edge switch remains to bring it back.
+Splitting your screen or opening a sidebar shrinks the conversation column and typically collapses native navigation; this rail stays pinned to the edge by default so rapid jumps never vanish. If you prefer an uncluttered reading layout, narrow columns can be configured to hide the rail automatically. Even when stowed, a subtle edge toggle remains in place so you can summon it back whenever needed.
 
 ## ⌘F / Ctrl+F to search the conversation
 
-A Spotlight-style overlay: an empty query shows a track-shaped capsule bar; the first keystroke expands it downward into a result card.
+Press the shortcut to call up a Spotlight search bar; on the first keystroke, the capsule morphs seamlessly downward into a glass result card with identical corner curves. It supports whitespace-delimited AND matching across languages with highlighted context snippets, fully operable via keyboard (`↑` `↓` to navigate, `↵` to jump with a flash, `Esc` to dismiss). Background sliced indexing ensures silky typing regardless of conversation depth, while both the overlay and preview cards support live-switchable frosted glass, liquid glass, and opaque finishes.
 
-- **Whitespace AND matching**: terms split on spaces, every term must hit — Chinese and English alike.
-- **Highlighted hits**: each result shows a context excerpt of that turn's prompt/response (30 characters either side) with the matched terms highlighted.
-- **Keyboard first**: `↑` `↓` to select, `↵` to jump with a landing flash, `Esc` or an outside click to close.
-- **Smooth on long conversations**: the index builds in background slices, input is debounced, and the newest 50 matches are shown.
-
-Preview cards and the search overlay come in opaque, frosted glass, and liquid glass, with live-tunable parameters.
-
-<p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="The capsule bar expanding into a result card"></p>
+<p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="Capsule search bar expanding downward into a glass result card"></p>
 
 <details>
 <summary><b>Interaction details</b></summary>

@@ -1,110 +1,219 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Place the turn rail on either edge and pick a density. Left: docked on the left edge, loose 30px pitch, one row per turn. Right: docked on the right edge, compact 10px pitch, ends fading where the rail scrolls inside its frame.">
-  <title>Rail placement</title>
-  <desc>Two conversation columns. Left edge with a loose 30px tick pitch, right edge with a compact 10px pitch and faded scroll ends. Same marks: 6px idle lines, the current turn in ink, a hover wave on the compact rail.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Rail placement and density: loose 30px pitch on left edge, compact 10px pitch on right edge with hover wave and glass preview">
   <style>
-    text { font-family: system-ui, sans-serif; }
-    .scene { fill: #edf0f3; }
-    .col { fill: #fff; stroke: rgba(0,0,0,.1); stroke-width: 1; }
+    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); }
+    .surface { fill: #fff; stroke: rgba(0,0,0,.09); }
+    .label { font-size: 13px; font-weight: 600; fill: #81858c; letter-spacing: .05em; }
     .prompt { fill: rgba(15,17,21,.46); }
     .resp { fill: rgba(97,102,107,.24); }
-    .dim { fill: rgba(97,102,107,.14); }
-    .idle { fill: #81858c; }
-    .on { fill: #0f1115; fill-opacity: .7; }
-    .hot { fill: #0f1115; }
-    .near { fill: #0f1115; fill-opacity: .55; }
+    .respDim { fill: rgba(97,102,107,.14); }
+    .cardGlass { fill: rgba(255,255,255,.32); }
+    .cardRing { stroke: rgba(0,0,0,.13); fill: none; }
+    .rim { stroke: url(#rimGrad); }
+    .cardRim { stroke: url(#cardRimGrad); }
+    .sheen { fill: url(#sheenGrad); }
+    .foldBar { fill: rgba(97,102,107,.55); }
+    .foldBar2 { fill: rgba(97,102,107,.32); }
+    .cardPrompt { fill: rgba(15,17,21,.8); }
+    .cardResp { fill: rgba(15,17,21,.45); }
+    .markIdle { fill: rgba(129,133,140,.4); }
+    .markOn { fill: #0f1115; }
+    .markNear { fill: rgba(15,17,21,.65); }
+    .markBrand { fill: #4d6bfe; }
     .ink { fill: #0f1115; }
-    .sub { fill: #61666b; }
-    .card { fill: #fff; }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #101113; stroke: rgba(255,255,255,.09); }
+      .surface { fill: #1c1d1f; stroke: rgba(255,255,255,.1); }
+      .label { fill: #9da2a8; }
+      .prompt { fill: rgba(249,250,251,.44); }
+      .resp { fill: rgba(166,171,178,.24); }
+      .respDim { fill: rgba(166,171,178,.14); }
+      .cardGlass { fill: rgba(35,35,36,.34); }
+      .cardRing { stroke: rgba(255,255,255,.15); }
+      .rim { stroke: url(#rimGradD); }
+      .cardRim { stroke: url(#cardRimGradD); }
+      .foldBar { fill: rgba(166,171,178,.8); }
+      .foldBar2 { fill: rgba(166,171,178,.45); }
+      .cardPrompt { fill: rgba(249,250,251,.88); }
+      .cardResp { fill: rgba(249,250,251,.55); }
+      .markIdle { fill: rgba(173,178,184,.38); }
+      .markOn { fill: #f9fafb; }
+      .markNear { fill: rgba(249,250,251,.65); }
+      .ink { fill: #f9fafb; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
   </style>
   <defs>
-    <!-- 24px end fade: compact overflow scrolls inside the frame, it does not compress. -->
-    <linearGradient id="endFade" gradientUnits="userSpaceOnUse" x1="840" y1="56" x2="840" y2="244">
-      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
-      <stop offset=".128" stop-color="#fff" stop-opacity="1"/>
-      <stop offset=".872" stop-color="#fff" stop-opacity="1"/>
-      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    <radialGradient id="glintSurface" cx="10%" cy="12%" r="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,.08)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="cardGlint" cx="12%" cy="15%" r="35%">
+      <stop offset="0%" stop-color="rgba(255,255,255,.36)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,.1)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <linearGradient id="rimGrad" x2=".75" y2=".75">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="25%" stop-color="rgba(255,255,255,.32)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
     </linearGradient>
-    <mask id="scrollFade" maskUnits="userSpaceOnUse">
-      <rect x="820" y="56" width="48" height="188" fill="url(#endFade)"/>
+    <linearGradient id="rimGradD" x2=".75" y2=".75">
+      <stop offset="0%" stop-color="rgba(249,250,251,.65)"/>
+      <stop offset="25%" stop-color="rgba(249,250,251,.16)"/>
+      <stop offset="50%" stop-color="rgba(249,250,251,0)"/>
+    </linearGradient>
+    <linearGradient id="cardRimGrad" x2=".75" y2=".7">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="24%" stop-color="rgba(255,255,255,.35)"/>
+      <stop offset="48%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="cardRimGradD" x2=".75" y2=".7">
+      <stop offset="0%" stop-color="rgba(249,250,251,.72)"/>
+      <stop offset="24%" stop-color="rgba(249,250,251,.18)"/>
+      <stop offset="48%" stop-color="rgba(249,250,251,0)"/>
+    </linearGradient>
+    <linearGradient id="sheenGrad" x2=".8" y2=".7">
+      <stop offset="0%" stop-color="rgba(255,255,255,.16)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="100%" stop-color="rgba(77,107,254,.05)"/>
+    </linearGradient>
+    <linearGradient id="cardFold" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="surfaceShadow" x="-5%" y="-5%" width="112%" height="118%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(15,17,21,.07)"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(15,17,21,.04)"/>
+    </filter>
+    <filter id="glassShadow" x="-15%" y="-20%" width="135%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="rgba(0,0,0,.15)"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,.07)"/>
+    </filter>
+    <filter id="heroLens">
+      <feGaussianBlur stdDeviation="6"/>
+      <feColorMatrix type="saturate" values="1.6"/>
+    </filter>
+    <linearGradient id="endFade" gradientUnits="userSpaceOnUse" x1="0" y1="46" x2="0" y2="234">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="13%" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="87%" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="scrollFade">
+      <rect x="815" y="46" width="40" height="188" fill="url(#endFade)"/>
     </mask>
+    <clipPath id="clipSurfaceL"><rect x="24" y="38" width="404" height="204" rx="14"/></clipPath>
+    <clipPath id="clipSurfaceR"><rect x="452" y="38" width="404" height="204" rx="14"/></clipPath>
+    <clipPath id="clipPreview"><rect x="618" y="86" width="194" height="84" rx="14"/></clipPath>
   </defs>
-
-  <rect class="scene" x="1" y="1" width="878" height="258" rx="16"/>
-
-  <!-- settings chips: edge and pitch are independent knobs -->
-  <rect class="col" x="122" y="16" width="200" height="28" rx="14"/>
-  <text x="222" y="30" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">
-    <tspan class="sub">edge: </tspan><tspan fill="#4d6bfe">L</tspan><tspan class="sub"> · pitch: </tspan><tspan fill="#4d6bfe">30px</tspan>
-  </text>
-  <rect class="col" x="558" y="16" width="200" height="28" rx="14"/>
-  <text x="658" y="30" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="600">
-    <tspan class="sub">edge: </tspan><tspan fill="#4d6bfe">R</tspan><tspan class="sub"> · pitch: </tspan><tspan fill="#4d6bfe">10px</tspan>
-  </text>
-
-  <!-- ===== left edge, loose 30px row ===== -->
-  <rect class="col" x="16" y="56" width="412" height="188" rx="12"/>
-  <g>
-    <rect class="prompt" x="46" y="66" width="280" height="8" rx="4"/>
-    <rect class="resp" x="46" y="77" width="200" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="96" width="220" height="8" rx="4"/>
-    <rect class="resp" x="46" y="107" width="310" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="126" width="300" height="8" rx="4"/>
-    <rect class="resp" x="46" y="137" width="240" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="156" width="260" height="8" rx="4"/>
-    <rect class="resp" x="46" y="167" width="180" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="186" width="340" height="8" rx="4"/>
-    <rect class="resp" x="46" y="197" width="210" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="216" width="190" height="8" rx="4"/>
-    <rect class="resp" x="46" y="227" width="270" height="6" rx="3"/>
+  <rect class="scene" x="1" y="1" width="878" height="258" rx="14"/>
+  <text class="label" x="26" y="27">loose</text>
+  <text class="label" x="454" y="27">compact</text>
+  <g filter="url(#surfaceShadow)">
+    <rect class="surface" x="24" y="38" width="404" height="204" rx="14"/>
+    <g clip-path="url(#clipSurfaceL)">
+      <rect x="24" y="38" width="404" height="204" fill="url(#glintSurface)"/>
+      <rect class="sheen" x="24" y="38" width="404" height="204"/>
+    </g>
+    <rect class="rim" x="24.5" y="38.5" width="403" height="203" rx="13.5" fill="none" stroke-width="1.2"/>
   </g>
-  <!-- EDGE_GAP 12, left-aligned, rest 6px of the 20px mark, pitch 30, centered on each row -->
   <g>
-    <rect class="idle" x="28" y="73.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="103.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="on" x="28" y="133.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="163.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="193.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="223.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="prompt" x="66" y="52" width="130" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="63" width="220" height="6" rx="3"/>
+    <rect class="respDim" x="66" y="72" width="150" height="5" rx="2.5"/>
+    <rect class="prompt" x="66" y="82" width="160" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="93" width="250" height="6" rx="3"/>
+    <rect class="prompt" x="66" y="112" width="180" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="123" width="270" height="6" rx="3"/>
+    <rect class="respDim" x="66" y="132" width="190" height="5" rx="2.5"/>
+    <rect class="prompt" x="66" y="142" width="140" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="153" width="210" height="6" rx="3"/>
+    <rect class="prompt" x="66" y="172" width="155" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="183" width="240" height="6" rx="3"/>
+    <rect class="respDim" x="66" y="192" width="160" height="5" rx="2.5"/>
+    <rect class="prompt" x="66" y="202" width="125" height="7" rx="3.5"/>
+    <rect class="resp" x="66" y="213" width="190" height="6" rx="3"/>
   </g>
-
-  <!-- ===== right edge, compact 10px pitch, hover wave, faded scroll ends ===== -->
-  <rect class="col" x="452" y="56" width="412" height="188" rx="12"/>
   <g>
-    <rect class="prompt" x="468" y="68" width="300" height="8" rx="4"/>
-    <rect class="resp" x="468" y="80" width="220" height="6" rx="3"/>
-    <rect class="dim" x="468" y="90" width="140" height="5" rx="2.5"/>
-    <rect class="prompt" x="468" y="104" width="250" height="8" rx="4"/>
-    <rect class="resp" x="468" y="116" width="330" height="6" rx="3"/>
-    <rect class="prompt" x="468" y="134" width="340" height="8" rx="4"/>
-    <rect class="resp" x="468" y="146" width="200" height="6" rx="3"/>
-    <rect class="dim" x="468" y="156" width="110" height="5" rx="2.5"/>
-    <rect class="prompt" x="468" y="172" width="280" height="8" rx="4"/>
-    <rect class="resp" x="468" y="184" width="180" height="6" rx="3"/>
-    <rect class="prompt" x="468" y="202" width="210" height="8" rx="4"/>
-    <rect class="resp" x="468" y="214" width="290" height="6" rx="3"/>
-    <rect class="dim" x="468" y="224" width="100" height="5" rx="2.5"/>
+    <rect class="markIdle" x="38" y="58.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="38" y="88.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markBrand" x="38" y="117.5" width="16" height="3.5" rx="1.75"/>
+    <rect class="markIdle" x="38" y="148.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="38" y="178.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="38" y="208.75" width="6" height="2.5" rx="1.25"/>
   </g>
-  <!-- right-aligned, pitch 10. Ends fade: the frame scrolls. Hover sweeps to 20px. -->
+  <g filter="url(#surfaceShadow)">
+    <rect class="surface" x="452" y="38" width="404" height="204" rx="14"/>
+    <g clip-path="url(#clipSurfaceR)">
+      <rect x="452" y="38" width="404" height="204" fill="url(#glintSurface)"/>
+      <rect class="sheen" x="452" y="38" width="404" height="204"/>
+    </g>
+    <rect class="rim" x="452.5" y="38.5" width="403" height="203" rx="13.5" fill="none" stroke-width="1.2"/>
+  </g>
+  <g>
+    <rect class="prompt" x="474" y="50" width="130" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="60" width="180" height="6" rx="3"/>
+    <rect class="prompt" x="474" y="74" width="150" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="84" width="210" height="6" rx="3"/>
+    <rect class="respDim" x="474" y="93" width="140" height="5" rx="2.5"/>
+    <rect class="prompt" x="474" y="106" width="120" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="116" width="170" height="6" rx="3"/>
+    <rect class="prompt" x="474" y="130" width="160" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="140" width="220" height="6" rx="3"/>
+    <rect class="prompt" x="474" y="154" width="135" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="164" width="190" height="6" rx="3"/>
+    <rect class="respDim" x="474" y="173" width="130" height="5" rx="2.5"/>
+    <rect class="prompt" x="474" y="186" width="145" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="196" width="210" height="6" rx="3"/>
+    <rect class="prompt" x="474" y="210" width="115" height="7" rx="3.5"/>
+    <rect class="resp" x="474" y="220" width="160" height="6" rx="3"/>
+  </g>
+  <g filter="url(#glassShadow)">
+    <g clip-path="url(#clipPreview)">
+      <g filter="url(#heroLens)">
+        <rect class="prompt" x="630" y="88" width="140" height="7" rx="3.5"/>
+        <rect class="resp" x="630" y="99" width="170" height="6" rx="3"/>
+        <rect class="prompt" x="630" y="118" width="150" height="7" rx="3.5"/>
+        <rect class="resp" x="630" y="129" width="160" height="6" rx="3"/>
+        <rect class="prompt" x="630" y="148" width="130" height="7" rx="3.5"/>
+      </g>
+      <rect class="cardGlass" x="618" y="86" width="194" height="84" rx="14"/>
+      <rect x="792" y="86" width="20" height="84" fill="url(#cardFold)"/>
+      <rect class="foldBar" x="792" y="104" width="18" height="3" rx="1.5"/>
+      <rect class="foldBar2" x="794" y="110" width="16" height="2" rx="1"/>
+      <rect class="foldBar" x="792" y="138" width="18" height="3" rx="1.5"/>
+      <rect class="foldBar2" x="794" y="144" width="16" height="2" rx="1"/>
+      <rect x="618" y="86" width="194" height="84" rx="14" fill="url(#cardGlint)"/>
+      <rect class="sheen" x="618" y="86" width="194" height="84" rx="14"/>
+    </g>
+    <rect class="cardRing" x="618.5" y="86.5" width="193" height="83" rx="13.5" stroke-width="1"/>
+    <rect class="cardRim" x="618.5" y="86.5" width="193" height="83" rx="13.5" fill="none" stroke-width="1.6"/>
+    <rect class="cardPrompt" x="634" y="104" width="124" height="7" rx="3.5"/>
+    <rect class="cardPrompt" x="634" y="115" width="86" height="7" rx="3.5"/>
+    <rect class="cardResp" x="634" y="132" width="138" height="6" rx="3"/>
+    <rect class="cardResp" x="634" y="142" width="102" height="6" rx="3"/>
+    <rect class="cardResp" x="634" y="152" width="70" height="5" rx="2.5"/>
+  </g>
   <g mask="url(#scrollFade)">
-    <rect class="idle" x="846" y="68.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="78.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="88.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="98.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="108.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="844" y="118.75" width="8" height="2.5" rx="1.25"/>
-    <rect class="near" x="840" y="128.75" width="12" height="2.5" rx="1.25"/>
-    <rect class="near" x="836" y="138.75" width="16" height="2.5" rx="1.25"/>
-    <rect class="hot" x="832" y="148.75" width="20" height="2.5" rx="1.25"/>
-    <rect class="near" x="836" y="158.75" width="16" height="2.5" rx="1.25"/>
-    <rect class="near" x="840" y="168.75" width="12" height="2.5" rx="1.25"/>
-    <rect class="idle" x="844" y="178.75" width="8" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="188.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="on" x="846" y="198.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="208.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="218.75" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="846" y="228.75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="55" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="65" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="75" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="85" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="837" y="95" width="7" height="2.5" rx="1.25"/>
+    <rect class="markNear" x="834" y="105" width="10" height="2.5" rx="1.25"/>
+    <rect class="markNear" x="829" y="115" width="15" height="2.5" rx="1.25"/>
+    <rect class="markOn" x="824" y="125" width="20" height="2.5" rx="1.25"/>
+    <rect class="markNear" x="829" y="135" width="15" height="2.5" rx="1.25"/>
+    <rect class="markNear" x="834" y="145" width="10" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="837" y="155" width="7" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="165" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="175" width="6" height="2.5" rx="1.25"/>
+    <rect class="markBrand" x="832" y="184.75" width="12" height="3" rx="1.5"/>
+    <rect class="markIdle" x="838" y="195" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="205" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="215" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="838" y="225" width="6" height="2.5" rx="1.25"/>
   </g>
-  <!-- pointer on the hot mark, just outside the column edge -->
-  <path d="M856 150 l11 4.2-4.6 1.1 3.1 5.6-2.1 1.15-3.1-5.6-3.9 2.3z" fill="#0f1115" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
+  <path d="M848 126 l10 4-4.2 1 2.8 5.2-1.9 1-2.8-5.2-3.5 2.1z" class="ink" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
 </svg>

@@ -1,266 +1,177 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" width="880" height="360" role="img" aria-label="Turn rail on the conversation edge: left or right, compact or loose. Scroll the wheel to preview turns one by one, click to jump. In narrow columns the official UI hides and the rail stays. Cmd+F opens a 52px capsule into a result card.">
-  <title>dsh-ui-outline</title>
-  <desc>Edge turn rail, wheel-stepped preview with click-to-jump, narrow-column stay, and Cmd+F search.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" role="img" aria-label="Turn outline rail: hover wave and per-turn liquid-glass preview card">
+  <!-- Redesigned hero. Composition: the conversation column fills the frame
+       (640px wide) with turn-grouped bars; the rail hugs its right edge with
+       a legible mark ladder; the liquid card floats on a visible lens blur.
+       Real lighting params from lib/client.js, illustratively strengthened:
+       neutral corner glint, one-way Fresnel rim, thick-lens fold band. -->
   <style>
-    text { font-family: system-ui, sans-serif; }
-    .scene { fill: #edf0f3; }
-    .col { fill: #fff; stroke: rgba(0,0,0,.1); stroke-width: 1; }
-    .prompt { fill: rgba(15,17,21,.46); }
-    .resp { fill: rgba(97,102,107,.24); }
-    .dim { fill: rgba(97,102,107,.14); }
-    .idle { fill: #81858c; }
-    .on { fill: #0f1115; fill-opacity: .7; }
-    .hot { fill: #0f1115; }
-    .near { fill: #0f1115; fill-opacity: .55; }
-    .stay { fill: #0f1115; fill-opacity: .82; }
-    .ghost { fill: #81858c; fill-opacity: .55; }
-    .ink { fill: #0f1115; }
-    .mute { fill: #81858c; }
-    .sub { fill: #61666b; }
-    .card { fill: #fff; }
+    .scene { fill: #edf0f3; stroke: rgba(0, 0, 0, .08); }
+    .ink   { fill: #0f1115; }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .09); }
+    .prompt  { fill: rgba(15, 17, 21, .46); }
+    .resp    { fill: rgba(97, 102, 107, .24); }
+    .respDim { fill: rgba(97, 102, 107, .14); }
+    .card    { fill: rgba(255, 255, 255, .28); }
+    .cardSub { fill: rgba(15, 17, 21, .55); }
+    .cardRing { stroke: rgba(0, 0, 0, .14); fill: none; }
+    .glint   { fill: url(#heroGlint); }
+    .sheen   { fill: url(#heroSheen); }
+    .rim     { stroke: url(#heroRim); }
+    .foldBar { fill: rgba(97,102,107,.62); } .foldBar2 { fill: rgba(97,102,107,.38); }
+    .markIdle  { fill: rgba(129, 133, 140, .40); }
+    .markOn    { fill: #0f1115; }
+    .markHot   { fill: rgba(15, 17, 21, .70); }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #101113; stroke: rgba(255, 255, 255, .09); }
+      .ink   { fill: #f9fafb; }
+      .surface { fill: #1c1d1f; stroke: rgba(255, 255, 255, .10); }
+      .prompt  { fill: rgba(249, 250, 251, .44); }
+      .resp    { fill: rgba(166, 171, 178, .24); }
+      .respDim { fill: rgba(166, 171, 178, .14); }
+      .card    { fill: rgba(35, 35, 36, .32); }
+      .cardSub { fill: rgba(249, 250, 251, .58); }
+      .cardRing { stroke: rgba(255, 255, 255, .15); fill: none; }
+      .glint   { fill: url(#heroGlintD); }
+      .rim     { stroke: url(#heroRimD); }
+      .foldBar { fill: rgba(166,171,178,.85); } .foldBar2 { fill: rgba(166,171,178,.5); }
+      .markIdle  { fill: rgba(173, 178, 184, .38); }
+      .markOn    { fill: #f9fafb; }
+      .markHot   { fill: #d9dde2; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
   </style>
+
   <defs>
-    <filter id="lift" x="-35%" y="-40%" width="170%" height="190%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".16"/>
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".08"/>
+    <radialGradient id="heroGlint" gradientUnits="userSpaceOnUse" cx="330" cy="110" r="70" gradientTransform="scale(1,0.5)">
+      <stop offset="0%" stop-color="rgba(255,255,255,.34)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.09)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <radialGradient id="heroGlintD" gradientUnits="userSpaceOnUse" cx="330" cy="110" r="70" gradientTransform="scale(1,0.5)">
+      <stop offset="0%" stop-color="rgba(255,255,255,.12)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,.05)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <linearGradient id="heroSheen" x1="0" y1="0" x2=".74" y2=".67">
+      <stop offset="0%" stop-color="rgba(255,255,255,.12)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="100%" stop-color="rgba(120,170,255,.06)"/>
+    </linearGradient>
+    <linearGradient id="heroRim" x1="0" y1="0" x2=".74" y2=".67">
+      <stop offset="0%" stop-color="rgba(255,255,255,1)"/>
+      <stop offset="22%" stop-color="rgba(255,255,255,.3)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="heroRimD" x1="0" y1="0" x2=".74" y2=".67">
+      <stop offset="0%" stop-color="rgba(249,250,251,.72)"/>
+      <stop offset="22%" stop-color="rgba(249,250,251,.18)"/>
+      <stop offset="45%" stop-color="rgba(249,250,251,0)"/>
+    </linearGradient>
+    <linearGradient id="heroFold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,.34)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="heroLens"><feGaussianBlur stdDeviation="8"/><feColorMatrix type="saturate" values="1.6"/></filter>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,.18)" flood-opacity="1"/>
     </filter>
-    <linearGradient id="rim" x1="0" y1="0" x2=".85" y2=".9">
-      <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
-      <stop offset=".42" stop-color="#fff" stop-opacity=".28"/>
-      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4d6bfe" stop-opacity=".06"/>
-      <stop offset="1" stop-color="#4d6bfe" stop-opacity="0"/>
-    </linearGradient>
-    <clipPath id="clipPrev"><rect x="186" y="106" width="190" height="106" rx="18.4"/></clipPath>
-    <clipPath id="clipSearch"><rect x="588" y="108" width="268" height="192" rx="26"/></clipPath>
-    <clipPath id="clipCap"><rect x="588" y="40" width="268" height="52" rx="26"/></clipPath>
+    <clipPath id="clipCard"><rect x="304" y="96" width="280" height="104" rx="18"/></clipPath>
   </defs>
 
-  <rect class="scene" x="1" y="1" width="878" height="358" rx="16"/>
+  <rect class="scene" x="1" y="1" width="758" height="318" rx="14"/>
 
-  <!-- labels -->
-  <text class="ink" x="16" y="28" font-size="14" font-weight="600">Left · Loose</text>
-  <text class="ink" x="146" y="28" font-size="14" font-weight="600">Right · Compact</text>
-  <text class="ink" x="436" y="28" font-size="14" font-weight="600">Narrow column</text>
-  <text class="ink" x="588" y="28" font-size="14" font-weight="600">Cmd+F</text>
-
-  <!-- ===== 1a left edge, loose 30px pitch ===== -->
-  <rect class="col" x="16" y="40" width="116" height="288" rx="12"/>
+  <!-- conversation column, turn-grouped bars -->
+  <rect class="surface" x="56" y="24" width="640" height="272" rx="12"/>
   <g>
-    <rect class="prompt" x="46" y="62" width="72" height="8" rx="4"/>
-    <rect class="resp" x="46" y="74" width="58" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="98" width="64" height="8" rx="4"/>
-    <rect class="resp" x="46" y="110" width="70" height="6" rx="3"/>
-    <rect class="dim" x="46" y="120" width="40" height="5" rx="2.5"/>
-    <rect class="prompt" x="46" y="142" width="68" height="8" rx="4"/>
-    <rect class="resp" x="46" y="154" width="50" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="176" width="74" height="8" rx="4"/>
-    <rect class="resp" x="46" y="188" width="60" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="212" width="56" height="8" rx="4"/>
-    <rect class="resp" x="46" y="224" width="66" height="6" rx="3"/>
-    <rect class="dim" x="46" y="234" width="36" height="5" rx="2.5"/>
-    <rect class="prompt" x="46" y="256" width="70" height="8" rx="4"/>
-    <rect class="resp" x="46" y="268" width="48" height="6" rx="3"/>
-    <rect class="prompt" x="46" y="292" width="60" height="8" rx="4"/>
-    <rect class="resp" x="46" y="304" width="54" height="6" rx="3"/>
+    <rect class="prompt" x="104" y="48" width="200" height="8" rx="4"/>
+    <rect class="resp" x="104" y="60" width="320" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="70" width="240" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="90" width="170" height="8" rx="4"/>
+    <rect class="resp" x="104" y="102" width="300" height="6" rx="3"/>
+    <rect class="prompt" x="104" y="132" width="240" height="8" rx="4"/>
+    <rect class="resp" x="104" y="144" width="340" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="154" width="220" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="174" width="190" height="8" rx="4"/>
+    <rect class="resp" x="104" y="186" width="310" height="6" rx="3"/>
+    <rect class="prompt" x="104" y="216" width="220" height="8" rx="4"/>
+    <rect class="resp" x="104" y="228" width="280" height="6" rx="3"/>
+    <rect class="respDim" x="104" y="238" width="180" height="5" rx="2.5"/>
+    <rect class="prompt" x="104" y="258" width="160" height="8" rx="4"/>
+    <rect class="resp" x="104" y="270" width="230" height="6" rx="3"/>
   </g>
-  <!-- EDGE_GAP 12, left-aligned, rest 6px of the 20px mark, pitch 30 -->
+
+  <!-- liquid-glass preview card: floats left of the rail with 10px gap from
+       the hot mark; backdrop visibly bent through the lens chain -->
+  <g id="card">
+    <animateTransform attributeName="transform" type="translate"
+      values="0 0; 0 0; 0 38; 0 38; 0 38; 0 38; 0 0"
+      keyTimes="0; .34; .42; .76; .82; .90; 1" dur="4.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity"
+      values="1; 1; 1; 1; 0; 0; 1"
+      keyTimes="0; .34; .42; .76; .82; .90; 1" dur="4.2s" repeatCount="indefinite"/>
+    <g filter="url(#cardShadow)">
+      <g clip-path="url(#clipCard)">
+        <g filter="url(#heroLens)">
+          <rect class="prompt" x="104" y="90" width="170" height="8" rx="4"/>
+          <rect class="resp" x="104" y="102" width="300" height="6" rx="3"/>
+          <rect class="prompt" x="104" y="132" width="240" height="8" rx="4"/>
+          <rect class="resp" x="104" y="144" width="340" height="6" rx="3"/>
+          <rect class="respDim" x="104" y="154" width="220" height="5" rx="2.5"/>
+          <rect class="prompt" x="104" y="174" width="190" height="8" rx="4"/>
+          <rect class="resp" x="104" y="186" width="310" height="6" rx="3"/>
+        </g>
+        <rect class="card" x="304" y="96" width="280" height="104" rx="18"/>
+        <rect x="304" y="96" width="26" height="104" fill="url(#heroFold)"/>
+        <rect class="foldBar"  x="304.5" y="112" width="24" height="3.6" rx="1.8"/>
+        <rect class="foldBar2" x="304.5" y="117.8" width="22" height="2.4" rx="1.2"/>
+        <rect class="foldBar"  x="304.5" y="146" width="24" height="3.6" rx="1.8"/>
+        <rect class="foldBar2" x="304.5" y="151.8" width="22" height="2.4" rx="1.2"/>
+        <rect class="foldBar"  x="304.5" y="180" width="24" height="3.6" rx="1.8"/>
+        <rect class="glint" x="304" y="96" width="280" height="104" rx="18"/>
+        <rect class="sheen" x="304" y="96" width="280" height="104" rx="18"/>
+      </g>
+      <rect class="cardRing" x="304.5" y="96.5" width="279" height="103" rx="17.5" stroke-width="1"/>
+      <rect x="304.5" y="96.5" width="279" height="103" rx="17.5" fill="none" class="rim" stroke-width="1.7"/>
+      <rect class="ink" x="330" y="116" width="190" height="9" rx="4.5"/>
+      <rect class="ink" x="330" y="132" width="140" height="9" rx="4.5"/>
+      <rect class="cardSub" x="330" y="150" width="88" height="5" rx="2.5"/>
+      <rect class="cardSub" x="330" y="165" width="210" height="7" rx="3.5"/>
+      <rect class="cardSub" x="330" y="178" width="150" height="7" rx="3.5"/>
+    </g>
+  </g>
+
+  <!-- rail: mark ladder hugging the column edge (right-aligned x_end=688) -->
   <g>
-    <rect class="idle" x="28" y="77.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="107.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="137.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="167.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="on" x="28" y="197.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="227.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="257.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="28" y="287.8" width="6" height="2.5" rx="1.25"/>
+    <rect class="markIdle" x="681" y="52" width="7" height="2.5" rx="1.25">
+      <animate attributeName="width" values="7;7;9;9;7;7" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="681;681;679;679;681;681" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markIdle" x="672" y="94" width="16" height="2.5" rx="1.25">
+      <animate attributeName="width" values="16;16;14;14;16;16" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="672;672;674;674;672;672" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" x="672" y="94" width="16" height="2.5" rx="1.25">
+      <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="16;16;14;14;16;16" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="672;672;674;674;672;672" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markIdle" x="677" y="136" width="11" height="2.5" rx="1.25">
+      <animate attributeName="width" values="11;11;22;22;11;11" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="677;677;666;666;677;677" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markHot" x="677" y="136" width="11" height="2.5" rx="1.25" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="11;11;22;22;11;11" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="677;677;666;666;677;677" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markIdle" x="680" y="178" width="8" height="2.5" rx="1.25">
+      <animate attributeName="width" values="8;8;14;14;8;8" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="680;680;674;674;680;680" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markIdle" x="681.5" y="220" width="6.5" height="2.5" rx="1.25">
+      <animate attributeName="width" values="6.5;6.5;9;9;6.5;6.5" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+      <animate attributeName="x" values="681.5;681.5;679;679;681.5;681.5" keyTimes="0;.34;.42;.76;.82;1" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect class="markOn" x="680" y="261.5" width="8" height="3" rx="1.5"/>
   </g>
-
-  <!-- ===== 1b right edge, compact 10px pitch, hover preview ===== -->
-  <rect class="col" x="146" y="40" width="272" height="288" rx="12"/>
-  <g>
-    <rect class="prompt" x="162" y="54" width="168" height="8" rx="4"/>
-    <rect class="resp" x="162" y="66" width="132" height="6" rx="3"/>
-    <rect class="dim" x="162" y="76" width="96" height="5" rx="2.5"/>
-    <rect class="prompt" x="162" y="90" width="120" height="8" rx="4"/>
-    <rect class="resp" x="162" y="102" width="150" height="6" rx="3"/>
-    <!-- transcript continues under the card -->
-    <rect class="prompt" x="162" y="128" width="200" height="8" rx="4"/>
-    <rect class="resp" x="162" y="140" width="176" height="6" rx="3"/>
-    <rect class="dim" x="162" y="150" width="110" height="5" rx="2.5"/>
-    <rect class="prompt" x="162" y="164" width="188" height="8" rx="4"/>
-    <rect class="resp" x="162" y="176" width="150" height="6" rx="3"/>
-    <rect class="prompt" x="162" y="190" width="164" height="8" rx="4"/>
-    <rect class="resp" x="162" y="202" width="190" height="6" rx="3"/>
-    <rect class="dim" x="162" y="212" width="100" height="5" rx="2.5"/>
-    <rect class="prompt" x="162" y="236" width="156" height="8" rx="4"/>
-    <rect class="resp" x="162" y="248" width="128" height="6" rx="3"/>
-    <rect class="prompt" x="162" y="268" width="180" height="8" rx="4"/>
-    <rect class="resp" x="162" y="280" width="140" height="6" rx="3"/>
-    <rect class="dim" x="162" y="290" width="88" height="5" rx="2.5"/>
-    <rect class="prompt" x="162" y="304" width="112" height="8" rx="4"/>
-    <rect class="resp" x="162" y="316" width="96" height="6" rx="3"/>
-  </g>
-
-  <text class="sub" x="374" y="98" text-anchor="end" font-size="14" font-weight="600">Hover</text>
-
-  <!-- preview: 106px, radius 18.4, 10px clear of the 20px hot mark -->
-  <g filter="url(#lift)">
-    <rect class="card" x="186" y="106" width="190" height="106" rx="18.4"/>
-  </g>
-  <g clip-path="url(#clipPrev)">
-    <rect fill="url(#sheen)" x="186" y="106" width="190" height="40"/>
-  </g>
-  <rect x="186.5" y="106.5" width="189" height="105" rx="18" fill="none" stroke="rgba(0,0,0,.1)" stroke-width="1"/>
-  <rect x="186.5" y="106.5" width="189" height="105" rx="18" fill="none" stroke="url(#rim)" stroke-width="1.6"/>
-  <g>
-    <rect class="ink" x="198" y="132" width="132" height="8" rx="4"/>
-    <rect class="ink" x="198" y="146" width="96" height="8" rx="4"/>
-    <rect class="sub" x="198" y="166" width="150" height="6" rx="3" opacity=".75"/>
-    <rect class="sub" x="198" y="178" width="112" height="6" rx="3" opacity=".45"/>
-  </g>
-
-  <!-- compact ladder, right-aligned, pitch 10, rest 6 / hot 20. Ends fade: the frame scrolls. -->
-  <g>
-    <rect class="idle" x="400" y="77.8" width="6" height="2.5" rx="1.25" opacity=".4"/>
-    <rect class="idle" x="400" y="87.8" width="6" height="2.5" rx="1.25" opacity=".7"/>
-    <rect class="idle" x="400" y="97.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="107.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="117.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="398" y="127.8" width="8" height="2.5" rx="1.25"/>
-    <rect class="near" x="394" y="137.8" width="12" height="2.5" rx="1.25"/>
-    <rect class="near" x="390" y="147.8" width="16" height="2.5" rx="1.25"/>
-    <rect class="hot" x="386" y="157.8" width="20" height="2.5" rx="1.25"/>
-    <rect class="near" x="390" y="167.8" width="16" height="2.5" rx="1.25"/>
-    <rect class="near" x="394" y="177.8" width="12" height="2.5" rx="1.25"/>
-    <rect class="idle" x="398" y="187.8" width="8" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="197.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="207.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="217.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="on" x="400" y="227.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="237.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="247.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="257.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="267.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="idle" x="400" y="277.8" width="6" height="2.5" rx="1.25" opacity=".7"/>
-    <rect class="idle" x="400" y="287.8" width="6" height="2.5" rx="1.25" opacity=".4"/>
-  </g>
-  <!-- pointer on the hot mark -->
-  <path d="M410 159 l11 4.2-4.6 1.1 3.1 5.6-2.1 1.15-3.1-5.6-3.9 2.3z" fill="#0f1115" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
-
-  <!-- ===== 2 narrow column: official UI hides, rail stays ===== -->
-  <rect class="col" x="436" y="40" width="132" height="288" rx="12"/>
-  <text class="sub" x="448" y="78" font-size="14" font-weight="500">Official hides</text>
-  <!-- wheel stepping: scroll previews one turn at a time, the click jumps -->
-  <g>
-    <rect x="452" y="104" width="15" height="24" rx="7.5" fill="none" stroke="#61666b" stroke-width="1.6"/>
-    <line x1="459.5" y1="110" x2="459.5" y2="122" stroke="#61666b" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M482 108 l0 14 m-3.4-3.2 3.4 3.4 3.4-3.4" fill="none" stroke="#61666b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M489 136 l0 -14 m-3.4 3.2 3.4-3.4 3.4 3.4" fill="none" stroke="#61666b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <text class="sub" x="476" y="160" font-size="14" font-weight="600">Scroll to preview</text>
-    <text class="sub" x="476" y="180" font-size="14">· click to jump ·</text>
-  </g>
-
-  <!-- cancelled official ticks -->
-  <g>
-    <rect class="ghost" x="542" y="57.8" width="14" height="2.5" rx="1.25"/>
-    <rect class="ghost" x="542" y="67.8" width="14" height="2.5" rx="1.25"/>
-    <rect class="ghost" x="542" y="77.8" width="14" height="2.5" rx="1.25"/>
-    <rect class="ghost" x="542" y="87.8" width="14" height="2.5" rx="1.25"/>
-    <rect class="ghost" x="542" y="97.8" width="14" height="2.5" rx="1.25"/>
-  </g>
-  <g stroke="#0f1115" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".7">
-    <line x1="536" y1="50" x2="562" y2="108"/>
-    <line x1="562" y1="50" x2="536" y2="108"/>
-  </g>
-  <g>
-    <rect class="prompt" x="448" y="132" width="78" height="8" rx="4"/>
-    <rect class="resp" x="448" y="144" width="62" height="6" rx="3"/>
-    <rect class="prompt" x="448" y="164" width="70" height="8" rx="4"/>
-    <rect class="resp" x="448" y="176" width="54" height="6" rx="3"/>
-    <rect class="prompt" x="448" y="214" width="74" height="8" rx="4"/>
-    <rect class="resp" x="448" y="226" width="58" height="6" rx="3"/>
-    <rect class="prompt" x="448" y="238" width="66" height="8" rx="4"/>
-    <rect class="resp" x="448" y="250" width="48" height="6" rx="3"/>
-    <rect class="prompt" x="448" y="270" width="72" height="8" rx="4"/>
-    <rect class="resp" x="448" y="282" width="50" height="6" rx="3"/>
-  </g>
-  <!-- our rail, same edge, still there -->
-  <g>
-    <rect class="stay" x="550" y="123.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="133.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="143.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="153.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="hot" x="540" y="163.8" width="16" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="173.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="183.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="193.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="203.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="213.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="223.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="233.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="243.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="253.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="263.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="273.8" width="6" height="2.5" rx="1.25"/>
-    <rect class="stay" x="550" y="283.8" width="6" height="2.5" rx="1.25"/>
-  </g>
-  <text class="ink" x="532" y="198" text-anchor="end" font-size="14" font-weight="600">Rail stays</text>
-
-  <!-- ===== 3 Cmd+F: 52px stadium capsule, then the opened card ===== -->
-  <g filter="url(#lift)">
-    <rect class="card" x="588" y="40" width="268" height="52" rx="26"/>
-  </g>
-  <g clip-path="url(#clipCap)">
-    <rect fill="url(#sheen)" x="588" y="40" width="268" height="26"/>
-  </g>
-  <rect x="588.5" y="40.5" width="267" height="51" rx="25.5" fill="none" stroke="rgba(0,0,0,.1)"/>
-  <rect x="588.5" y="40.5" width="267" height="51" rx="25.5" fill="none" stroke="url(#rim)" stroke-width="1.6"/>
-  <!-- magnifier, left; empty placeholder centered -->
-  <g fill="none" stroke="#81858c" stroke-width="1.7" stroke-linecap="round">
-    <circle cx="610" cy="66" r="5.4"/>
-    <path d="M614.2 70.2 L617.6 73.6"/>
-  </g>
-  <text class="mute" x="722" y="66" text-anchor="middle" dominant-baseline="middle" font-size="15">Search</text>
-
-  <g filter="url(#lift)">
-    <rect class="card" x="588" y="108" width="268" height="192" rx="26"/>
-  </g>
-  <g clip-path="url(#clipSearch)">
-    <rect fill="url(#sheen)" x="588" y="108" width="268" height="36"/>
-  </g>
-  <rect x="588.5" y="108.5" width="267" height="191" rx="25.5" fill="none" stroke="rgba(0,0,0,.1)"/>
-  <rect x="588.5" y="108.5" width="267" height="191" rx="25.5" fill="none" stroke="url(#rim)" stroke-width="1.6"/>
-
-  <!-- input row is the same 52px -->
-  <g fill="none" stroke="#81858c" stroke-width="1.7" stroke-linecap="round">
-    <circle cx="610" cy="134" r="5.4"/>
-    <path d="M614.2 138.2 L617.6 141.6"/>
-  </g>
-  <text class="ink" x="628" y="134" dominant-baseline="middle" font-size="15">edge</text>
-  <rect fill="#4d6bfe" x="666" y="126" width="1.6" height="16" rx=".8"/>
-
-  <line x1="588" y1="160.5" x2="856" y2="160.5" stroke="rgba(0,0,0,.1)"/>
-
-  <!-- selected row: inset pill (radius = half the 48px height), brand 10% -->
-  <rect x="596" y="167" width="252" height="48" rx="24" fill="rgba(77,107,254,.1)"/>
-  <rect x="608" y="182" width="22" height="18" rx="6" fill="rgba(0,0,0,.05)"/>
-  <text class="sub" x="619" y="191" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="500">3</text>
-  <rect class="ink" x="638" y="178" width="40" height="8" rx="4"/>
-  <rect x="682" y="174" width="34" height="16" rx="3" fill="rgba(77,107,254,.24)"/>
-  <rect class="ink" x="686" y="178" width="26" height="8" rx="3"/>
-  <rect class="ink" x="720" y="178" width="56" height="8" rx="4"/>
-  <rect class="sub" x="638" y="196" width="112" height="6" rx="3" opacity=".7"/>
-
-  <!-- second row, no pill — the highlight is the selected one -->
-  <rect x="608" y="230" width="22" height="18" rx="6" fill="rgba(0,0,0,.05)"/>
-  <text class="sub" x="619" y="239" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="500">8</text>
-  <rect class="sub" x="638" y="226" width="96" height="8" rx="4" opacity=".8"/>
-  <rect class="sub" x="638" y="242" width="72" height="6" rx="3" opacity=".45"/>
-
-  <line x1="588" y1="269.5" x2="856" y2="269.5" stroke="rgba(0,0,0,.1)"/>
-  <text class="sub" x="722" y="288" text-anchor="middle" font-size="14">↑↓ Select · ↵ Jump · Esc Close</text>
 </svg>
