@@ -2,30 +2,73 @@
 
 # dsh-ui-outline
 
-<p align="center"><img src="docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline"></p>
+A customizable turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web, built to help you find your way through long conversations.
 
-A turn navigation rail for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh 0.2.1) web (desktop shell embeds the same web client). Hugs the conversation edge and centers on the reading band. Under 900px column width (a side panel, or a browser window beside the app) the official rail hides; this one stays by default so turns remain reachable. Hide, in settings or via the edge switch, restores the official stand-down. The 44px hit strip snaps clicks to the nearest turn and supports drag scrubbing.
+<p align="center"><img src="docs/img/rail-hero.svg" width="700"></p>
 
-- **Mark layout**: `compact` (official 10px pitch, scrolls when overflowing) or `loose` (30px row per turn).
-- **Preview material**: `none` (opaque official card), `frost` (default: veil + bright rim + extra blur), or `liquid` (thin lens with the same bright rim + subtle blur, translucent with no reflection or SVG).
-- **Conversation search**: `⌘F` / `Ctrl+F` opens a Spotlight-style overlay — an empty query shows a track-shaped G2 capsule bar (half-superellipse ends) that morphs into the full rounded card on the first keystroke (grid 0fr→1fr height morph with the radius riding along). It live-searches every turn's prompt and final response (whitespace AND tokens, match highlighting, ±30-char context windows); the surface follows the preview-card material. ↑↓ to select, ↵ to jump with the landing flash, esc or outside-click to close. Long conversations stay smooth: the index builds in background slices on first open, scanning is sliced behind a 60ms debounce, and only the newest 50 hits are shown.
+## A rail that fits how you read
+
+Dock the rail to either edge of the conversation column and choose between two tick densities:
+
+- **Compact `compact`**: 10px spacing, with scrolling inside the rail when turns overflow.
+- **Loose `loose`**: a 30px row per turn for more breathing room.
+
+The 44px-wide hit strip snaps clicks to the nearest turn, so you do not need to aim at a thin tick. Hold and drag to scrub through turns; hover to preview a short excerpt of the prompt and response.
+
+## Keep navigation in narrow columns
+
+Opening a sidebar or using split-screen can reduce the conversation column below 900px. The official turn rail then hides; this plugin stays at the column edge by default, keeping quick jumps within reach.
+
+Prefer it hidden? Change the narrow-column setting. An edge switch remains available to bring the rail back.
+
+## ⌘F / Ctrl+F to search the conversation
+
+Press `⌘F` / `Ctrl+F` to open a Spotlight-style search overlay. With an empty query, it is a 52px-high G2 capsule bar with 26px half-superellipse ends. The first character expands it downward into a card, keeping the same 26px corner radius throughout.
+
+Search covers each turn's prompt and final response in the current conversation:
+
+- **Whitespace-separated terms, AND matching**: every term must match.
+- **Highlighted matches**: snippets include 30 characters of context on either side of a match.
+- **Keyboard controls**: `↑` / `↓` to select, `↵` to jump with a brief landing flash, and `Esc` or an outside click to close.
+- **Long-conversation handling**: the index builds in background chunks on first open; chunked scanning and a 60ms debounce reduce typing stalls. Results show up to the newest 50 matches.
+
+Preview cards and the search overlay offer frosted glass `frost`, liquid glass `liquid`, or the official opaque appearance.
 
 ## Install
 
 Requires dsh `0.2.1`.
 
+Choose one installation method:
+
 ```sh
 dsh plugin --profile web add dsh-ui-outline
 dsh plugin --profile web add github:iluluyu/dsh-ui-outline
-dsh plugin --profile web add .   # run from the plugin directory; relative paths are anchored to the invoking directory
+dsh plugin --profile web add .   # run from the plugin directory; relative paths resolve from the invoking directory
 dsh plugin --profile web add file:/absolute/path/to/plugin
 ```
 
-Restart `dsh web` and reload. Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
+Restart `dsh web` after installation, then reload the page.
+
+Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
+
+Built for the web version. The DeepSeek desktop app has not been specifically adapted for; you are welcome to try it.
 
 ## Settings
 
-*Plugins → dsh-ui-outline*. Defaults: right, compact, frost (transparency 80, blur 6), narrow shown. Liquid standard is transparency 75, blur 4. Airy / Standard / Misty write both knobs at once. Narrow → Hide stands the rail down under 900px; the edge switch writes the same setting.
+Open **Plugins → dsh-ui-outline**.
+
+| Setting | Options and defaults |
+| --- | --- |
+| Dock edge | Left / Right; defaults to Right |
+| Tick density | Compact `compact` / Loose `loose`; defaults to Compact |
+| Preview material | Opaque `none` / Frosted glass `frost` / Liquid glass `liquid`; defaults to Frosted glass |
+| Narrow-column visibility | Show / Hide; defaults to Show |
+
+Frosted glass defaults to transparency **80** and blur **6**, combining a soft veil, a bright rim, and extra blur. Liquid glass uses a thinner, more translucent surface; its Standard preset sets transparency to **75** and blur to **4**.
+
+The **Airy / Standard / Misty** presets update transparency and blur together, without briefly exposing the custom sliders. The search overlay follows the preview material setting; liquid-glass search uses a minimum effective blur of **10px** for readability.
+
+Set narrow-column visibility to Hide to collapse the rail below **900px**. The edge switch brings it back and updates the same setting.
 
 ## License
 
