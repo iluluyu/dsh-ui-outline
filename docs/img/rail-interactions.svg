@@ -1,161 +1,102 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-label="Rail interactions: hover preview card and wheel-stepped cursor — the current turn stays put while the preview walks">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-label="Rail interactions: the current turn stays on a solid brand row while the dashed cursor, glass preview, and pointer walk with the wheel">
   <style>
-    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); }
-    .surface { fill: #fff; stroke: rgba(0,0,0,.09); }
-    .prompt { fill: rgba(15,17,21,.46); }
-    .resp { fill: rgba(97,102,107,.24); }
-    .respDim { fill: rgba(97,102,107,.14); }
-    .cardGlass { fill: rgba(255,255,255,.32); }
-    .cardRing { stroke: rgba(0,0,0,.13); fill: none; }
-    .rim { stroke: url(#rimGrad); }
-    .cardRim { stroke: url(#cardRimGrad); }
-    .sheen { fill: url(#sheenGrad); }
-    .foldBar { fill: rgba(97,102,107,.55); }
-    .foldBar2 { fill: rgba(97,102,107,.32); }
-    .cardPrompt { fill: rgba(15,17,21,.8); }
-    .cardResp { fill: rgba(15,17,21,.45); }
+    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); stroke-width: 1; }
+    .surface { fill: #ffffff; stroke: rgba(0,0,0,.09); stroke-width: 1; }
+    .sheet { fill: #ffffff; }
+    .paper { fill: rgba(15,17,21,.5); font-size: 12px; }
+    .body { fill: rgba(15,17,21,.8); }
+    .sub { fill: rgba(15,17,21,.65); }
+    .glass { fill: rgba(255,255,255,.25); }
+    .rim { fill: none; stroke: rgb(255,255,255,.62); stroke-width: 1.5; stroke-linejoin: round; }
     .markIdle { fill: rgba(129,133,140,.4); }
     .markOn { fill: #0f1115; }
     .markNear { fill: rgba(15,17,21,.65); }
     .markBrand { fill: #4d6bfe; }
-    .ink { fill: #0f1115; }
+    .cursor { fill: #0f1115; stroke: #fff; stroke-width: 1.15; stroke-linejoin: round; }
+    .icon { fill: none; stroke: #61666b; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .sum { font-size: 11px; }
+    .row { font-size: 11px; }
+    .float { filter: url(#sh); }
     text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
     @media (prefers-color-scheme: dark) {
       .scene { fill: #101113; stroke: rgba(255,255,255,.09); }
-      .surface { fill: #1c1d1f; stroke: rgba(255,255,255,.1); }
-      .prompt { fill: rgba(249,250,251,.44); }
-      .resp { fill: rgba(166,171,178,.24); }
-      .respDim { fill: rgba(166,171,178,.14); }
-      .cardGlass { fill: rgba(35,35,36,.34); }
-      .cardRing { stroke: rgba(255,255,255,.15); }
-      .rim { stroke: url(#rimGradD); }
-      .cardRim { stroke: url(#cardRimGradD); }
-      .foldBar { fill: rgba(166,171,178,.8); }
-      .foldBar2 { fill: rgba(166,171,178,.45); }
-      .cardPrompt { fill: rgba(249,250,251,.88); }
-      .cardResp { fill: rgba(249,250,251,.55); }
+      .surface, .sheet { fill: #1c1d1f; }
+      .surface { stroke: rgba(255,255,255,.1); }
+      .paper { fill: rgba(249,250,251,.5); }
+      .body { fill: rgba(249,250,251,.88); }
+      .sub { fill: rgba(249,250,251,.72); }
+      .glass { fill: rgba(35,35,36,.25); }
+      .rim { stroke: rgb(255,255,255,.34); }
       .markIdle { fill: rgba(173,178,184,.38); }
       .markOn { fill: #f9fafb; }
       .markNear { fill: rgba(249,250,251,.65); }
-      .ink { fill: #f9fafb; }
+      .cursor { fill: #f9fafb; stroke: #101113; }
+      .icon { stroke: #9da2a8; }
+      .float { filter: url(#shD); }
     }
   </style>
   <defs>
-    <radialGradient id="glintSurface" cx="10%" cy="12%" r="28%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,.08)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <radialGradient id="cardGlint" cx="12%" cy="15%" r="35%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.36)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,.1)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <linearGradient id="rimGrad" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="25%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="rimGradD" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="rgba(249,250,251,.65)"/>
-      <stop offset="25%" stop-color="rgba(249,250,251,.16)"/>
-      <stop offset="50%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGrad" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="24%" stop-color="rgba(255,255,255,.35)"/>
-      <stop offset="48%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGradD" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="rgba(249,250,251,.72)"/>
-      <stop offset="24%" stop-color="rgba(249,250,251,.18)"/>
-      <stop offset="48%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="sheenGrad" x2=".8" y2=".7">
-      <stop offset="0%" stop-color="rgba(255,255,255,.16)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="100%" stop-color="rgba(77,107,254,.05)"/>
-    </linearGradient>
-    <linearGradient id="cardFold" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <filter id="surfaceShadow" x="-5%" y="-5%" width="112%" height="118%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(15,17,21,.07)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(15,17,21,.04)"/>
+    <filter id="sh" x="-70%" y="-120%" width="240%" height="360%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".12"/>
     </filter>
-    <filter id="glassShadow" x="-15%" y="-20%" width="135%" height="150%">
-      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="rgba(0,0,0,.15)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,.07)"/>
+    <filter id="shD" x="-70%" y="-120%" width="240%" height="360%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".36"/>
     </filter>
-    <filter id="heroLens">
-      <feGaussianBlur stdDeviation="6"/>
-      <feColorMatrix type="saturate" values="1.6"/>
+    <filter id="lens" x="-20%" y="-30%" width="140%" height="170%">
+      <feGaussianBlur stdDeviation="4"/>
+      <feColorMatrix type="saturate" values="1.8"/>
     </filter>
-    <clipPath id="clipSurface"><rect x="24" y="38" width="676" height="204" rx="14"/></clipPath>
-    <clipPath id="clipPreview"><rect x="430" y="148" width="200" height="88" rx="14"/></clipPath>
+    <mask id="hole" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="280">
+      <rect width="880" height="280" fill="#fff"/>
+      <rect x="430" y="148" width="200" height="88" rx="14" fill="#000"/>
+    </mask>
+    <mask id="ring" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="280">
+      <rect width="880" height="280" fill="#fff"/>
+      <rect x="430" y="148" width="200" height="88" rx="14" fill="#000"/>
+    </mask>
+    <clipPath id="clipCard"><rect x="430" y="148" width="200" height="88" rx="14"/></clipPath>
   </defs>
   <rect class="scene" x="1" y="1" width="878" height="278" rx="14"/>
-  <g filter="url(#surfaceShadow)">
+  <g mask="url(#hole)">
     <rect class="surface" x="24" y="38" width="676" height="204" rx="14"/>
-    <g clip-path="url(#clipSurface)">
-      <rect x="24" y="38" width="676" height="204" fill="url(#glintSurface)"/>
-      <rect class="sheen" x="24" y="38" width="676" height="204"/>
+    <g class="paper">
+      <text x="66" y="58">The dominant sequence transduction models are based on complex</text>
+      <text x="66" y="74">based solely on attention mechanisms, dispensing with recurrence</text>
+      <text x="66" y="130">and convolutions entirely.</text>
+      <text x="66" y="146">Attention is all you need.</text>
+      <text x="66" y="204">Experiments on two machine translation tasks show these</text>
+      <text x="66" y="220">models to be superior in quality</text>
     </g>
-    <rect class="rim" x="24.5" y="38.5" width="675" height="203" rx="13.5" fill="none" stroke-width="1.2"/>
+    <g>
+      <rect x="46" y="84" width="440" height="30" rx="8" fill="rgba(77,107,254,.1)"/>
+      <rect x="46" y="90" width="3.5" height="18" rx="1.75" fill="#4d6bfe"/>
+      <text class="body row" x="62" y="103">We propose a new simple network architecture, the Transformer,</text>
+    </g>
+    <g>
+      <rect x="46" y="158" width="440" height="30" rx="8" fill="none" stroke="#4d6bfe" stroke-width="1.5" stroke-dasharray="5 4" stroke-linejoin="round"/>
+      <text class="body row" x="62" y="177">recurrent or convolutional neural networks.</text>
+    </g>
   </g>
-  <!-- transcript bars -->
-  <g>
-    <rect class="prompt" x="66" y="54" width="150" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="65" width="240" height="6" rx="3"/>
-    <rect class="prompt" x="66" y="116" width="180" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="127" width="260" height="6" rx="3"/>
-    <rect class="respDim" x="66" y="136" width="170" height="5" rx="2.5"/>
-    <rect class="prompt" x="66" y="196" width="140" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="207" width="220" height="6" rx="3"/>
-    <rect class="respDim" x="66" y="216" width="150" height="5" rx="2.5"/>
+  <g class="float" mask="url(#ring)">
+    <rect x="430" y="148" width="200" height="88" rx="14" fill="#000"/>
   </g>
-  <!-- current turn: solid, stays -->
-  <g>
-    <rect x="46" y="84" width="440" height="30" rx="8" fill="rgba(77,107,254,.1)"/>
-    <rect x="46" y="90" width="3.5" height="18" rx="1.75" fill="#4d6bfe"/>
-    <rect class="cardPrompt" x="62" y="92" width="150" height="7" rx="3.5"/>
-    <rect class="cardResp" x="62" y="102" width="210" height="6" rx="3"/>
-  </g>
-  <!-- wheel-cursor turn: dashed, walks -->
-  <g>
-    <rect x="46" y="158" width="440" height="30" rx="8" fill="none" stroke="#4d6bfe" stroke-width="1.5" stroke-dasharray="5 4" stroke-linejoin="round"/>
-    <rect class="cardPrompt" x="62" y="166" width="170" height="7" rx="3.5"/>
-    <rect class="cardResp" x="62" y="176" width="190" height="6" rx="3"/>
-  </g>
-  <!-- glass preview card, lens-blurred transcript behind -->
-  <g filter="url(#glassShadow)">
-    <g clip-path="url(#clipPreview)">
-      <g filter="url(#heroLens)">
-        <rect class="prompt" x="446" y="152" width="150" height="7" rx="3.5"/>
-        <rect class="resp" x="446" y="163" width="180" height="6" rx="3"/>
-        <rect class="prompt" x="446" y="182" width="160" height="7" rx="3.5"/>
-        <rect class="resp" x="446" y="193" width="140" height="6" rx="3"/>
-        <rect class="prompt" x="446" y="212" width="130" height="7" rx="3.5"/>
+  <g clip-path="url(#clipCard)">
+    <g filter="url(#lens)">
+      <rect class="sheet" x="410" y="128" width="240" height="128"/>
+      <g class="paper">
+        <text x="446" y="156">Attention is all you need.</text>
+        <text x="446" y="230">and convolutions entirely.</text>
       </g>
-      <rect class="cardGlass" x="430" y="148" width="200" height="88" rx="14"/>
-      <rect x="610" y="148" width="20" height="88" fill="url(#cardFold)"/>
-      <rect class="foldBar" x="610" y="166" width="18" height="3" rx="1.5"/>
-      <rect class="foldBar2" x="612" y="172" width="16" height="2" rx="1"/>
-      <rect class="foldBar" x="610" y="200" width="18" height="3" rx="1.5"/>
-      <rect class="foldBar2" x="612" y="206" width="16" height="2" rx="1"/>
-      <rect x="430" y="148" width="200" height="88" rx="14" fill="url(#cardGlint)"/>
-      <rect class="sheen" x="430" y="148" width="200" height="88" rx="14"/>
     </g>
-    <rect class="cardRing" x="430.5" y="148.5" width="199" height="87" rx="13.5" stroke-width="1"/>
-    <rect class="cardRim" x="430.5" y="148.5" width="199" height="87" rx="13.5" fill="none" stroke-width="1.6"/>
-    <rect class="cardPrompt" x="446" y="166" width="124" height="7" rx="3.5"/>
-    <rect class="cardPrompt" x="446" y="177" width="86" height="7" rx="3.5"/>
-    <rect class="cardResp" x="446" y="194" width="138" height="6" rx="3"/>
-    <rect class="cardResp" x="446" y="204" width="102" height="6" rx="3"/>
-    <rect class="cardResp" x="446" y="214" width="70" height="5" rx="2.5"/>
+    <rect class="glass" x="430" y="148" width="200" height="88" rx="14"/>
   </g>
-  <!-- rail on the column's right edge: current mark fixed, wave at the cursor -->
+  <rect class="rim" x="430" y="148" width="200" height="88" rx="14"/>
+  <g class="sum">
+    <text class="body" x="446" y="166">We introduce a new language</text>
+    <text class="body" x="446" y="182">representation model called BERT,</text>
+    <text class="sub" x="446" y="198">designed to pre-train deep</text>
+    <text class="sub" x="446" y="214">bidirectional representations.</text>
+  </g>
   <g>
     <rect class="markIdle" x="688" y="56" width="6" height="2.5" rx="1.25"/>
     <rect class="markIdle" x="688" y="70" width="6" height="2.5" rx="1.25"/>
@@ -169,18 +110,15 @@
     <rect class="markIdle" x="688" y="212" width="6" height="2.5" rx="1.25"/>
     <rect class="markIdle" x="688" y="226" width="6" height="2.5" rx="1.25"/>
   </g>
-  <!-- pointer on the hot mark -->
-  <path d="M700 171 l11 4.2-4.6 1.1 3.1 5.6-2.1 1.15-3.1-5.6-3.9 2.3z" class="ink" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
-  <!-- wheel glyph: scroll drives the cursor -->
-  <g fill="none" stroke="#61666b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M700 171 l11 4.2-4.6 1.1 3.1 5.6-2.1 1.15-3.1-5.6-3.9 2.3z" class="cursor" paint-order="stroke"/>
+  <g class="icon">
     <rect x="742" y="118" width="20" height="34" rx="10"/>
     <line x1="752" y1="126" x2="752" y2="138"/>
     <path d="M746 106 l6-6 6 6"/>
     <path d="M746 164 l6 6 6-6"/>
   </g>
-  <!-- the walk: cursor row steps through turns while the solid row never moves -->
-  <g fill="none" stroke="#4d6bfe" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
-    <path d="M518 188 h10 m-4-4 4 4-4 4"/>
-    <path d="M518 158 h-10 m4-4-4 4 4 4"/>
+  <g fill="none" stroke="#4d6bfe" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M324 188 h10 m-4-4 4 4-4 4"/>
+    <path d="M324 158 h-10 m4-4-4 4 4 4"/>
   </g>
 </svg>

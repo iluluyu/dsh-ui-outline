@@ -30,6 +30,10 @@ Splitting your screen or opening a sidebar shrinks the conversation column and t
 
 Press the shortcut to call up a Spotlight search bar; on the first keystroke, the capsule morphs seamlessly downward into a glass result card with identical corner curves. It supports whitespace-delimited AND matching across languages with highlighted context snippets, fully operable via keyboard (`↑` `↓` to navigate, `↵` to jump with a flash, `Esc` to dismiss). Background sliced indexing ensures silky typing regardless of conversation depth, while both the overlay and preview cards support live-switchable frosted glass, liquid glass, and opaque finishes.
 
+Three materials side by side — opaque, frosted glass, and liquid glass — over the same turn:
+
+<p align="center"><img src="docs/img/material-comparison.svg" width="640" alt="none / frost / liquid material comparison"></p>
+
 <p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="Capsule search bar expanding downward into a glass result card"></p>
 
 <details>

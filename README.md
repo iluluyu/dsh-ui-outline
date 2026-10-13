@@ -30,6 +30,10 @@
 
 按下快捷键唤出 Spotlight 搜索条；键入字符瞬间，跑道胶囊顺着固有圆角向下平滑生长为玻璃结果卡片。支持空格分词 AND 检索与中英混排，命中的上下文词块精准高亮，并全程由纯键盘高效驱动（`↑` `↓` 切换、`↵` 闪光跳转、`Esc` 退出）。后台分片构建索引杜绝输入卡顿，且搜索浮层与预览卡同样支持毛玻璃、液态玻璃及不透明等多种材质实时切换。
 
+三种材质并排看：不透明、毛玻璃、液态玻璃——同一轮内容，不同质感。
+
+<p align="center"><img src="docs/img/material-comparison.svg" width="640" alt="none / frost / liquid 三种材质对比"></p>
+
 <p align="center"><img src="docs/img/search-spotlight.svg" width="640" alt="胶囊搜索条沿同等圆角向下生长为玻璃结果卡片"></p>
 
 <details>

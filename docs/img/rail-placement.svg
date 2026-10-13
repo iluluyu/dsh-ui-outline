@@ -1,98 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Rail placement and density: loose 30px pitch on left edge, compact 10px pitch on right edge with hover wave and glass preview">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Rail placement and density: loose 30px pitch on the left edge, compact 10px pitch on the right edge with scroll fade, hover wave, and a liquid-glass preview">
   <style>
-    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); }
-    .surface { fill: #fff; stroke: rgba(0,0,0,.09); }
+    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); stroke-width: 1; }
+    .surface { fill: #ffffff; stroke: rgba(0,0,0,.09); stroke-width: 1; }
+    .sheet { fill: #ffffff; }
+    .paper { fill: rgba(15,17,21,.5); font-size: 12px; }
+    .body { fill: rgba(15,17,21,.8); }
+    .sub { fill: rgba(15,17,21,.65); }
+    .glass { fill: rgba(255,255,255,.25); }
+    .rim { fill: none; stroke: rgb(255,255,255,.62); stroke-width: 1.5; stroke-linejoin: round; }
     .label { font-size: 13px; font-weight: 600; fill: #81858c; letter-spacing: .05em; }
-    .prompt { fill: rgba(15,17,21,.46); }
-    .resp { fill: rgba(97,102,107,.24); }
-    .respDim { fill: rgba(97,102,107,.14); }
-    .cardGlass { fill: rgba(255,255,255,.32); }
-    .cardRing { stroke: rgba(0,0,0,.13); fill: none; }
-    .rim { stroke: url(#rimGrad); }
-    .cardRim { stroke: url(#cardRimGrad); }
-    .sheen { fill: url(#sheenGrad); }
-    .foldBar { fill: rgba(97,102,107,.55); }
-    .foldBar2 { fill: rgba(97,102,107,.32); }
-    .cardPrompt { fill: rgba(15,17,21,.8); }
-    .cardResp { fill: rgba(15,17,21,.45); }
     .markIdle { fill: rgba(129,133,140,.4); }
     .markOn { fill: #0f1115; }
     .markNear { fill: rgba(15,17,21,.65); }
     .markBrand { fill: #4d6bfe; }
-    .ink { fill: #0f1115; }
+    .cursor { fill: #0f1115; stroke: #fff; stroke-width: 1.15; stroke-linejoin: round; }
+    .sum { font-size: 10px; }
+    .float { filter: url(#sh); }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
     @media (prefers-color-scheme: dark) {
       .scene { fill: #101113; stroke: rgba(255,255,255,.09); }
-      .surface { fill: #1c1d1f; stroke: rgba(255,255,255,.1); }
+      .surface, .sheet { fill: #1c1d1f; }
+      .surface { stroke: rgba(255,255,255,.1); }
+      .paper { fill: rgba(249,250,251,.5); }
+      .body { fill: rgba(249,250,251,.88); }
+      .sub { fill: rgba(249,250,251,.72); }
+      .glass { fill: rgba(35,35,36,.25); }
+      .rim { stroke: rgb(255,255,255,.34); }
       .label { fill: #9da2a8; }
-      .prompt { fill: rgba(249,250,251,.44); }
-      .resp { fill: rgba(166,171,178,.24); }
-      .respDim { fill: rgba(166,171,178,.14); }
-      .cardGlass { fill: rgba(35,35,36,.34); }
-      .cardRing { stroke: rgba(255,255,255,.15); }
-      .rim { stroke: url(#rimGradD); }
-      .cardRim { stroke: url(#cardRimGradD); }
-      .foldBar { fill: rgba(166,171,178,.8); }
-      .foldBar2 { fill: rgba(166,171,178,.45); }
-      .cardPrompt { fill: rgba(249,250,251,.88); }
-      .cardResp { fill: rgba(249,250,251,.55); }
       .markIdle { fill: rgba(173,178,184,.38); }
       .markOn { fill: #f9fafb; }
       .markNear { fill: rgba(249,250,251,.65); }
-      .ink { fill: #f9fafb; }
+      .cursor { fill: #f9fafb; stroke: #101113; }
+      .float { filter: url(#shD); }
+      #endFade stop { stop-color: #1c1d1f; }
     }
-    text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
   </style>
   <defs>
-    <radialGradient id="glintSurface" cx="10%" cy="12%" r="28%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,.08)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <radialGradient id="cardGlint" cx="12%" cy="15%" r="35%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.36)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,.1)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <linearGradient id="rimGrad" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="25%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="rimGradD" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="rgba(249,250,251,.65)"/>
-      <stop offset="25%" stop-color="rgba(249,250,251,.16)"/>
-      <stop offset="50%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGrad" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="24%" stop-color="rgba(255,255,255,.35)"/>
-      <stop offset="48%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGradD" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="rgba(249,250,251,.72)"/>
-      <stop offset="24%" stop-color="rgba(249,250,251,.18)"/>
-      <stop offset="48%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="sheenGrad" x2=".8" y2=".7">
-      <stop offset="0%" stop-color="rgba(255,255,255,.16)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="100%" stop-color="rgba(77,107,254,.05)"/>
-    </linearGradient>
-    <linearGradient id="cardFold" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <filter id="surfaceShadow" x="-5%" y="-5%" width="112%" height="118%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(15,17,21,.07)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(15,17,21,.04)"/>
+    <filter id="sh" x="-70%" y="-120%" width="240%" height="360%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".12"/>
     </filter>
-    <filter id="glassShadow" x="-15%" y="-20%" width="135%" height="150%">
-      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="rgba(0,0,0,.15)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,.07)"/>
+    <filter id="shD" x="-70%" y="-120%" width="240%" height="360%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".36"/>
     </filter>
-    <filter id="heroLens">
-      <feGaussianBlur stdDeviation="6"/>
-      <feColorMatrix type="saturate" values="1.6"/>
+    <filter id="lens" x="-30%" y="-40%" width="160%" height="180%">
+      <feGaussianBlur stdDeviation="4"/>
+      <feColorMatrix type="saturate" values="1.8"/>
     </filter>
     <linearGradient id="endFade" gradientUnits="userSpaceOnUse" x1="0" y1="46" x2="0" y2="234">
       <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
@@ -103,37 +55,32 @@
     <mask id="scrollFade">
       <rect x="815" y="46" width="40" height="188" fill="url(#endFade)"/>
     </mask>
-    <clipPath id="clipSurfaceL"><rect x="24" y="38" width="404" height="204" rx="14"/></clipPath>
-    <clipPath id="clipSurfaceR"><rect x="452" y="38" width="404" height="204" rx="14"/></clipPath>
-    <clipPath id="clipPreview"><rect x="618" y="86" width="194" height="84" rx="14"/></clipPath>
+    <mask id="hole" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="260">
+      <rect width="880" height="260" fill="#fff"/>
+      <rect x="618" y="86" width="194" height="84" rx="14" fill="#000"/>
+    </mask>
+    <mask id="ring" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="260">
+      <rect width="880" height="260" fill="#fff"/>
+      <rect x="618" y="86" width="194" height="84" rx="14" fill="#000"/>
+    </mask>
+    <clipPath id="clipCard"><rect x="618" y="86" width="194" height="84" rx="14"/></clipPath>
   </defs>
   <rect class="scene" x="1" y="1" width="878" height="258" rx="14"/>
   <text class="label" x="26" y="27">loose</text>
   <text class="label" x="454" y="27">compact</text>
-  <g filter="url(#surfaceShadow)">
-    <rect class="surface" x="24" y="38" width="404" height="204" rx="14"/>
-    <g clip-path="url(#clipSurfaceL)">
-      <rect x="24" y="38" width="404" height="204" fill="url(#glintSurface)"/>
-      <rect class="sheen" x="24" y="38" width="404" height="204"/>
-    </g>
-    <rect class="rim" x="24.5" y="38.5" width="403" height="203" rx="13.5" fill="none" stroke-width="1.2"/>
-  </g>
-  <g>
-    <rect class="prompt" x="66" y="52" width="130" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="63" width="220" height="6" rx="3"/>
-    <rect class="respDim" x="66" y="72" width="150" height="5" rx="2.5"/>
-    <rect class="prompt" x="66" y="82" width="160" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="93" width="250" height="6" rx="3"/>
-    <rect class="prompt" x="66" y="112" width="180" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="123" width="270" height="6" rx="3"/>
-    <rect class="respDim" x="66" y="132" width="190" height="5" rx="2.5"/>
-    <rect class="prompt" x="66" y="142" width="140" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="153" width="210" height="6" rx="3"/>
-    <rect class="prompt" x="66" y="172" width="155" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="183" width="240" height="6" rx="3"/>
-    <rect class="respDim" x="66" y="192" width="160" height="5" rx="2.5"/>
-    <rect class="prompt" x="66" y="202" width="125" height="7" rx="3.5"/>
-    <rect class="resp" x="66" y="213" width="190" height="6" rx="3"/>
+  <rect class="surface" x="24" y="38" width="404" height="204" rx="14"/>
+  <g class="paper">
+    <text x="66" y="62">We propose a new simple network architecture, the Transformer,</text>
+    <text x="66" y="78">based solely on attention mechanisms, dispensing with recurrence</text>
+    <text x="66" y="94">and convolutions entirely.</text>
+    <text x="66" y="110">The dominant sequence transduction models are based on complex</text>
+    <text x="66" y="126">recurrent or convolutional neural networks.</text>
+    <text x="66" y="142">Attention is all you need.</text>
+    <text x="66" y="158">Experiments on two machine translation tasks show these</text>
+    <text x="66" y="174">models to be superior in quality while being more</text>
+    <text x="66" y="190">parallelizable and requiring significantly less time to train.</text>
+    <text x="66" y="206">Our model achieves 28.4 BLEU on the WMT 2014</text>
+    <text x="66" y="222">translation task, improving over the existing best results.</text>
   </g>
   <g>
     <rect class="markIdle" x="38" y="58.75" width="6" height="2.5" rx="1.25"/>
@@ -143,57 +90,44 @@
     <rect class="markIdle" x="38" y="178.75" width="6" height="2.5" rx="1.25"/>
     <rect class="markIdle" x="38" y="208.75" width="6" height="2.5" rx="1.25"/>
   </g>
-  <g filter="url(#surfaceShadow)">
+  <g mask="url(#hole)">
     <rect class="surface" x="452" y="38" width="404" height="204" rx="14"/>
-    <g clip-path="url(#clipSurfaceR)">
-      <rect x="452" y="38" width="404" height="204" fill="url(#glintSurface)"/>
-      <rect class="sheen" x="452" y="38" width="404" height="204"/>
+    <g class="paper">
+      <text x="474" y="62">Experiments on two machine translation tasks show these</text>
+      <text x="474" y="78">models to be superior in quality while being more</text>
+      <text x="474" y="94">parallelizable and</text>
+      <text x="474" y="110">requiring significantly</text>
+      <text x="474" y="126">less time to train.</text>
+      <text x="474" y="142">Our model achieves</text>
+      <text x="474" y="158">28.4 BLEU on the</text>
+      <text x="474" y="174">English-to-German</text>
+      <text x="474" y="190">We propose a new simple network architecture, the Transformer,</text>
+      <text x="474" y="206">based solely on attention mechanisms, dispensing with recurrence</text>
+      <text x="474" y="222">and convolutions entirely.</text>
     </g>
-    <rect class="rim" x="452.5" y="38.5" width="403" height="203" rx="13.5" fill="none" stroke-width="1.2"/>
   </g>
-  <g>
-    <rect class="prompt" x="474" y="50" width="130" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="60" width="180" height="6" rx="3"/>
-    <rect class="prompt" x="474" y="74" width="150" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="84" width="210" height="6" rx="3"/>
-    <rect class="respDim" x="474" y="93" width="140" height="5" rx="2.5"/>
-    <rect class="prompt" x="474" y="106" width="120" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="116" width="170" height="6" rx="3"/>
-    <rect class="prompt" x="474" y="130" width="160" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="140" width="220" height="6" rx="3"/>
-    <rect class="prompt" x="474" y="154" width="135" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="164" width="190" height="6" rx="3"/>
-    <rect class="respDim" x="474" y="173" width="130" height="5" rx="2.5"/>
-    <rect class="prompt" x="474" y="186" width="145" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="196" width="210" height="6" rx="3"/>
-    <rect class="prompt" x="474" y="210" width="115" height="7" rx="3.5"/>
-    <rect class="resp" x="474" y="220" width="160" height="6" rx="3"/>
+  <g class="float" mask="url(#ring)">
+    <rect x="618" y="86" width="194" height="84" rx="14" fill="#000"/>
   </g>
-  <g filter="url(#glassShadow)">
-    <g clip-path="url(#clipPreview)">
-      <g filter="url(#heroLens)">
-        <rect class="prompt" x="630" y="88" width="140" height="7" rx="3.5"/>
-        <rect class="resp" x="630" y="99" width="170" height="6" rx="3"/>
-        <rect class="prompt" x="630" y="118" width="150" height="7" rx="3.5"/>
-        <rect class="resp" x="630" y="129" width="160" height="6" rx="3"/>
-        <rect class="prompt" x="630" y="148" width="130" height="7" rx="3.5"/>
+  <g clip-path="url(#clipCard)">
+    <g filter="url(#lens)">
+      <rect class="sheet" x="598" y="66" width="234" height="124"/>
+      <g class="paper">
+        <text x="474" y="94">parallelizable and requiring significantly less time to train.</text>
+        <text x="474" y="110">Our model achieves 28.4 BLEU on the WMT 2014</text>
+        <text x="474" y="126">English-to-German translation task, improving over the existing best results.</text>
+        <text x="474" y="142">We propose a new simple network architecture, the Transformer,</text>
+        <text x="474" y="158">based solely on attention mechanisms, dispensing with recurrence</text>
       </g>
-      <rect class="cardGlass" x="618" y="86" width="194" height="84" rx="14"/>
-      <rect x="792" y="86" width="20" height="84" fill="url(#cardFold)"/>
-      <rect class="foldBar" x="792" y="104" width="18" height="3" rx="1.5"/>
-      <rect class="foldBar2" x="794" y="110" width="16" height="2" rx="1"/>
-      <rect class="foldBar" x="792" y="138" width="18" height="3" rx="1.5"/>
-      <rect class="foldBar2" x="794" y="144" width="16" height="2" rx="1"/>
-      <rect x="618" y="86" width="194" height="84" rx="14" fill="url(#cardGlint)"/>
-      <rect class="sheen" x="618" y="86" width="194" height="84" rx="14"/>
     </g>
-    <rect class="cardRing" x="618.5" y="86.5" width="193" height="83" rx="13.5" stroke-width="1"/>
-    <rect class="cardRim" x="618.5" y="86.5" width="193" height="83" rx="13.5" fill="none" stroke-width="1.6"/>
-    <rect class="cardPrompt" x="634" y="104" width="124" height="7" rx="3.5"/>
-    <rect class="cardPrompt" x="634" y="115" width="86" height="7" rx="3.5"/>
-    <rect class="cardResp" x="634" y="132" width="138" height="6" rx="3"/>
-    <rect class="cardResp" x="634" y="142" width="102" height="6" rx="3"/>
-    <rect class="cardResp" x="634" y="152" width="70" height="5" rx="2.5"/>
+    <rect class="glass" x="618" y="86" width="194" height="84" rx="14"/>
+  </g>
+  <rect class="rim" x="618" y="86" width="194" height="84" rx="14"/>
+  <g class="sum">
+    <text class="body" x="632" y="108">We present a residual learning</text>
+    <text class="body" x="632" y="124">framework to ease the training</text>
+    <text class="sub" x="632" y="140">of networks that are</text>
+    <text class="sub" x="632" y="156">substantially deeper.</text>
   </g>
   <g mask="url(#scrollFade)">
     <rect class="markIdle" x="838" y="55" width="6" height="2.5" rx="1.25"/>
@@ -215,5 +149,5 @@
     <rect class="markIdle" x="838" y="215" width="6" height="2.5" rx="1.25"/>
     <rect class="markIdle" x="838" y="225" width="6" height="2.5" rx="1.25"/>
   </g>
-  <path d="M848 126 l10 4-4.2 1 2.8 5.2-1.9 1-2.8-5.2-3.5 2.1z" class="ink" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" paint-order="stroke"/>
+  <path d="M848 126 l10 4-4.2 1 2.8 5.2-1.9 1-2.8-5.2-3.5 2.1z" class="cursor" paint-order="stroke"/>
 </svg>

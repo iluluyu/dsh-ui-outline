@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="Preview materials on the same turn: opaque none, frosted glass, and liquid glass">
+  <!-- none / frost / liquid match lib/client.js. One shared page of the
+       paper; frost is milkier and blurrier, liquid is a thin saturated lens. -->
+  <style>
+    .scene { fill: #edf0f3; stroke: rgba(0, 0, 0, .08); }
+    .surface { fill: #ffffff; stroke: rgba(0, 0, 0, .09); }
+    .paper { fill: rgba(15, 17, 21, .5); }
+    .glass { fill: rgba(255, 255, 255, .25); }
+    .frost { fill: rgba(255, 255, 255, .36); }
+    .rim { fill: none; stroke: rgba(255, 255, 255, .62); }
+    .noneCard { fill: #ffffff; stroke: rgba(0, 0, 0, .1); }
+    .cardPrompt { fill: rgba(15, 17, 21, .8); font-weight: 500; }
+    .cardResp { fill: rgba(15, 17, 21, .65); }
+    .label { font-size: 14px; font-weight: 600; fill: #81858c; }
+    #glassShadow feDropShadow { flood-opacity: .12; }
+    #noneShadow feDropShadow { flood-opacity: .08; }
+    @media (prefers-color-scheme: dark) {
+      .scene { fill: #101113; stroke: rgba(255, 255, 255, .09); }
+      .surface { fill: #1c1d1f; stroke: rgba(255, 255, 255, .10); }
+      .paper { fill: rgba(249, 250, 251, .5); }
+      .glass { fill: rgba(35, 35, 36, .25); }
+      .frost { fill: rgba(35, 35, 36, .36); }
+      .rim { stroke: rgba(255, 255, 255, .34); }
+      .noneCard { fill: #1c1d1f; stroke: rgba(255, 255, 255, .12); }
+      .cardPrompt { fill: rgba(249, 250, 251, .88); }
+      .cardResp { fill: rgba(249, 250, 251, .72); }
+      .label { fill: #9da2a8; }
+      #glassShadow feDropShadow { flood-opacity: .36; }
+      #noneShadow feDropShadow { flood-opacity: .2; }
+    }
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  </style>
+  <defs>
+    <filter id="liquidLens" color-interpolation-filters="sRGB" x="-6%" y="-12%" width="112%" height="128%">
+      <feGaussianBlur stdDeviation="4"/>
+      <feColorMatrix type="saturate" values="1.8"/>
+    </filter>
+    <filter id="frostLens" color-interpolation-filters="sRGB" x="-8%" y="-16%" width="116%" height="136%">
+      <feGaussianBlur stdDeviation="14"/>
+      <feColorMatrix type="saturate" values="1.15"/>
+    </filter>
+    <filter id="glassShadow" color-interpolation-filters="sRGB" x="-45%" y="-30%" width="190%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".12" result="sh"/>
+      <feComposite in="sh" in2="SourceAlpha" operator="out"/>
+    </filter>
+    <filter id="noneShadow" color-interpolation-filters="sRGB" x="-30%" y="-20%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".08" result="sh"/>
+      <feComposite in="sh" in2="SourceAlpha" operator="out"/>
+    </filter>
+    <clipPath id="clipPage"><rect x="16" y="8" width="848" height="206" rx="12"/></clipPath>
+    <clipPath id="clipNone"><rect x="40" y="52" width="240" height="150" rx="18"/></clipPath>
+    <clipPath id="clipFrost"><rect x="320" y="52" width="240" height="150" rx="18"/></clipPath>
+    <clipPath id="clipLiquid"><rect x="600" y="52" width="240" height="150" rx="18"/></clipPath>
+    <clipPath id="sampleFrost"><rect x="284" y="16" width="312" height="222" rx="28"/></clipPath>
+    <clipPath id="sampleLiquid"><rect x="584" y="36" width="272" height="182" rx="22"/></clipPath>
+  </defs>
+
+  <rect class="scene" x="1" y="1" width="878" height="258" rx="14"/>
+  <g id="page">
+    <rect class="surface" x="16" y="8" width="848" height="206" rx="12"/>
+    <g class="paper" clip-path="url(#clipPage)" font-size="12">
+      <text x="32" y="30">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</text>
+      <text x="128" y="46">The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. Attention is all you need.</text>
+      <text x="32" y="62">Attention is all you need.</text>
+      <text x="32" y="78">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</text>
+      <text x="128" y="94">The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. Attention is all you need.</text>
+      <text x="32" y="110">Attention is all you need.</text>
+      <text x="32" y="126">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</text>
+      <text x="128" y="142">The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. Attention is all you need.</text>
+      <text x="32" y="158">Attention is all you need.</text>
+      <text x="32" y="174">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</text>
+      <text x="128" y="190">The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. Attention is all you need.</text>
+      <text x="32" y="206">Attention is all you need.</text>
+    </g>
+  </g>
+
+  <g clip-path="url(#clipFrost)">
+    <g filter="url(#frostLens)">
+      <g clip-path="url(#sampleFrost)"><use href="#page" xlink:href="#page"/></g>
+    </g>
+  </g>
+  <g clip-path="url(#clipLiquid)">
+    <g filter="url(#liquidLens)">
+      <g clip-path="url(#sampleLiquid)"><use href="#page" xlink:href="#page"/></g>
+    </g>
+  </g>
+
+  <g filter="url(#noneShadow)"><rect x="40" y="52" width="240" height="150" rx="18" fill="#fff"/></g>
+  <rect class="noneCard" x="40" y="52" width="240" height="150" rx="18" stroke-width="1"/>
+  <g filter="url(#glassShadow)"><rect x="320" y="52" width="240" height="150" rx="18" fill="#fff"/></g>
+  <rect class="frost" x="320" y="52" width="240" height="150" rx="18"/>
+  <rect class="rim" x="320" y="52" width="240" height="150" rx="18" stroke-width="1.5"/>
+  <g filter="url(#glassShadow)"><rect x="600" y="52" width="240" height="150" rx="18" fill="#fff"/></g>
+  <rect class="glass" x="600" y="52" width="240" height="150" rx="18"/>
+  <rect class="rim" x="600" y="52" width="240" height="150" rx="18" stroke-width="1.5"/>
+
+  <g font-size="12">
+    <g clip-path="url(#clipNone)">
+      <text class="cardPrompt" x="54" y="76">We introduce a new language</text>
+      <text class="cardPrompt" x="54" y="94">representation model called BERT.</text>
+      <text class="cardResp" x="54" y="118" font-size="11.5">BERT is designed to pre-train deep</text>
+      <text class="cardResp" x="54" y="135" font-size="11.5">bidirectional representations from</text>
+    </g>
+    <g clip-path="url(#clipFrost)">
+      <text class="cardPrompt" x="334" y="76">We introduce a new language</text>
+      <text class="cardPrompt" x="334" y="94">representation model called BERT.</text>
+      <text class="cardResp" x="334" y="118" font-size="11.5">BERT is designed to pre-train deep</text>
+      <text class="cardResp" x="334" y="135" font-size="11.5">bidirectional representations from</text>
+    </g>
+    <g clip-path="url(#clipLiquid)">
+      <text class="cardPrompt" x="614" y="76">We introduce a new language</text>
+      <text class="cardPrompt" x="614" y="94">representation model called BERT.</text>
+      <text class="cardResp" x="614" y="118" font-size="11.5">BERT is designed to pre-train deep</text>
+      <text class="cardResp" x="614" y="135" font-size="11.5">bidirectional representations from</text>
+    </g>
+  </g>
+
+  <text class="label" x="40" y="244">none</text>
+  <text class="label" x="320" y="244">frost</text>
+  <text class="label" x="600" y="244">liquid</text>
+</svg>

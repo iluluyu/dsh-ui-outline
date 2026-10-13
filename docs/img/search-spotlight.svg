@@ -1,161 +1,137 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="Cmd+F conversation search: an empty capsule grows into a glass result card — same width, same corners, pure height">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="880" height="340" role="img" aria-label="Cmd+F conversation search: an empty capsule grows downward at the same width and corners into a liquid-glass result card">
   <style>
-    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); }
-    .cardGlass { fill: rgba(255,255,255,.32); }
-    .cardRing { stroke: rgba(0,0,0,.13); fill: none; }
-    .cardRim { stroke: url(#cardRimGrad); }
-    .rim { stroke: url(#rimGrad); }
-    .sheen { fill: url(#sheenGrad); }
-    .cardPrompt { fill: rgba(15,17,21,.8); }
-    .cardResp { fill: rgba(15,17,21,.45); }
+    .scene { fill: #edf0f3; stroke: rgba(0,0,0,.08); stroke-width: 1; }
+    .surface { fill: #ffffff; stroke: rgba(0,0,0,.09); stroke-width: 1; }
+    .sheet { fill: #edf0f3; }
+    .glass { fill: rgba(255,255,255,.25); }
+    .rim { fill: none; stroke: rgb(255,255,255,.62); stroke-width: 1.5; stroke-linejoin: round; }
+    .body { fill: rgba(15,17,21,.8); }
+    .sub { fill: rgba(15,17,21,.65); }
+    .dim { fill: rgba(97,102,107,.45); }
     .ink { fill: #0f1115; }
-    .brand { fill: #4d6bfe; }
-    .ghostRing { stroke: rgba(129,133,140,.55); }
+    .ghost { fill: rgba(255,255,255,.14); stroke: rgba(129,133,140,.55); stroke-width: 1.25; stroke-dasharray: 5 4; stroke-linejoin: round; }
+    .rule { stroke: rgba(0,0,0,.1); }
+    .mag { fill: none; stroke: #81858c; stroke-width: 1.7; stroke-linecap: round; }
+    .well { fill: rgba(0,0,0,.05); }
+    .hit { fill: rgba(77,107,254,.24); }
+    .float { filter: url(#sh); }
     text { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
     @media (prefers-color-scheme: dark) {
-      .scene { fill: #101113; stroke: rgba(255,255,255,.09); }
-      .cardGlass { fill: rgba(35,35,36,.34); }
-      .cardRing { stroke: rgba(255,255,255,.15); }
-      .cardRim { stroke: url(#cardRimGradD); }
-      .rim { stroke: url(#rimGradD); }
-      .cardPrompt { fill: rgba(249,250,251,.88); }
-      .cardResp { fill: rgba(249,250,251,.55); }
+      .scene, .sheet { fill: #101113; }
+      .scene { stroke: rgba(255,255,255,.09); }
+      .surface { fill: #1c1d1f; stroke: rgba(255,255,255,.1); }
+      .glass { fill: rgba(35,35,36,.25); }
+      .rim { stroke: rgb(255,255,255,.34); }
+      .body { fill: rgba(249,250,251,.88); }
+      .sub { fill: rgba(249,250,251,.72); }
+      .dim { fill: rgba(249,250,251,.5); }
       .ink { fill: #f9fafb; }
-      .ghostRing { stroke: rgba(173,178,184,.5); }
+      .ghost { fill: rgba(255,255,255,.04); stroke: rgba(173,178,184,.5); }
+      .rule { stroke: rgba(255,255,255,.1); }
+      .mag { stroke: #9da2a8; }
+      .well { fill: rgba(255,255,255,.06); }
+      .float { filter: url(#shD); }
     }
+    .paper { font-size: 12px; fill: rgba(15,17,21,.5); }
   </style>
   <defs>
-    <radialGradient id="cardGlint" cx="12%" cy="15%" r="35%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.36)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,.1)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </radialGradient>
-    <linearGradient id="rimGrad" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="25%" stop-color="rgba(255,255,255,.32)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="rimGradD" x2=".75" y2=".75">
-      <stop offset="0%" stop-color="rgba(249,250,251,.65)"/>
-      <stop offset="25%" stop-color="rgba(249,250,251,.16)"/>
-      <stop offset="50%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGrad" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="24%" stop-color="rgba(255,255,255,.35)"/>
-      <stop offset="48%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-    <linearGradient id="cardRimGradD" x2=".75" y2=".7">
-      <stop offset="0%" stop-color="rgba(249,250,251,.72)"/>
-      <stop offset="24%" stop-color="rgba(249,250,251,.18)"/>
-      <stop offset="48%" stop-color="rgba(249,250,251,0)"/>
-    </linearGradient>
-    <linearGradient id="sheenGrad" x2=".8" y2=".7">
-      <stop offset="0%" stop-color="rgba(255,255,255,.16)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-      <stop offset="100%" stop-color="rgba(77,107,254,.05)"/>
-    </linearGradient>
-    <filter id="surfaceShadow" x="-5%" y="-5%" width="112%" height="118%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(15,17,21,.07)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(15,17,21,.04)"/>
+    <filter id="sh" x="-40%" y="-50%" width="180%" height="220%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".12"/>
     </filter>
-    <filter id="glassShadow" x="-15%" y="-20%" width="135%" height="150%">
-      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="rgba(0,0,0,.15)"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,.07)"/>
+    <filter id="shD" x="-40%" y="-50%" width="180%" height="220%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".36"/>
     </filter>
-    <filter id="heroLens">
-      <feGaussianBlur stdDeviation="6"/>
-      <feColorMatrix type="saturate" values="1.6"/>
+    <filter id="lens" x="-8%" y="-20%" width="116%" height="150%">
+      <feGaussianBlur stdDeviation="4"/>
+      <feColorMatrix type="saturate" values="1.8"/>
     </filter>
     <clipPath id="clipCap"><rect x="196" y="28" width="488" height="52" rx="26"/></clipPath>
     <clipPath id="clipCard"><rect x="196" y="150" width="488" height="168" rx="26"/></clipPath>
-    <clipPath id="clipGhost"><rect x="196" y="28" width="488" height="122" rx="26"/></clipPath>
+    <mask id="ghostVis" maskUnits="userSpaceOnUse" x="160" y="20" width="560" height="310">
+      <rect x="196" y="28" width="488" height="290" fill="#fff"/>
+      <rect x="196" y="28" width="488" height="52" rx="26" fill="#000"/>
+      <rect x="196" y="150" width="488" height="168" rx="26" fill="#000"/>
+    </mask>
+    <mask id="ring" maskUnits="userSpaceOnUse" x="80" y="0" width="720" height="340">
+      <rect x="80" y="0" width="720" height="340" fill="#fff"/>
+      <rect x="196" y="28" width="488" height="52" rx="26" fill="#000"/>
+      <rect x="196" y="150" width="488" height="168" rx="26" fill="#000"/>
+    </mask>
   </defs>
   <rect class="scene" x="1" y="1" width="878" height="338" rx="14"/>
-
-  <!-- ===== empty capsule: 52px stadium, rx = half height ===== -->
-  <g filter="url(#glassShadow)">
-    <rect class="cardGlass" x="196" y="28" width="488" height="52" rx="26"/>
-    <g clip-path="url(#clipCap)">
-      <g filter="url(#heroLens)">
-        <rect class="cardPrompt" x="220" y="34" width="200" height="7" rx="3.5"/>
-        <rect class="cardResp" x="240" y="48" width="260" height="6" rx="3"/>
-        <rect class="cardPrompt" x="230" y="62" width="240" height="7" rx="3.5"/>
-      </g>
-      <rect x="196" y="28" width="488" height="52" rx="26" fill="url(#cardGlint)"/>
-      <rect class="sheen" x="196" y="28" width="488" height="52" rx="26"/>
-    </g>
-    <rect class="cardRing" x="196.5" y="28.5" width="487" height="51" rx="25.5" stroke-width="1"/>
-    <rect class="cardRim" x="196.5" y="28.5" width="487" height="51" rx="25.5" fill="none" stroke-width="1.6"/>
+  <g mask="url(#ghostVis)">
+    <rect class="ghost" x="196" y="28" width="488" height="290" rx="26"/>
+    <line class="rule" x1="204" y1="118" x2="676" y2="118"/>
   </g>
-  <!-- magnifier + centered placeholder shimmer -->
-  <g fill="none" stroke="#81858c" stroke-width="1.7" stroke-linecap="round">
+  <g class="float" mask="url(#ring)">
+    <rect x="196" y="28" width="488" height="52" rx="26" fill="#000"/>
+    <rect x="196" y="150" width="488" height="168" rx="26" fill="#000"/>
+  </g>
+  <g clip-path="url(#clipCap)">
+    <g filter="url(#lens)">
+      <rect class="sheet" x="180" y="12" width="520" height="84"/>
+      <text class="paper" x="212" y="34">We propose a new simple network architecture, the Transformer, based</text>
+      <text class="paper" x="212" y="50">solely on attention mechanisms, dispensing with recurrence and</text>
+      <text class="paper" x="212" y="66">convolutions entirely. The dominant sequence transduction models are</text>
+      <text class="paper" x="212" y="82">based on complex recurrent or convolutional neural networks.</text>
+    </g>
+    <rect class="glass" x="196" y="28" width="488" height="52" rx="26"/>
+  </g>
+  <rect class="rim" x="196.5" y="28.5" width="487" height="51" rx="25.5"/>
+  <g class="mag">
     <circle cx="228" cy="54" r="5.2"/>
     <path d="M232.4 58.4 L236 62"/>
   </g>
   <rect x="380" y="50" width="120" height="8" rx="4" fill="rgba(129,133,140,.5)"/>
-  <!-- command-F keycaps -->
   <g>
-    <rect x="716" y="34" width="34" height="30" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)" filter="url(#surfaceShadow)"/>
+    <rect class="surface" x="716" y="34" width="34" height="30" rx="8"/>
     <text class="ink" x="733" y="49" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="600">&#8984;</text>
-    <rect x="756" y="34" width="30" height="30" rx="8" fill="#fff" stroke="rgba(0,0,0,.1)" filter="url(#surfaceShadow)"/>
+    <rect class="surface" x="756" y="34" width="30" height="30" rx="8"/>
     <text class="ink" x="771" y="49" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="600">F</text>
   </g>
-
-  <!-- ===== growth ghost: same plate, dashed, pure height ===== -->
-  <g clip-path="url(#clipGhost)">
-    <rect x="196" y="28" width="488" height="290" rx="26" fill="rgba(255,255,255,.14)" stroke="#81858c" stroke-width="1.25" stroke-dasharray="5 4" stroke-linejoin="round"/>
-    <line x1="204" y1="118" x2="676" y2="118" stroke="rgba(0,0,0,.08)"/>
-  </g>
-  <!-- height-only arrow: down the right side, radius never travels -->
   <g fill="none" stroke="#4d6bfe" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <line x1="716" y1="94" x2="716" y2="132"/>
     <path d="M710 126 l6 8 6-8"/>
   </g>
-
-  <!-- ===== opened card: same 26px plate on glass ===== -->
-  <g filter="url(#glassShadow)">
-    <g clip-path="url(#clipCard)">
-      <g filter="url(#heroLens)">
-        <rect class="cardPrompt" x="220" y="160" width="220" height="7" rx="3.5"/>
-        <rect class="cardResp" x="240" y="174" width="280" height="6" rx="3"/>
-        <rect class="cardPrompt" x="230" y="196" width="240" height="7" rx="3.5"/>
-        <rect class="cardResp" x="250" y="210" width="200" height="6" rx="3"/>
-        <rect class="cardPrompt" x="230" y="252" width="260" height="7" rx="3.5"/>
-        <rect class="cardResp" x="240" y="266" width="180" height="6" rx="3"/>
-      </g>
-      <rect class="cardGlass" x="196" y="150" width="488" height="168" rx="26"/>
-      <rect x="196" y="150" width="488" height="168" rx="26" fill="url(#cardGlint)"/>
-      <rect class="sheen" x="196" y="150" width="488" height="168" rx="26"/>
+  <g clip-path="url(#clipCard)">
+    <g filter="url(#lens)">
+      <rect class="sheet" x="180" y="134" width="520" height="200"/>
+      <text class="paper" x="212" y="156">We introduce a new language representation model designed to pre-train</text>
+      <text class="paper" x="212" y="172">deep bidirectional representations by jointly conditioning on both left</text>
+      <text class="paper" x="212" y="188">and right context in all layers. Attention is all you need; scaling</text>
+      <text class="paper" x="212" y="204">laws suggest larger models keep improving with compute and data.</text>
+      <text class="paper" x="212" y="220">Deep residual learning makes it easier to train much deeper networks:</text>
+      <text class="paper" x="212" y="236">the dominant transduction models are replaced by self-attention, and</text>
+      <text class="paper" x="212" y="252">recurrence is no longer required for sequence modeling tasks.</text>
+      <text class="paper" x="212" y="268">Language models are few-shot learners when scaled with care.</text>
+      <text class="paper" x="212" y="284">Pre-training of deep bidirectional transformers unlocks transfer.</text>
+      <text class="paper" x="212" y="300">The Transformer follows this overall architecture using stacked</text>
+      <text class="paper" x="212" y="316">self-attention and point-wise, fully connected layers.</text>
     </g>
-    <rect class="cardRing" x="196.5" y="150.5" width="487" height="167" rx="25.5" stroke-width="1"/>
-    <rect class="cardRim" x="196.5" y="150.5" width="487" height="167" rx="25.5" fill="none" stroke-width="1.6"/>
+    <rect class="glass" x="196" y="150" width="488" height="168" rx="26"/>
   </g>
-  <!-- input row: magnifier, query with caret -->
-  <g fill="none" stroke="#81858c" stroke-width="1.7" stroke-linecap="round">
+  <rect class="rim" x="196.5" y="150.5" width="487" height="167" rx="25.5"/>
+  <g class="mag">
     <circle cx="228" cy="176" r="5.2"/>
     <path d="M232.4 180.4 L236 184"/>
   </g>
-  <rect class="cardPrompt" x="248" y="171" width="34" height="9" rx="4.5"/>
-  <rect class="brand" x="288" y="169" width="2" height="13" rx="1"/>
-  <line x1="204" y1="202.5" x2="676" y2="202.5" stroke="rgba(0,0,0,.1)"/>
-  <!-- selected hit: true pill, rx = half of 48 -->
+  <rect class="body" x="248" y="171" width="34" height="9" rx="4.5"/>
+  <rect x="288" y="169" width="2" height="13" rx="1" fill="#4d6bfe"/>
+  <line class="rule" x1="204" y1="202.5" x2="676" y2="202.5"/>
   <rect x="212" y="210" width="456" height="48" rx="24" fill="rgba(77,107,254,.1)"/>
-  <rect x="226" y="223" width="34" height="22" rx="6" fill="rgba(0,0,0,.05)"/>
-  <rect class="cardResp" x="233" y="230" width="20" height="7" rx="3.5"/>
-  <rect class="cardPrompt" x="272" y="224" width="88" height="8" rx="4"/>
-  <rect x="366" y="221" width="44" height="18" rx="4" fill="rgba(77,107,254,.24)"/>
+  <rect class="well" x="226" y="223" width="34" height="22" rx="6"/>
+  <rect class="sub" x="233" y="230" width="20" height="7" rx="3.5"/>
+  <rect class="body" x="272" y="224" width="88" height="8" rx="4"/>
+  <rect class="hit" x="366" y="221" width="44" height="18" rx="4"/>
   <rect class="ink" x="374" y="226" width="28" height="8" rx="4"/>
-  <rect class="cardPrompt" x="416" y="224" width="64" height="8" rx="4"/>
-  <rect class="cardResp" x="272" y="240" width="180" height="7" rx="3.5"/>
-  <!-- next hit, no pill -->
-  <rect x="226" y="268" width="34" height="22" rx="6" fill="rgba(0,0,0,.05)"/>
-  <rect class="cardResp" x="233" y="275" width="20" height="7" rx="3.5"/>
-  <rect class="cardResp" x="272" y="278" width="104" height="7" rx="3.5"/>
-  <rect x="382" y="275" width="44" height="16" rx="4" fill="rgba(77,107,254,.24)"/>
+  <rect class="body" x="416" y="224" width="64" height="8" rx="4"/>
+  <rect class="sub" x="272" y="240" width="180" height="7" rx="3.5"/>
+  <rect class="well" x="226" y="268" width="34" height="22" rx="6"/>
+  <rect class="sub" x="233" y="275" width="20" height="7" rx="3.5"/>
+  <rect class="sub" x="272" y="278" width="104" height="7" rx="3.5"/>
+  <rect class="hit" x="382" y="275" width="44" height="16" rx="4"/>
   <rect class="ink" x="390" y="279" width="28" height="8" rx="4"/>
-  <rect class="cardResp" x="432" y="278" width="72" height="7" rx="3.5"/>
-  <!-- footer: keyboard glyphs only -->
-  <line x1="204" y1="300.5" x2="676" y2="300.5" stroke="rgba(0,0,0,.1)"/>
-  <text class="cardResp" x="440" y="308" text-anchor="middle" font-size="13" letter-spacing="1">&#8593;&#8595; &#8629; &#9099;</text>
+  <rect class="sub" x="432" y="278" width="72" height="7" rx="3.5"/>
+  <line class="rule" x1="204" y1="300.5" x2="676" y2="300.5"/>
+  <text class="dim" x="440" y="314" text-anchor="middle" font-size="13" letter-spacing="1">&#8593;&#8595; &#8629; &#9099;</text>
 </svg>
