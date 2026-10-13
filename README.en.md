@@ -2,7 +2,7 @@
 
 # dsh-ui-outline
 
-A customizable turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web, built to help you find your way through long conversations.
+A customizable turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh 0.2.1), built to help you find your way through long conversations. Works on both the web version and the desktop app, which reuses the same web client.
 
 <p align="center"><img src="docs/img/rail-hero.svg" width="700"></p>
 
@@ -13,7 +13,7 @@ Dock the rail to either edge of the conversation column and choose between two t
 - **Compact `compact`**: 10px spacing, with scrolling inside the rail when turns overflow.
 - **Loose `loose`**: a 30px row per turn for more breathing room.
 
-The 44px-wide hit strip snaps clicks to the nearest turn, so you do not need to aim at a thin tick. Hold and drag to scrub through turns; hover to preview a short excerpt of the prompt and response.
+The 44px-wide hit strip snaps clicks to the nearest turn, so you do not need to aim at a thin tick. Hold and drag to scrub through turns; hover to preview a short excerpt of the prompt and response. Scroll the wheel over the rail to step through turns one by one — the wave and preview card follow while the conversation stays put; click to commit the jump.
 
 ## Keep navigation in narrow columns
 
@@ -51,7 +51,7 @@ Restart `dsh web` after installation, then reload the page.
 
 Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
 
-Built for the web version. The DeepSeek desktop app has not been specifically adapted for; you are welcome to try it.
+Works on both the web version and the DeepSeek Harness desktop app, which reuses the same web client.
 
 ## Settings
 
