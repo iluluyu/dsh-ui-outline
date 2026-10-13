@@ -2,56 +2,60 @@
 
 # dsh-ui-outline
 
-A customizable turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh 0.2.1), built to help you find your way through long conversations. Works on both the web version and the desktop app, which reuses the same web client.
+Find your place in long conversations. Position the rail your way, keep it in narrow columns, and search with ⌘F / Ctrl+F.
+
+A turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 <p align="center"><img src="docs/img/rail-hero.svg" width="700"></p>
 
 ## A rail that fits how you read
 
-Dock the rail to either edge of the conversation column and choose between two tick densities:
+Dock the rail to either edge of the conversation column and pick a tick density: **compact** keeps long conversations in view, **loose** gives every turn its own row.
 
-- **Compact `compact`**: 10px spacing, with scrolling inside the rail when turns overflow.
-- **Loose `loose`**: a 30px row per turn for more breathing room.
+The hit strip is wide, so you never aim at a thin tick; hold and drag to browse. Hover previews a turn's prompt and response; scroll the wheel to step through turns one by one, and click to jump.
 
-The 44px-wide hit strip snaps clicks to the nearest turn, so you do not need to aim at a thin tick. Hold and drag to scrub through turns; hover to preview a short excerpt of the prompt and response. Scroll the wheel over the rail to step through turns one by one — the wave and preview card follow while the conversation stays put; click to commit the jump.
+## Navigation that stays in narrow columns
 
-## Keep navigation in narrow columns
-
-Opening a sidebar or using split-screen can reduce the conversation column below 900px. The official turn rail then hides; this plugin stays at the column edge by default, keeping quick jumps within reach.
-
-Prefer it hidden? Change the narrow-column setting. An edge switch remains available to bring the rail back.
+Opening a sidebar or split-screen hides the official turn rail; this one stays at the column edge by default, so quick jumps never disappear. Prefer it hidden? Change the narrow-column setting — an edge switch remains to bring it back.
 
 ## ⌘F / Ctrl+F to search the conversation
 
-Press `⌘F` / `Ctrl+F` to open a Spotlight-style search overlay. With an empty query, it is a 52px-high G2 capsule bar with 26px half-superellipse ends. The first character expands it downward into a card, keeping the same 26px corner radius throughout.
+A Spotlight-style overlay: an empty query shows a track-shaped capsule bar; the first keystroke expands it into a result card. Whitespace AND matching, highlighted hits with context excerpts; `↑` `↓` to select, `↵` to jump with a landing flash, `Esc` or an outside click to close. Long conversations stay smooth.
 
-Search covers each turn's prompt and final response in the current conversation:
+Preview cards and the search overlay come in opaque, frosted glass, and liquid glass.
 
-- **Whitespace-separated terms, AND matching**: every term must match.
-- **Highlighted matches**: snippets include 30 characters of context on either side of a match.
-- **Keyboard controls**: `↑` / `↓` to select, `↵` to jump with a brief landing flash, and `Esc` or an outside click to close.
-- **Long-conversation handling**: the index builds in background chunks on first open; chunked scanning and a 60ms debounce reduce typing stalls. Results show up to the newest 50 matches.
+<details>
+<summary><b>Interaction details</b></summary>
 
-Preview cards and the search overlay offer frosted glass `frost`, liquid glass `liquid`, or the official opaque appearance.
+- Tick density: compact at 10px spacing (scrolls inside the rail when turns overflow) or loose at 30px per turn; the 44px hit strip snaps clicks to the nearest turn.
+- Wheel stepping: starts at the current turn, previews one turn at a time while the conversation stays put; click to jump.
+- Search overlay: a 52px capsule sharing one 26px corner radius across both states (G2 continuous-curvature superellipse ends); ±30 characters of context per hit; the index builds in background slices on first open behind a 60ms input debounce, showing the newest 50 matches.
+- Liquid-glass search keeps a minimum effective blur of 10px for readability.
+
+</details>
 
 ## Install
 
-Requires dsh `0.2.1`.
-
-Choose one installation method:
+Requires dsh `>= 0.2.0-rc.1`. Supports the web client and the desktop app that reuses it.
 
 ```sh
 dsh plugin --profile web add dsh-ui-outline
+```
+
+Restart `dsh web` after installation, then reload the page.
+
+<details>
+<summary><b>Other install methods</b></summary>
+
+```sh
 dsh plugin --profile web add github:iluluyu/dsh-ui-outline
 dsh plugin --profile web add .   # run from the plugin directory; relative paths resolve from the invoking directory
 dsh plugin --profile web add file:/absolute/path/to/plugin
 ```
 
-Restart `dsh web` after installation, then reload the page.
-
 Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
 
-Works on both the web version and the DeepSeek Harness desktop app, which reuses the same web client.
+</details>
 
 ## Settings
 
@@ -64,11 +68,12 @@ Open **Plugins → dsh-ui-outline**.
 | Preview material | Opaque `none` / Frosted glass `frost` / Liquid glass `liquid`; defaults to Frosted glass |
 | Narrow-column visibility | Show / Hide; defaults to Show |
 
-Frosted glass defaults to transparency **80** and blur **6**, combining a soft veil, a bright rim, and extra blur. Liquid glass uses a thinner, more translucent surface; its Standard preset sets transparency to **75** and blur to **4**.
+<details>
+<summary><b>Material parameters</b></summary>
 
-The **Airy / Standard / Misty** presets update transparency and blur together, without briefly exposing the custom sliders. The search overlay follows the preview material setting; liquid-glass search uses a minimum effective blur of **10px** for readability.
+Frosted glass defaults to transparency **80**, blur **6**; liquid glass is thinner, with its Standard preset at transparency **75**, blur **4**. The **Airy / Standard / Misty** presets update both values together without flashing the custom sliders. The search overlay follows the preview material setting.
 
-Set narrow-column visibility to Hide to collapse the rail below **900px**. The edge switch brings it back and updates the same setting.
+</details>
 
 ## License
 

@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-outline",
-  "version": "0.1.3",
-  "description": "Turn navigation rail for dsh web following the official TurnNavigator design · 轮次导航轨道（大纲/刻度/毛玻璃预览）",
+  "version": "0.2.0",
+  "description": "Turn navigation rail + Spotlight-style conversation search for dsh web/desktop · 轮次导航轨道（大纲/刻度/毛玻璃预览）+ ⌘F 对话搜索",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -34,6 +34,9 @@
       ],
       "platform": "web"
     }
+  },
+  "engines": {
+    "dsh": ">=0.2.0-rc.1"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": ">=1.0.0",
