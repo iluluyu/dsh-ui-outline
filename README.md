@@ -8,7 +8,14 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-hero.svg" width="700" alt="dsh-ui-outline 导航轨与毛玻璃预览总览"></p>
 
-[安装](#安装) · [设置](#设置)
+[演示](#演示视频) · [安装](#安装) · [设置](#设置)
+
+## 演示视频
+
+<p align="center"><a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/video/outline-demo.gif" width="760" alt="dsh-ui-outline 演示：⌘F 搜索当前对话"></a></p>
+
+<p align="center"><b>47 秒完整演示</b>：轮次导航轨 · 悬停预览 · 滚轮步进 · ⌘F 搜索 · 三种材质 · 窄列常驻</p>
+<p align="center"><a href="https://iluluyu.github.io/dsh-ui-outline/">在线播放</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4">AV1 下载</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-h264-1440p.mp4">H.264 回退</a></p>
 
 ## 导航轨，按你的阅读习惯摆放
 
@@ -28,7 +35,7 @@
 
 ## ⌘F / Ctrl+F，搜索当前对话
 
-按下快捷键唤出 Spotlight 搜索条；键入字符瞬间，跑道胶囊顺着固有圆角向下平滑生长为玻璃结果卡片。支持空格分词 AND 检索与中英混排，命中的上下文词块精准高亮，并全程由纯键盘高效驱动（`↑` `↓` 切换、`↵` 闪光跳转、`Esc` 退出）。后台分片构建索引杜绝输入卡顿，且搜索浮层与预览卡同样支持毛玻璃、液态玻璃及不透明等多种材质实时切换。
+按下快捷键唤出 Spotlight 搜索条；键入字符瞬间，跑道胶囊顺着固有圆角向下平滑生长为玻璃结果卡片。支持空格分词 AND 检索、`"精确短语"` 与 `-排除`、中英混排与全角/大小写归一（中文词中间多打一两个字也能命中），命中的上下文词块精准高亮，并全程由纯键盘高效驱动（`↑` `↓` 切换、`↵` 闪光跳转、`Esc` 退出）。索引覆盖每个回答步骤而不只是最后一条，后台分片构建杜绝输入卡顿，且搜索浮层与预览卡同样支持毛玻璃、液态玻璃及不透明等多种材质实时切换。
 
 三种材质并排看：不透明、毛玻璃、液态玻璃——同一轮内容，不同质感。
 

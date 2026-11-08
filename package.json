@@ -1,6 +1,6 @@
 {
   "name": "dsh-ui-outline",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Turn navigation rail + Spotlight-style conversation search for dsh web/desktop · 轮次导航轨道（大纲/刻度/毛玻璃预览）+ ⌘F 对话搜索",
   "type": "module",
   "main": "lib/index.js",
@@ -17,7 +17,8 @@
   ],
   "scripts": {
     "prepublishOnly": "node --check lib/index.js && node --check lib/client.js",
-    "check": "node --check lib/index.js && node --check lib/client.js"
+    "check": "node --check lib/index.js && node --check lib/client.js && node tools/search-engine.test.mjs",
+    "test:search": "node tools/search-engine.test.mjs"
   },
   "repository": {
     "type": "git",

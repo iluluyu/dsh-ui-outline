@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>轮次标注与排布 · 方案选择</title>
+<style>
+  /* ── page ground ─────────────────────────────────────────────────────── */
+  :root{
+    --bg:#f5f6f8;
+    --card:#ffffff;
+    --ink:#0f1115;
+    --ink2:#5e6369;
+    --ink3:#6f747a;
+    --line:rgba(0,0,0,.12);
+    --line2:rgba(0,0,0,.06);
+    --brand:#4d6bfe;
+    --chip:rgba(0,0,0,.05);
+    --shadow:0 1px 2px rgba(0,0,0,.05), 0 10px 28px rgba(0,0,0,.06);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.07), 0 18px 44px rgba(0,0,0,.10);
+    --radius:16px;
+    --font:"Inter","Helvetica Neue",system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  html[data-theme="dark"]{
+    --bg:#141415;
+    --card:#232324;
+    --ink:#f9fafb;
+    --ink2:#b6bbc1;
+    --ink3:#a1a7ae;
+    --line:rgba(255,255,255,.14);
+    --line2:rgba(255,255,255,.07);
+    --brand:#7b90ff;
+    --chip:rgba(255,255,255,.08);
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 32px rgba(0,0,0,.45);
+    --shadow-lift:0 2px 8px rgba(0,0,0,.5), 0 20px 48px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-wrap:pretty;
+  }
+
+  /* ── header ──────────────────────────────────────────────────────────── */
+  .top{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; gap:20px;
+    padding:14px clamp(20px,4vw,48px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(14px) saturate(1.4);
+    -webkit-backdrop-filter:blur(14px) saturate(1.4);
+    border-bottom:1px solid var(--line2);
+  }
+  .top h1{
+    margin:0; font-size:16px; font-weight:600; letter-spacing:.01em;
+    display:flex; align-items:baseline; gap:10px; min-width:0;
+  }
+  .top h1 span{font-size:12.5px; font-weight:400; color:var(--ink3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .top .grow{flex:1}
+  .pick{
+    display:flex; align-items:center; gap:8px;
+    font-size:12.5px; color:var(--ink2); font-variant-numeric:tabular-nums;
+    padding:5px 12px; border-radius:999px; background:var(--chip);
+    white-space:nowrap;
+  }
+  .pick b{color:var(--ink); font-weight:600}
+  .iconbtn{
+    appearance:none; border:1px solid var(--line); background:var(--card); color:var(--ink);
+    width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+    cursor:pointer; transition:border-color .15s, background .15s, transform .12s;
+  }
+  .iconbtn:hover{border-color:var(--ink3)}
+  .iconbtn:active{transform:scale(.96)}
+  .iconbtn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+  main{padding:clamp(24px,4vw,48px) clamp(20px,4vw,48px) 120px; max-width:1320px; margin:0 auto}
+
+  .lede{margin:0 0 8px; font-size:22px; font-weight:600; letter-spacing:-.01em}
+  .sub{margin:0 0 34px; max-width:74ch; font-size:14px; color:var(--ink2); line-height:1.7}
+
+  section{margin:0 0 46px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin:0 0 6px}
+  .sec-head h2{margin:0; font-size:15px; font-weight:600; letter-spacing:.01em}
+  .sec-head .num{
+    font-family:var(--mono); font-size:11.5px; color:var(--ink3);
+    padding:1px 6px; border-radius:5px; background:var(--chip);
+  }
+  .sec-note{margin:0 0 18px; font-size:13.5px; color:var(--ink2); max-width:78ch}
+
+  /* ── option cards ────────────────────────────────────────────────────── */
+  .grid{display:grid; gap:16px}
+  .grid.three{grid-template-columns:repeat(auto-fit, minmax(min(320px,100%),1fr))}
+  .grid.two{grid-template-columns:repeat(auto-fit, minmax(min(420px,100%),1fr))}
+
+  .opt{
+    appearance:none; text-align:left; font:inherit; color:inherit; cursor:pointer;
+    display:flex; flex-direction:column; gap:0; padding:0;
+    border:1px solid var(--line2); border-radius:var(--radius);
+    background:var(--card); box-shadow:var(--shadow);
+    transition:border-color .16s, box-shadow .16s, transform .16s;
+    overflow:hidden;
+  }
+  .opt:hover{box-shadow:var(--shadow-lift); transform:translateY(-1px); border-color:var(--line)}
+  .opt:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .opt[aria-pressed="true"]{border-color:var(--brand); box-shadow:0 0 0 1px var(--brand), var(--shadow-lift)}
+  .opt-top{
+    display:flex; align-items:center; gap:8px; flex:none; padding:12px 14px 10px;
+    border-bottom:1px solid var(--line2);
+  }
+  .opt-name{font-size:13.5px; font-weight:600; letter-spacing:.01em}
+  .opt-id{font-family:var(--mono); font-size:11px; color:var(--ink3); margin-left:auto}
+  .tick{
+    flex:none; width:16px; height:16px; border-radius:50%;
+    border:1px solid var(--line); display:grid; place-items:center;
+    color:transparent; background:transparent;
+  }
+  .opt[aria-pressed="true"] .tick{background:var(--brand); border-color:var(--brand); color:#fff}
+  .opt-why{
+    display:block;
+    padding:10px 14px 12px; font-size:12.5px; line-height:1.65; color:var(--ink2);
+    border-top:1px solid var(--line2); background:color-mix(in srgb, var(--chip) 45%, transparent);
+  }
+  .opt-why b{font-weight:600; color:var(--ink)}
+  .demo{padding:6px 8px; display:flex; flex-direction:column; min-height:206px}
+
+  /* ── product pane: tokens copied from lib/client.js ──────────────────── */
+  .pane{
+    --hl-sel:10%; --hl-hover:6%; --hl-mark:24%; --hl-mark-sel:24%;
+    --p-brand-soft:color-mix(in srgb, var(--p-brand) var(--hl-hover), transparent);
+    --p-brand-soft2:color-mix(in srgb, var(--p-brand) var(--hl-sel), transparent);
+    --p-mark:color-mix(in srgb, var(--p-brand) var(--hl-mark), transparent);
+    --p-mark-sel:color-mix(in srgb, var(--p-brand) var(--hl-mark-sel), transparent);
+    --p-ink:#0f1115;
+    --p-ink2:#5e6369;
+    --p-ink3:#6f747a;
+    --p-line:rgba(0,0,0,.10);
+    --p-chip:rgba(0,0,0,.05);
+    --p-brand:#4d6bfe;
+    color:var(--p-ink);
+    font-family:var(--font);
+  }
+  html[data-theme="dark"] .pane{
+    --p-ink:#f9fafb;
+    --p-ink2:#b6bbc1;
+    --p-ink3:#a1a7ae;
+    --p-line:rgba(255,255,255,.13);
+    --p-chip:rgba(255,255,255,.08);
+    --p-brand:#7b90ff;
+  }
+
+  /* result row: 48px min-height, 2 lines, padding 0 10px 0 12px, gap 10px */
+  .row{
+    display:flex; align-items:center; gap:10px;
+    min-height:48px; padding:0 10px 0 12px; border-radius:8px;
+    transition:background .12s;
+  }
+  .row[data-hover]{background:var(--p-brand-soft)}
+  .row[data-selected]{background:var(--p-brand-soft2)}
+  .row-texts{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+  .row-line{
+    min-width:0; font-size:13.5px; line-height:20px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .row-prompt{color:var(--p-ink)}
+  .row-response{color:var(--p-ink2)}
+  .row-line mark{
+    background:var(--p-mark); color:var(--p-ink);
+    border-radius:3px; padding:0 2px; font-weight:500;
+  }
+  .row[data-selected] .row-line mark{ background:var(--p-mark-sel) }
+
+  /* Half a row above the anchor: the previous match peeking in, no text. */
+  .peek{
+    display:block; position:relative; height:22px; overflow:hidden;
+    mask-image:linear-gradient(transparent 0, #000 8px);
+    -webkit-mask-image:linear-gradient(transparent 0, #000 8px);
+  }
+  .peek .row{ position:relative; top:-26px }
+  .cap{
+    display:flex; align-items:center; gap:8px;
+    font-size:11.5px; line-height:16px; color:var(--p-ink3);
+    padding:6px 12px 4px; font-variant-numeric:tabular-nums;
+  }
+  .cap::after{content:""; flex:1; height:1px; background:var(--p-line)}
+
+  /* ── highlight variants (the one axis the user is judging) ───────────── */
+  html[data-hl="h1"] .pane{ --hl-sel:10%; --hl-hover:6%; --hl-mark:24%; --hl-mark-sel:24% }
+  html[data-theme="dark"][data-hl="h1"] .pane{ --hl-sel:18%; --hl-hover:10%; --hl-mark:32%; --hl-mark-sel:32% }
+
+  html[data-hl="h2"] .pane{ --hl-sel:6%; --hl-hover:3%; --hl-mark:13%; --hl-mark-sel:15% }
+  html[data-theme="dark"][data-hl="h2"] .pane{ --hl-sel:12%; --hl-hover:6%; --hl-mark:22%; --hl-mark-sel:24% }
+
+  html[data-hl="h3"] .pane{ --hl-sel:6%; --hl-hover:3%; --hl-mark:0%; --hl-mark-sel:0% }
+  html[data-theme="dark"][data-hl="h3"] .pane{ --hl-sel:12%; --hl-hover:6% }
+  html[data-hl="h3"] .row-line mark{
+    background:none; color:var(--p-ink); font-weight:600; padding:0;
+    box-shadow:inset 0 -.12em 0 color-mix(in srgb, var(--p-brand) 45%, transparent);
+  }
+
+  /* 分档 + 变淡（最终）：行底最淡、命中比它强一档、选中行的命中最强 */
+  html[data-hl="h4"] .pane{ --hl-sel:6%; --hl-hover:3%; --hl-mark:10%; --hl-mark-sel:20% }
+  html[data-theme="dark"][data-hl="h4"] .pane{ --hl-sel:12%; --hl-hover:6%; --hl-mark:20%; --hl-mark-sel:34% }
+
+  .hlbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 30px}
+  .hlbar .t{font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink3); margin-right:2px}
+  .hlbar button{
+    appearance:none; font:inherit; font-size:12.5px; cursor:pointer;
+    padding:5px 13px; min-height:30px; border-radius:999px;
+    border:1px solid var(--line); background:var(--card); color:var(--ink2);
+    transition:color .15s, border-color .15s, background .15s;
+  }
+  .hlbar button:hover{border-color:var(--ink3); color:var(--ink)}
+  .hlbar button[aria-pressed="true"]{
+    border-color:var(--brand); color:var(--ink);
+    background:color-mix(in srgb, var(--brand) 10%, transparent);
+  }
+  .hlbar button:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+  /* ── L1 · #N 灰药丸（现状） ───────────────────────────────────────────── */
+  .lb-pill{
+    flex:none; padding:2px 7px; border-radius:6px;
+    font-size:11.5px; line-height:16px; font-weight:500;
+    font-variant-numeric:tabular-nums;
+    background:var(--p-chip); color:var(--p-ink2);
+  }
+  /* ── L2 · #N 无底色（推荐） ───────────────────────────────────────────── */
+  .lb-no{
+    flex:none; width:30px; text-align:left; white-space:nowrap;
+    font-size:12px; line-height:16px; font-weight:500;
+    font-variant-numeric:tabular-nums; color:var(--p-ink2);
+  }
+  .lb-no.lb-right{ text-align:right }
+  .lb-no.lb-zero{ letter-spacing:0 }
+  .lb-no .lb-hash{ font-size:11px; opacity:.72; margin-right:1px }
+  .row[data-selected] .lb-no{ color:var(--p-ink); font-weight:600 }
+  /* ── L3 · 行号 + 竖细线 ──────────────────────────────────────────────── */
+  .lb-rule{
+    flex:none; width:26px; text-align:right; padding-right:10px;
+    border-right:1px solid var(--p-line);
+    font-size:12.5px; line-height:20px; font-variant-numeric:tabular-nums;
+    color:var(--p-ink2);
+  }
+  .row[data-l3]{gap:12px}
+  /* ── L4 · 刻度 + 数字（复刻轨道语言） ───────────────────────────────── */
+  .lb-tick{
+    flex:none; display:flex; align-items:center; gap:7px;
+    font-size:12px; line-height:20px; font-variant-numeric:tabular-nums;
+    color:var(--p-ink2);
+  }
+  .lb-tick i{
+    display:block; width:12px; height:2px; border-radius:2px;
+    background:currentColor; opacity:.5; transition:width .16s, opacity .16s;
+  }
+  .row[data-selected] .lb-tick i{width:18px; opacity:1; background:var(--p-brand)}
+  .row[data-selected] .lb-tick{color:var(--p-ink)}
+  /* ── L5 · 第 N 轮 ─────────────────────────────────────────────────────── */
+  .lb-word{
+    flex:none; white-space:nowrap;
+    font-size:11.5px; line-height:20px; color:var(--p-ink2);
+    font-variant-numeric:tabular-nums;
+  }
+  /* ── L6 · 无编号 ──────────────────────────────────────────────────────── */
+  .lb-none{flex:none; width:6px; height:6px; border-radius:50%; background:transparent}
+  .row[data-selected] .lb-none{background:var(--p-brand)}
+
+  /* ── anchor diagram ─────────────────────────────────────────────────── */
+  .af{
+    margin-top:16px; padding:14px 16px 16px; border-radius:var(--radius);
+    border:1px solid var(--line2); background:var(--card); box-shadow:var(--shadow);
+    transition:opacity .16s;
+  }
+  .af[data-off]{ opacity:.42 }
+  .af-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:0 0 12px; font-size:12.5px; color:var(--ink2)}
+  .af-head .t{font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink3)}
+  .af-row{
+    display:flex; align-items:center; gap:12px; height:24px;
+    font-size:12px; color:var(--ink2); font-variant-numeric:tabular-nums;
+  }
+  .af-row b{min-width:30px; font-weight:500; color:var(--ink)}
+  .af-row .d{min-width:52px; font-size:11.5px; color:var(--ink3)}
+  .af-row em{font-style:normal; font-size:11.5px; color:var(--ink3)}
+  .af-above{
+    max-width:520px; margin-left:14px; padding-left:12px; opacity:.6;
+    border-left:1.5px dashed var(--ink3); border-radius:0 0 0 2px;
+  }
+  .af-window{
+    max-width:520px; margin-left:14px; padding:2px 10px 4px 12px;
+    border-left:2px solid var(--brand); border-radius:0 10px 10px 0;
+    background:color-mix(in srgb, var(--brand) 5%, transparent);
+  }
+  .af-peek{
+    display:flex; align-items:center; height:22px; margin:0 0 2px -12px;
+    padding-left:12px; border-left:2px solid var(--brand);
+    font-size:11px; color:var(--ink3);
+    background:linear-gradient(color-mix(in srgb, var(--brand) 9%, transparent), transparent);
+  }
+  .af-anchor b{color:var(--brand)}
+  .af-cur{ color:var(--ink) }
+  .af-cur b{color:var(--brand); font-weight:600}
+  .af-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:11.5px; color:var(--ink3)}
+  .af-legend i{display:inline-block; width:14px; height:0; margin-right:6px; vertical-align:middle; border-top:1.5px dashed var(--ink3)}
+
+  /* ── spec strip ──────────────────────────────────────────────────────── */
+  .spec{
+    margin-top:14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 16px;
+    padding:12px 14px; border-radius:12px; border:1px dashed var(--line);
+    font-size:12.5px; color:var(--ink2); line-height:1.6;
+  }
+  .spec b{color:var(--ink); font-weight:600}
+  .spec .spec-t{
+    font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink3);
+  }
+  .spec code{font-family:var(--mono); font-size:11.5px; color:var(--ink)}
+
+  /* ── live stage ──────────────────────────────────────────────────────── */
+  .stage{
+    display:grid; gap:20px;
+    grid-template-columns:minmax(0,1fr) 340px;
+    align-items:start;
+  }
+  @media (max-width:900px){ .stage{grid-template-columns:1fr} }
+
+  .paper{
+    position:relative; overflow:hidden;
+    border-radius:var(--radius); border:1px solid var(--line2);
+    background:var(--card); box-shadow:var(--shadow);
+    padding:22px 22px 26px;
+    min-height:470px;
+  }
+  .paper-label{
+    font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink3); margin:0 0 14px;
+  }
+  .prose{
+    font-size:13px; line-height:1.95; color:var(--ink3);
+    mask-image:linear-gradient(#000 55%, transparent 96%);
+    -webkit-mask-image:linear-gradient(#000 55%, transparent 96%);
+  }
+  .prose p{margin:0 0 12px}
+
+  /* spotlight overlay: 640 wide, radius 26, corner-shape superellipse(1.5) */
+  html[data-theme="dark"] .paper{ background:#1a1a1b; }
+  .spot{
+    position:absolute; left:50%; top:38px; transform:translateX(-50%);
+    width:min(560px, calc(100% - 40px));
+    border-radius:26px; corner-shape:superellipse(1.5);
+    overflow:hidden; border:0;
+    display:flex; flex-direction:column;
+    --veil:70%; --blur:6px;
+    background:color-mix(in srgb, #ffffff var(--veil), transparent);
+    box-shadow:
+      inset 0 0 .5px .75px color-mix(in srgb, var(--ink) 12%, transparent),
+      0 10px 28px rgba(0,0,0,.14);
+    -webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);
+    backdrop-filter:blur(var(--blur)) saturate(1.8);
+    color:var(--p-ink);
+  }
+  html[data-theme="dark"] .spot{
+    --veil:82%;
+    background:color-mix(in srgb, #232324 var(--veil), transparent);
+    box-shadow:
+      inset 0 0 .5px .75px rgba(255,255,255,.2),
+      0 10px 28px rgba(0,0,0,.4);
+  }
+  .spot-field{display:flex; align-items:center; min-width:0}
+  .spot-icon{flex:none; margin:0 9px 0 15px; color:var(--p-ink3); display:flex}
+  .spot-input{
+    flex:1; min-width:0; height:52px; padding:0 16px 0 0;
+    border:0; background:transparent; outline:none;
+    font-family:var(--font); font-size:15px; line-height:52px; color:var(--p-ink);
+    caret-color:var(--p-brand);
+  }
+  .spot-body{position:relative; display:flex; flex-direction:column; border-top:1px solid var(--p-line)}
+  .spot-scroll{
+    overflow-y:auto; max-height:268px; overscroll-behavior:contain;
+    scrollbar-width:thin;
+  }
+  .spot-list{padding:6px 8px}
+  .spot-foot{
+    border-top:1px solid var(--p-line); padding:8px 16px;
+    font-size:11.5px; line-height:16px; font-variant-numeric:tabular-nums;
+    color:var(--p-ink3); display:flex; gap:8px;
+  }
+
+  /* rail + preview card, geometry from lib/client.js */
+  .railbox{
+    border-radius:var(--radius); border:1px solid var(--line2);
+    background:var(--card); box-shadow:var(--shadow);
+    padding:18px; display:flex; flex-direction:column; gap:14px;
+  }
+  .railbox h3{margin:0; font-size:12.5px; font-weight:600; color:var(--ink2); letter-spacing:.01em}
+  .railrow{position:relative; display:flex; align-items:flex-start; gap:18px}
+  .rail{
+    position:relative; width:44px; flex:none; overflow:hidden;
+    display:flex; flex-direction:column; padding:6px 0;
+  }
+  .markrow{
+    height:30px; display:flex; align-items:center; justify-content:flex-end;
+    border:0; background:none; padding:0; width:100%; cursor:pointer;
+  }
+  .markrow i{
+    display:block; height:2px; border-radius:2px; background:currentColor;
+    color:var(--p-ink3); opacity:.4;
+  }
+  .markrow[data-on] i{color:var(--p-ink); opacity:.6}
+  .markrow[data-near] i{color:var(--p-ink); opacity:1}
+  .preview{
+    position:absolute; left:62px; width:calc(100% - 62px);
+    padding:10px 12px; max-height:106px; overflow:hidden;
+    transform:translateY(-50%);
+    border-radius:18.4px; corner-shape:superellipse(1.5);
+    background:var(--card);
+    box-shadow:
+      inset 0 0 .5px .75px color-mix(in srgb, var(--ink) 12%, transparent),
+      var(--shadow);
+  }
+  .preview .row-prompt{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    font-size:13px; line-height:20px; font-weight:500;
+  }
+  .preview .row-response{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    margin-top:4px; font-size:12.5px; line-height:19px;
+  }
+  .railnote{font-size:12px; line-height:1.7; color:var(--ink2); margin:0}
+
+  /* ── summary ─────────────────────────────────────────────────────────── */
+  .summary{
+    margin-top:6px; border-radius:var(--radius); border:1px solid var(--line2);
+    background:var(--card); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .summary-head{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:14px 16px; border-bottom:1px solid var(--line2);
+  }
+  .summary-head h3{margin:0; font-size:13.5px; font-weight:600}
+  .summary-head .grow{flex:1}
+  .copy{
+    appearance:none; font:inherit; font-size:12.5px; font-weight:500; cursor:pointer;
+    border:1px solid var(--line); background:var(--chip); color:var(--ink);
+    padding:6px 14px; border-radius:999px; min-height:32px;
+    transition:border-color .15s, background .15s;
+  }
+  .copy:hover{border-color:var(--ink3)}
+  .copy:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .summary-body{padding:16px; display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+  .kv{display:flex; flex-direction:column; gap:6px}
+  .kv .k{font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink3)}
+  .kv .v{font-size:13.5px; line-height:1.7; color:var(--ink)}
+  .kv code,code.inline{
+    font-family:var(--mono); font-size:12px; padding:1px 5px; border-radius:5px;
+    background:var(--chip); color:var(--ink);
+  }
+  .json{
+    margin:0; padding:12px 14px; border-radius:10px; background:var(--chip);
+    font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink);
+    overflow-x:auto;
+  }
+  @media (max-width:720px){
+    .top{flex-wrap:wrap; gap:10px; padding:10px 20px}
+    .top h1{font-size:15px}
+    .top h1 span{display:none}
+    .pick{order:3; margin-left:auto}
+    main{padding-top:22px}
+    .lede{font-size:19px}
+    .stage{grid-template-columns:1fr}
+    .demo{min-height:0}
+  }
+  footer{
+    max-width:1320px; margin:0 auto; padding:0 clamp(20px,4vw,48px) 60px;
+    font-size:12px; line-height:1.8; color:var(--ink3);
+  }
+  footer code{font-family:var(--mono); font-size:11.5px; color:var(--ink2)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>轮次标注与排布 · 方案选择 <span>点选卡片，下方实景实时合成</span></h1>
+  <div class="grow"></div>
+  <div class="pick" aria-live="polite">标注 <b id="pickL">L1</b> · 排布 <b id="pickO">O1</b></div>
+  <button class="iconbtn" id="themeBtn" type="button" aria-label="切换深浅色主题" title="切换深浅色主题">
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M8 2.8v10.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M8 2.8a5.2 5.2 0 0 1 0 10.4z" fill="currentColor"/>
+    </svg>
+  </button>
+</header>
+
+<main>
+  <p class="lede">⌘F 结果列表：编号怎么标，命中怎么排</p>
+  <p class="sub">
+    两处已经定了方向：<b>①</b> <code class="inline">#12</code> 这个写法留下，去掉那块灰底（下方 L2 就是它）；<b>②</b> 列表改升序 + 就近定位——站在第 6 轮，第一行是临近的 <code class="inline">#5</code>，往下 <code class="inline">#7 #9</code>，更早的 <code class="inline">#3 #2</code> 滚到视口上方（下方 O5）。调研与规格见 <code class="inline">docs/search-result-order-research.md</code>。
+    两处都在 <code class="inline">lib/client.js</code> 的 <code class="inline">ResultRow</code> 与 <code class="inline">searchScanSlice</code> 上。
+    左边一栏只换编号形态，右边一栏只换顺序，二者互不影响；下面第三段把它们合起来看真机效果。所有尺寸、圆角、颜色取自当前源码，不是示意值。
+  </p>
+
+  <div class="hlbar" role="group" aria-label="高亮强度">
+    <span class="t">高亮</span>
+    <button type="button" data-hl="h1">现状 · 选中 10% / 命中 24%</button>
+    <button type="button" data-hl="h2">变淡 · 6% / 13%</button>
+    <button type="button" data-hl="h3">下划线 · 6% / 无底色</button>
+    <button type="button" data-hl="h4">分档 + 变淡（推荐）· 选中行 20% / 其余 10%</button>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="num">1</span><h2>编号形态</h2></div>
+    <p class="sec-note">现状是 <b>L1</b>：<code class="inline">#12</code> 灰底药丸——每行占一块底色，几十条命中纵向叠起来是一片灰斑。<b>L2</b> 是已定方向：字和号都留下，只把底色去掉，并让 <code class="inline">#</code> 退成符号。L3–L6 作为"要不要换掉编号形态"的对照保留（例如把轨道的 2px 刻度搬进列表）。</p>
+    <div class="grid three" id="labelGrid" role="group" aria-label="编号形态"></div>
+    <div class="spec">
+      <span class="spec-t">L2 规格</span>
+      <span>槽宽 <b>30px</b> 左对齐（<code>#</code> 成竖线）</span>
+      <span><b>12 / 16px</b> · 500（选中 600）</span>
+      <span><b>tabular-nums</b></span>
+      <span><code>#</code> 11px · .72</span>
+      <span>数字 secondary（白底 <b>5.6:1</b>）</span>
+      <span>行 <b>48px</b> / 内距 12 · gap 10 不动</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">2</span><h2>结果排布</h2></div>
+    <p class="sec-note">现状是 <b>O1</b>：从最新一轮往前扫，列表编号倒着走（#12 → #2），与正文、与轨道刻度都相反。调研过一圈后，主流（Word 导航窗格、Acrobat / 预览的结果列表、VS Code 的按行结果、浏览器查找）都是<b>文档序升序</b>，并且<b>从不给单条结果编号</b>——编号留给"第几轮"这种绝对锚点，"我在哪"只由计数、高亮和刻度表达。<b>O5</b> 就是按这个结论做的：顺序恒定升序，就近交给定位，列表里不加提示行。</p>
+    <div class="grid two" id="orderGrid" role="group" aria-label="结果排布"></div>
+
+    <div class="af" id="anchorFig">
+      <p class="af-head">
+        <span class="t">O5 就近定位 · 示意</span>
+        <span>锚点 = 距当前轮最近的命中（并列取更旧的一条）；打开时视口从锚点开始，它的上一行只露半行。</span>
+        <span id="afNote"></span>
+      </p>
+      <div class="af-body" id="afBody"></div>
+      <p class="af-legend">
+        <span><i style="border-top:0;border-left:2px solid var(--brand);height:12px;width:0"></i>打开时的视口</span>
+        <span><i></i>视口上方（滚一下才有）</span>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">3</span><h2>合成实景</h2></div>
+    <p class="sec-note">左边是 ⌘F 面板（搜索「预览」），右边是轨道悬停预览卡，用来确认编号改动不会破坏原有的材质与节奏。</p>
+    <div class="stage">
+      <div class="paper">
+        <p class="paper-label">会话正文（背景示意）</p>
+        <div class="prose" aria-hidden="true">
+          <p>把轨道贴合会话列边缘之后，命中项的落点仍然依赖滚动容器的偏移。缩进层级由 data-depth 标记，渲染时按最长前缀成组，分组内部不再二次排序。</p>
+          <p>索引构建分成若干空闲切片，每片不超过两毫秒，累计字符数达到阈值就让出主线程；扫描阶段同样切片，保证输入法组合期间没有抖动。</p>
+          <p>玻璃材质只换表面配方，尺寸与间距保持不变，因此三种材质之间切换不会引起重排，轨道刻度也不会跳动。</p>
+          <p>落点闪光由 Web Animations 驱动，`prefers-reduced-motion` 下整体关闭，滑动改用即时定位。</p>
+        </div>
+        <div class="spot pane" role="presentation">
+          <div class="spot-field">
+            <span class="spot-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16">
+                <circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10.4 10.4L14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input class="spot-input" value="预览" readonly aria-label="搜索对话">
+          </div>
+          <div class="spot-body">
+            <div class="spot-scroll"><div class="spot-list" id="liveList" role="listbox" aria-label="搜索结果"></div></div>
+            <div class="spot-foot"><span id="liveCount">7 / 18 轮命中</span><span>·</span><span>↑↓ 选择 · ↵ 跳转 · esc 关闭</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="railbox">
+        <h3>轨道刻度 · 第 6 轮为当前 · 第 10 条悬停</h3>
+        <div class="railrow">
+          <div class="rail" id="rail" aria-hidden="true"></div>
+          <div class="preview pane" id="previewCard"></div>
+        </div>
+        <p class="railnote">轨道本身不标数字。编号只属于搜索结果列表——这也是为什么编号可以做得更安静：它不需要和刻度抢同一套视觉重量。</p>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="summary-head">
+        <h3>当前选择</h3>
+        <div class="grow"></div>
+        <button class="copy" id="copyBtn" type="button">复制选择</button>
+      </div>
+      <div class="summary-body">
+        <div class="kv"><span class="k">编号</span><span class="v" id="sumL"></span></div>
+        <div class="kv"><span class="k">排布</span><span class="v" id="sumO"></span></div>
+        <div class="kv"><span class="k">落点</span><span class="v" id="sumImpact"></span></div>
+        <div class="kv"><span class="k">高亮</span><span class="v" id="sumH"></span></div>
+      </div>
+      <pre class="json" id="sumJson"></pre>
+    </div>
+  </section>
+</main>
+
+<footer>
+  原型文件：<code>outline/docs/prototypes/turn-number-options.html</code> · 不改动插件代码 · 选择会记在 localStorage 与 URL 里，可直接把链接发给别人对比。
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── 真实感数据：一轮 = 提问 + 最终回答（与搜索索引取的是同一对字段） ── */
+  var CURRENT = 6;
+  var TURNS = [
+    { n:2,  prompt:"能不能让预览显示这一轮的工具调用", response:"预览只截 prompt 与最终回答，工具步骤不进卡片" },
+    { n:3,  prompt:"换到左侧停靠之后，预览卡的方向反了", response:"锚点跟着 data-side 走，进场动画另有一份 left 版本" },
+    { n:5,  prompt:"紧凑模式里预览卡高度被裁掉一截", response:"PREVIEW_H 106px：两行 prompt 加两行 response 刚好吃满" },
+    { n:7,  prompt:"悬停预览会不会挡住会话正文", response:"指向轨道外侧、pointer-events 关掉，只做 tooltip" },
+    { n:9,  prompt:"毛玻璃材质下预览卡文字发灰", response:"深色基色压到 #232324，veil 25% 时对比度才站得住" },
+    { n:11, prompt:"预览卡的圆角和搜索面板不一样，看着别扭", response:"预览卡 18.4px、面板 26px，靠同一套 superellipse 语言统一" },
+    { n:12, prompt:"拖动刻度的时候预览卡跟不上手", response:"scrub 期间关掉 transition，previewTop 用 rAF 合并成一帧一次" }
+  ];
+  var TOTAL_TURNS = 15;
+  var QUERY = "预览";
+
+  /* ── 编号形态 ─────────────────────────────────────────────────────────── */
+  var LABELS = [
+    { id:"L1", name:"#N 灰药丸（现状）",
+      why:"<b>代价：</b>每行多一块底色，长列表叠成灰斑；<code>#</code> 不携带信息。",
+      render:function(t){ return '<span class="lb-pill">#'+t.n+'</span>'; } },
+    { id:"L2", name:"#N 无底色 · 左对齐（推荐）",
+      why:"<b>已定方向：</b>保住 <code>#12</code> 的锚点，去掉那块灰底。<code>#</code> 退成符号（11px/.72）。<b>左对齐</b>：所有 <code>#</code> 落在同一条竖线上，数字从固定 x 起排；槽宽固定 30px（容得下 <code>#100</code>），所以文字列也不动，只有槽内的空白在变。选中行数字升到 primary + 600。",
+      render:function(t){ return '<span class="lb-no"><span class="lb-hash">#</span>'+t.n+'</span>'; } },
+    { id:"L7", name:"#N 右对齐（对照）",
+      why:"<b>对照用：</b>数字右缘对齐、<code>#</code> 左缘参差。适合「比大小」的数值列（金额、统计），不适合当编号用——我们每行只有 1–2 位数字，参差的 <code>#</code> 反而更像噪点。",
+      render:function(t){ return '<span class="lb-no lb-right"><span class="lb-hash">#</span>'+t.n+'</span>'; } },
+
+    { id:"L3", name:"行号 + 竖细线",
+      why:"<b>优点：</b>一条 1px 竖线把编号区与正文分开，正文起点齐平，扫读列很稳（编辑器 gutter 语言）。<b>代价：</b>多一条竖线，窄面板下宽度更紧。",
+      render:function(t){ return '<span class="lb-rule">'+t.n+'</span>'; } },
+    { id:"L4", name:"刻度 + 数字",
+      why:"<b>优点：</b>把轨道的 2px 刻度语言搬进列表：编号前一条短刻度，选中行刻度变长并转品牌色。面板与轨道终于是一套语言。<b>代价：</b>多一个元素，信息密度略降。",
+      render:function(t){ return '<span class="lb-tick"><i></i>'+t.n+'</span>'; } },
+    { id:"L5", name:"「第 N 轮」",
+      why:"<b>优点：</b>中文语义最明确，不需要解释 <code>#</code> 是什么。<b>代价：</b>横向更宽，英文界面要换成 <code>turn N</code>，两种语言都得留位。",
+      render:function(t){ return '<span class="lb-word">第 '+t.n+' 轮</span>'; } },
+    { id:"L6", name:"无编号",
+      why:"<b>优点：</b>最干净，顺序本身就能表达位置；选中行只留一个 6px 品牌色圆点。<b>代价：</b>丢掉“第几轮”的绝对锚点，跟轨道刻度对不上号。",
+      render:function(t){ return '<span class="lb-none"></span>'; } }
+  ];
+
+  /* ── 排布顺序 ─────────────────────────────────────────────────────────── */
+  var ORDERS = [
+    { id:"O5", name:"升序 + 就近定位（推荐）",
+      why:"<b>优点：</b>编号恒升序（= 文档序），与正文、与轨道同向；打开时把“离当前轮最近”的命中放到第一行；上一条命中只从其上方露出一截（半行，约 22px），有没有更早的内容一眼就看出来——没有就什么都不留。不写一个字。Word / Acrobat / VS Code / 浏览器查找全部按文档序。<b>代价：</b>最新命中不在首屏。",
+      build:function(hits){
+        var info = anchorInfo(hits), parts = [];
+        if(info.above.length){
+          parts.push({type:"peek", turn:info.above[info.above.length-1]});
+        }
+        parts.push({type:"rows", rows:info.rows});
+        return parts;
+      } },
+    { id:"O1", name:"新 → 旧（现状）",
+      why:"<b>优点：</b>最新命中就在顶上，一问即见，也是 Spotlight 的默认。<b>代价：</b>编号倒着走（#12 → #2），与正文方向和轨道方向都相反。",
+      build:function(hits){ return [{type:"rows", rows:hits.slice().sort(function(a,b){return b.n-a.n;})}]; } },
+    { id:"O2", name:"旧 → 新",
+      why:"<b>优点：</b>与阅读方向、轨道刻度方向一致，编号从小到大读得通。<b>代价：</b>最新命中最远；默认选中会落在最早一条，需要同时决定“默认选中哪一行”。",
+      build:function(hits){ return [{type:"rows", rows:hits.slice().sort(function(a,b){return a.n-b.n;})}]; } },
+    { id:"O3", name:"距当前轮由近到远",
+      why:"<b>优点：</b>上下文优先——正在读第 6 轮时，附近命中最相关，翻回上一段代价最小。<b>代价：</b>顺序随阅读位置变动，列表不固定；需要把当前轮序号带进结果状态。",
+      build:function(hits){
+        return [{type:"cap", text:"当前阅读 · 第 "+CURRENT+" 轮"},
+                {type:"rows", rows:hits.slice().sort(function(a,b){
+          var da = Math.abs(a.n-CURRENT), db = Math.abs(b.n-CURRENT);
+          return da === db ? a.n-b.n : da-db;
+        })}];
+      } },
+    { id:"O4", name:"分组：本轮之前 / 之后",
+      why:"<b>优点：</b>时间顺序不变，但在当前轮断开，一次性回答“这条在我前面还是后面”。<b>代价：</b>多两行分组标题，命中稀疏时这两行显得空。",
+      build:function(hits){
+        var asc = hits.slice().sort(function(a,b){return a.n-b.n;});
+        var before = asc.filter(function(t){return t.n < CURRENT;});
+        var after  = asc.filter(function(t){return t.n > CURRENT;});
+        return [{type:"cap", text:"本轮之前 · "+before.length+" 条"},
+                {type:"rows", rows:before},
+                {type:"cap", text:"本轮之后 · "+after.length+" 条"},
+                {type:"rows", rows:after}];
+      } }
+  ];
+
+  /* Anchor = the hit nearest the current turn (tie → the older one). */
+  function anchorInfo(hits){
+    var asc = hits.slice().sort(function(a,b){return a.n-b.n;});
+    var anchor = 0, best = Infinity;
+    for(var i=0;i<asc.length;i++){
+      var d = Math.abs(asc[i].n-CURRENT);
+      if(d < best){ best = d; anchor = i; }
+    }
+    return { asc:asc, anchor:anchor, above:asc.slice(0, anchor), rows:asc.slice(anchor) };
+  }
+
+  /* ── 高亮：先转义，再包 <mark> ────────────────────────────────────────── */
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  }
+  function hl(s){
+    return esc(s).split(QUERY).join("<mark>"+esc(QUERY)+"</mark>");
+  }
+
+  function rowHTML(t, label, selected, hovered){
+    return '<span class="row" role="option" aria-selected="'+(selected?"true":"false")+'"'
+      + (selected?" data-selected":"") + (hovered?" data-hover":"")+'>'
+      + label.render(t)
+      + '<span class="row-texts">'
+      + '<span class="row-line row-prompt">'+hl(t.prompt)+'</span>'
+      + '<span class="row-line row-response">'+hl(t.response)+'</span>'
+      + '</span></span>';
+  }
+
+  /* Cards stay compact: captions are free, rows are capped. */
+  function groupHTML(parts, label, maxRows){
+    var out = "", used = 0, selDone = false;
+    parts.forEach(function(part){
+      if(part.type === "cap"){
+        if(used < maxRows) out += '<span class="cap">'+esc(part.text)+'</span>';
+        return;
+      }
+      if(part.type === "peek"){
+        out += '<span class="peek">'+rowHTML(part.turn, label, false, false)+'</span>';
+        used += 1;
+        return;
+      }
+      for(var i=0;i<part.rows.length && used<maxRows;i++){
+        out += rowHTML(part.rows[i], label, !selDone, false);
+        selDone = true;
+        used += 1;
+      }
+    });
+    return out;
+  }
+
+  /* ── 状态 ─────────────────────────────────────────────────────────────── */
+  var HL = {
+    h1:"选中 10% · 悬停 6% · 命中 24%（现状）",
+    h2:"选中 6% · 悬停 3% · 命中 13%，字重不变",
+    h3:"命中不用底色：2px 下划线（brand 45%）+ 600；选中 6%",
+    h4:"分档 + 变淡：行底 6%/3%，命中 10%，选中行命中 20%（深色 12%/6%、20%、34%）"
+  };
+  var state = { label:"L2", order:"O5", hl:"h4" };
+  try{
+    var saved = JSON.parse(localStorage.getItem("ol-turn-ui-choice") || "null");
+    if(saved && saved.label && saved.order){ state = saved; }
+  }catch(e){}
+  try{
+    var h = new URLSearchParams(location.hash.replace(/^#/, ""));
+    if(h.get("l")) state.label = h.get("l");
+    if(h.get("o")) state.order = h.get("o");
+    if(h.get("hl")) state.hl = h.get("hl");
+  }catch(e){}
+
+  var byId = function(list, id){
+    for(var i=0;i<list.length;i++){ if(list[i].id === id) return list[i]; }
+    return list[0];
+  };
+
+  function save(){
+    try{ localStorage.setItem("ol-turn-ui-choice", JSON.stringify(state)); }catch(e){}
+    try{ history.replaceState(null, "", "#l="+state.label+"&o="+state.order+"&hl="+state.hl); }catch(e){}
+  }
+
+  /* ── 渲染：选项卡片 ───────────────────────────────────────────────────── */
+  function paintGrid(host, list, axis){
+    host.innerHTML = list.map(function(o){
+      var demo;
+      if(axis === "label"){
+        // 三条固定命中，保证所有卡片内容一致，只有编号不同
+        demo = groupHTML([{type:"rows", rows:TURNS.slice().sort(function(a,b){return b.n-a.n;})}], o, 3);
+      }else{
+        demo = groupHTML(o.build(TURNS), byId(LABELS, state.label), 4);
+      }
+      return '<button class="opt" type="button" data-axis="'+axis+'" data-id="'+o.id+'"'
+        + ' aria-pressed="'+(state[axis==="label"?"label":"order"] === o.id ? "true":"false")+'">'
+        + '<span class="opt-top">'
+        + '<span class="tick" aria-hidden="true">'
+        + '<svg width="9" height="9" viewBox="0 0 10 10"><path d="M1.6 5.2l2.2 2.2 4.6-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        + '</span>'
+        + '<span class="opt-name">'+o.name+'</span>'
+        + '<span class="opt-id">'+o.id+'</span>'
+        + '</span>'
+        + '<span class="demo pane" aria-hidden="true">'+demo+'</span>'
+        + '<span class="opt-why">'+o.why+'</span>'
+        + '</button>';
+    }).join("");
+  }
+
+  /* ── 渲染：实景 ───────────────────────────────────────────────────────── */
+  function paintLive(){
+    var label = byId(LABELS, state.label);
+    var order = byId(ORDERS, state.order);
+    var parts = order.build(TURNS);
+
+    var html = "", idx = 0;
+    parts.forEach(function(part){
+      if(part.type === "cap"){ html += '<span class="cap">'+esc(part.text)+'</span>'; return; }
+      if(part.type === "peek"){
+        html += '<span class="peek">'+rowHTML(part.turn, label, false, false)+'</span>';
+        return;
+      }
+      part.rows.forEach(function(t){
+        html += rowHTML(t, label, idx === 0, idx === 2);
+        idx += 1;
+      });
+    });
+    document.getElementById("liveList").innerHTML = html;
+    document.getElementById("liveCount").textContent = TURNS.length + " / " + TOTAL_TURNS + " 轮命中";
+
+    /* 轨道：18 刻度，第 6 轮为当前，第 10 条悬停 → 预览卡 */
+    var rail = document.getElementById("rail");
+    var HOVER_MARK = 10;
+    if(!rail.dataset.built){
+      var marks = "";
+      for(var i=1;i<=TOTAL_TURNS;i++){
+        var on = i === CURRENT;
+        var near = i === HOVER_MARK;
+        var w = near ? 20 : (on ? 13 : 6);
+        marks += '<span class="markrow"'+(on?" data-on":"")+(near?" data-near":"")+'>'
+          + '<i style="width:'+w+'px"></i></span>';
+      }
+      rail.innerHTML = marks;
+      rail.style.height = (TOTAL_TURNS * 30 + 12) + "px";
+      rail.dataset.built = "1";
+    }
+    /* Card rides the hovered mark, exactly like the rail's previewTopFor(). */
+    document.getElementById("previewCard").style.top =
+      (6 + (HOVER_MARK - 1) * 30 + 15) + "px";
+    var t = null;
+    for(var k=0;k<TURNS.length;k++){ if(TURNS[k].n === 9) t = TURNS[k]; }
+    if(t === null) t = TURNS[TURNS.length-1];
+    document.getElementById("previewCard").innerHTML =
+      '<div class="row-prompt">'+hl(t.prompt)+'</div>'
+      + '<div class="row-response">'+hl(t.response)+'</div>';
+
+    /* 就近定位示意：距离列 + 视口边界 + 半行 peek */
+    var info = anchorInfo(TURNS);
+    var first = info.rows[0].n;
+    function afRow(t, extra){
+      return '<span class="af-row ' + (extra || '') + '"><b>#' + t.n + '</b>'
+        + '<span class="d">距离 ' + Math.abs(t.n - CURRENT) + '</span></span>';
+    }
+    var aboveHTML = info.above.map(function(t, k){
+      var note = k === info.above.length - 1 ? '<em>滚上去才看得到</em>' : '';
+      return '<span class="af-row"><b>#' + t.n + '</b>'
+        + '<span class="d">距离 ' + Math.abs(t.n - CURRENT) + '</span>' + note + '</span>';
+    }).join("");
+
+    var winHTML = '<span class="af-peek">半行 peek · 上一条露 22px</span>';
+    var inserted = false;
+    info.rows.forEach(function(t){
+      if(!inserted && t.n > CURRENT){
+        winHTML += '<span class="af-row af-cur"><b>第 ' + CURRENT + ' 轮</b><em>当前阅读位置</em></span>';
+        inserted = true;
+      }
+      var note = t.n === first ? '<em>锚点 · 打开时它的第一行</em>' : '';
+      winHTML += '<span class="af-row' + (t.n === first ? ' af-anchor' : '') + '"><b>#' + t.n + '</b>'
+        + '<span class="d">距离 ' + Math.abs(t.n - CURRENT) + '</span>' + note + '</span>';
+    });
+
+    document.getElementById("afBody").innerHTML =
+      (aboveHTML !== '' ? '<div class="af-above">' + aboveHTML + '</div>' : '')
+      + '<div class="af-window">' + winHTML + '</div>';
+
+    var fig = document.getElementById("anchorFig");
+    if(state.order === "O5"){ fig.removeAttribute("data-off"); }
+    else { fig.setAttribute("data-off", "1"); }
+    document.getElementById("afNote").textContent = state.order === "O5"
+      ? ""
+      : "（当前选的是 " + state.order + "，这套定位只对 O5 生效）";
+
+    /* 摘要 */
+    document.getElementById("pickL").textContent = state.label;
+    document.getElementById("pickO").textContent = state.order;
+    document.getElementById("sumL").innerHTML = "<b>"+state.label+"</b> · "+LABELS.filter(function(x){return x.id===state.label;})[0].name;
+    document.getElementById("sumO").innerHTML = "<b>"+state.order+"</b> · "+ORDERS.filter(function(x){return x.id===state.order;})[0].name;
+    document.getElementById("sumImpact").innerHTML = IMPACT[state.label] + "<br>" + IMPACT[state.order];
+    document.getElementById("sumH").innerHTML = "<b>"+state.hl+"</b> · "+HL[state.hl];
+    document.getElementById("sumJson").textContent =
+      JSON.stringify({ label: state.label, order: state.order, highlight: state.hl }, null, 2);
+
+    document.documentElement.dataset.hl = state.hl;
+    Array.prototype.forEach.call(document.querySelectorAll(".hlbar button"), function(b){
+      b.setAttribute("aria-pressed", b.dataset.hl === state.hl ? "true" : "false");
+    });
+  }
+
+  var IMPACT = {
+    L1:"<code>.ol-resultBadge</code> 保持现状。",
+    L2:"<code>.ol-resultBadge</code> → <code>.ol-resultNo</code>：删 <code>background/padding/border-radius</code>，改 <code>width:30px;text-align:left;font-size:12px</code>；<code>#</code> 单独一个 <code>.ol-hash</code>（11px/.72）；选中行 <code>font-weight:600</code> + primary。",
+    L3:"<code>.ol-resultBadge</code> 加 <code>border-right:1px solid var(--dsw-alias-border-l2)</code> 与 <code>padding-right:10px</code>，行 <code>gap</code> 提到 12px。",
+    L4:"<code>ResultRow</code> 里徽标前插一个 <code>&lt;span class=\"ol-badgeTick\"&gt;</code>（2px×12px，currentColor，opacity .5），选中行 18px 且转品牌色。",
+    L5:"改文案拼接：<code>\"第 \" + r.n + \" 轮\"</code>，英文 locale 走 <code>\"turn \" + r.n</code>，两处字典各加一条。",
+    L6:"<code>ResultRow</code> 不渲染徽标 span，<code>aria-label</code> 继续带 turn 序号，屏幕阅读器语义不丢。",
+    O5:"<code>searchScanSlice</code> 结果按 <code>n</code> 升序落盘；<code>navBridge.active</code> 下发后算锚点（<code>|n-active|</code> 最小，平手取更旧），<code>setSel(0)</code> 改用锚点索引；50 条上限改“最近 50 条”。列表里不加任何提示行/分隔行；锚点之上只留半行 peek（有则留、无则无）。",
+    O1:"<code>searchScanSlice</code> 从 <code>entries.length - 1</code> 递减，现状。",
+    O2:"扫描改从 0 递增（或结果 reverse），同时决定默认选中项——现状 <code>setSel(0)</code> 会落在最早一条。",
+    O3:"结果按 <code>Math.abs(n - 当前轮)</code> 排序：需要把当前轮序号放进 <code>searchState</code>（<code>navBridge</code> 已有 active 索引）。",
+    O4:"O2 的基础上，在 <code>n &gt; 当前轮</code> 的第一条前插入分组说明行；50 条上限不变。"
+  };
+
+  /* ── 事件 ─────────────────────────────────────────────────────────────── */
+  document.addEventListener("click", function(e){
+    var hlBtn = e.target.closest ? e.target.closest(".hlbar button") : null;
+    if(hlBtn !== null){
+      state.hl = hlBtn.dataset.hl;
+      save();
+      rebuild();
+      return;
+    }
+    var btn = e.target.closest ? e.target.closest(".opt") : null;
+    if(btn === null) return;
+    if(btn.dataset.axis === "label"){ state.label = btn.dataset.id; }
+    else{ state.order = btn.dataset.id; }
+    save();
+    rebuild();
+  });
+
+  var themeBtn = document.getElementById("themeBtn");
+  var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  var stored = null;
+  try{ stored = localStorage.getItem("ol-turn-ui-theme"); }catch(e){}
+  document.documentElement.dataset.theme = stored || (prefersDark ? "dark" : "light");
+  themeBtn.addEventListener("click", function(){
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try{ localStorage.setItem("ol-turn-ui-theme", next); }catch(e){}
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var btn = this;
+    var payload = JSON.stringify({ label: state.label, order: state.order })
+      + "  " + LABELS.filter(function(x){return x.id===state.label;})[0].name
+      + " / " + ORDERS.filter(function(x){return x.id===state.order;})[0].name;
+    var done = function(){
+      btn.textContent = "已复制";
+      setTimeout(function(){ btn.textContent = "复制选择"; }, 1400);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(payload).then(done, done);
+    }else{ done(); }
+  });
+
+  function rebuild(){
+    paintGrid(document.getElementById("labelGrid"), LABELS, "label");
+    paintGrid(document.getElementById("orderGrid"), ORDERS, "order");
+    paintLive();
+  }
+
+  if(!LABELS.some(function(x){return x.id===state.label;})) state.label = "L2";
+  if(!ORDERS.some(function(x){return x.id===state.order;})) state.order = "O5";
+  if(!HL[state.hl]) state.hl = "h4";
+  document.documentElement.dataset.hl = state.hl;
+  rebuild();
+})();
+</script>
+</body>
+</html>

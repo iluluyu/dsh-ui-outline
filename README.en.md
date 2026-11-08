@@ -8,7 +8,14 @@ A turn navigation rail and conversation search for [DeepSeek Harness](https://gi
 
 <p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-hero.svg" width="700" alt="Overview of turn navigation rail and frosted glass preview"></p>
 
-[Install](#install) · [Settings](#settings)
+[Demo](#demo) · [Install](#install) · [Settings](#settings)
+
+## Demo
+
+<p align="center"><a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/video/outline-demo.gif" width="760" alt="dsh-ui-outline demo: ⌘F conversation search"></a></p>
+
+<p align="center"><b>47-second full demo</b>: turn rail · hover previews · wheel stepping · ⌘F search · three glass materials · narrow-column persistence. Chinese captions, no narration.</p>
+<p align="center"><a href="https://iluluyu.github.io/dsh-ui-outline/">Watch online</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4">AV1 download</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-h264-1440p.mp4">H.264 fallback</a></p>
 
 ## A rail that fits how you read
 
@@ -28,7 +35,7 @@ Splitting your screen or opening a sidebar shrinks the conversation column and t
 
 ## ⌘F / Ctrl+F to search the conversation
 
-Press the shortcut to call up a Spotlight search bar; on the first keystroke, the capsule morphs seamlessly downward into a glass result card with identical corner curves. It supports whitespace-delimited AND matching across languages with highlighted context snippets, fully operable via keyboard (`↑` `↓` to navigate, `↵` to jump with a flash, `Esc` to dismiss). Background sliced indexing ensures silky typing regardless of conversation depth, while both the overlay and preview cards support live-switchable frosted glass, liquid glass, and opaque finishes.
+Press the shortcut to call up a Spotlight search bar; on the first keystroke, the capsule morphs seamlessly downward into a glass result card with identical corner curves. It supports whitespace-delimited AND matching, `"exact phrases"` and `-exclusions`, across languages with width/case folding (a CJK term still matches with a character or two inserted) and highlighted context snippets, fully operable via keyboard (`↑` `↓` to navigate, `↵` to jump with a flash, `Esc` to dismiss). Indexing covers every answer step, not just the last one, and background sliced building ensures silky typing regardless of conversation depth, while both the overlay and preview cards support live-switchable frosted glass, liquid glass, and opaque finishes.
 
 Three materials side by side — opaque, frosted glass, and liquid glass — over the same turn:
 
