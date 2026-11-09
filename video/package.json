@@ -1,0 +1,18 @@
+{
+	"name": "dsh-ui-outline-demo-video",
+	"private": true,
+	"type": "module",
+	"description": "Reproducible demo-video pipeline for dsh-ui-outline (Playwright capture + ffmpeg edit)",
+	"scripts": {
+		"seed": "node tools/seed-demo.mjs",
+		"record": "node tools/record.mjs",
+		"build": "node tools/build-video.mjs",
+		"record:hq": "node tools/record-hq.mjs --keep-server",
+		"cards:hq": "node tools/cards-hq.mjs",
+		"captions:hq": "node tools/captions-hq.mjs",
+		"build:hq": "node tools/build-hq.mjs"
+	},
+	"devDependencies": {
+		"playwright-core": "1.55.0"
+	}
+}
