@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsh-ui-outline · README 预览</title>
+<style>
+	:root {
+		--bg: #f4f5f7;
+		--panel: rgba(255, 255, 255, .76);
+		--card: #fff;
+		--ink: #12141a;
+		--muted: #6a7078;
+		--faint: #9aa0a8;
+		--line: rgba(16, 20, 30, .10);
+		--brand: #4d6bfe;
+		--code: rgba(16, 20, 30, .055);
+		--shadow: 0 1px 2px rgba(16, 20, 30, .04), 0 22px 60px rgba(16, 20, 30, .08);
+	}
+	:root[data-theme="dark"] {
+		--bg: #0f1013;
+		--panel: rgba(24, 25, 29, .72);
+		--card: #17181c;
+		--ink: #eceef2;
+		--muted: #9ba1aa;
+		--faint: #6d737c;
+		--line: rgba(255, 255, 255, .10);
+		--brand: #8fa2ff;
+		--code: rgba(255, 255, 255, .07);
+		--shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 24px 70px rgba(0, 0, 0, .45);
+	}
+	* { box-sizing: border-box; }
+	html { scroll-behavior: smooth; }
+	body {
+		margin: 0;
+		background:
+			radial-gradient(900px 620px at 84% -6%, rgba(77, 107, 254, .10), transparent 62%),
+			radial-gradient(760px 520px at 2% 104%, rgba(168, 85, 247, .06), transparent 60%),
+			var(--bg);
+		color: var(--ink);
+		font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		min-height: 100vh;
+	}
+	/* ---------- top bar ---------- */
+	.topbar {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 12px 26px;
+		background: var(--panel);
+		backdrop-filter: blur(18px) saturate(1.4);
+		-webkit-backdrop-filter: blur(18px) saturate(1.4);
+		border-bottom: 1px solid var(--line);
+	}
+	.brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+	.brand b { font-size: 15px; letter-spacing: -.01em; }
+	.brand span { color: var(--faint); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+	.spacer { flex: 1; }
+	.seg {
+		display: inline-flex;
+		padding: 3px;
+		gap: 2px;
+		border-radius: 999px;
+		border: 1px solid var(--line);
+		background: rgba(127, 133, 143, .08);
+	}
+	.seg button {
+		font: inherit;
+		font-size: 12.5px;
+		color: var(--muted);
+		background: transparent;
+		border: 0;
+		border-radius: 999px;
+		padding: 6px 13px;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background .15s ease, color .15s ease;
+	}
+	.seg button:hover { color: var(--ink); }
+	.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(16, 20, 30, .12); }
+	.iconBtn {
+		width: 34px; height: 34px;
+		display: grid; place-items: center;
+		border-radius: 50%;
+		border: 1px solid var(--line);
+		background: var(--card);
+		color: var(--muted);
+		cursor: pointer;
+	}
+	.iconBtn:hover { color: var(--ink); }
+	/* ---------- layout ---------- */
+	.shell {
+		display: grid;
+		grid-template-columns: 236px minmax(0, 1fr);
+		gap: 40px;
+		width: min(1240px, calc(100% - 52px));
+		margin: 0 auto;
+		padding: 30px 0 90px;
+	}
+	nav.toc { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 120px); overflow: auto; }
+	.tocHead { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; }
+	.tocHead b { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+	.tocList { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+	.tocList li { position: relative; }
+	.tocList a {
+		display: block;
+		padding: 6px 0 6px 14px;
+		font-size: 13px;
+		line-height: 1.45;
+		color: var(--muted);
+		text-decoration: none;
+		border-left: 2px solid transparent;
+		margin-left: -1.5px;
+		transition: color .12s ease, border-color .12s ease;
+	}
+	.tocList a:hover { color: var(--ink); }
+	.tocList a.active { color: var(--ink); font-weight: 600; border-left-color: var(--brand); }
+	.tocList a.sub { padding-left: 26px; font-size: 12.5px; color: var(--faint); }
+	.tocList a.sub.active { color: var(--ink); }
+
+	.main { min-width: 0; }
+	.compareNote {
+		display: none;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 16px;
+		padding: 10px 14px;
+		border-radius: 12px;
+		border: 1px solid rgba(230, 160, 40, .28);
+		background: rgba(255, 196, 92, .12);
+		color: var(--muted);
+		font-size: 13px;
+	}
+	.compareNote.on { display: flex; }
+	.compareNote b { color: var(--ink); font-weight: 600; }
+	.article {
+		background: var(--card);
+		border: 1px solid var(--line);
+		border-radius: 20px;
+		box-shadow: var(--shadow);
+		padding: 46px 56px 56px;
+		max-width: 940px;
+	}
+	/* ---------- markdown ---------- */
+	.markdown { font-size: 15.5px; line-height: 1.75; color: var(--ink); overflow-wrap: break-word; }
+	.markdown > :first-child { margin-top: 0; }
+	.markdown p { margin: 0 0 16px; }
+	.markdown h1 { font-size: 34px; line-height: 1.15; letter-spacing: -.03em; margin: 0 0 14px; }
+	.markdown h2 {
+		font-size: 23px;
+		letter-spacing: -.02em;
+		margin: 46px 0 16px;
+		padding-top: 26px;
+		border-top: 1px solid var(--line);
+	}
+	.markdown h2:first-of-type { border-top: 0; padding-top: 0; }
+	.markdown h3 { font-size: 17.5px; margin: 28px 0 10px; }
+	.markdown a { color: var(--brand); text-decoration: none; }
+	.markdown a:hover { text-decoration: underline; text-underline-offset: 3px; }
+	.markdown img { max-width: 100%; height: auto; border-radius: 12px; }
+	.markdown p:has(> img), .markdown p:has(> a > img) { margin: 18px 0; }
+	.markdown p[align="center"] { text-align: center; }
+	.markdown p[align="right"] { text-align: right; }
+	.markdown ul, .markdown ol { margin: 0 0 16px; padding-left: 22px; }
+	.markdown li { margin: 6px 0; }
+	.markdown li > strong { color: var(--ink); }
+	.markdown code {
+		font-family: "Noto Sans Mono CJK SC", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: .88em;
+		background: var(--code);
+		padding: 2px 6px;
+		border-radius: 5px;
+	}
+	.markdown pre {
+		margin: 14px 0 18px;
+		padding: 16px 18px;
+		overflow: auto;
+		border-radius: 12px;
+		border: 1px solid var(--line);
+		background: color-mix(in srgb, var(--code) 70%, transparent);
+	}
+	.markdown pre code { background: transparent; padding: 0; font-size: 13px; line-height: 1.6; }
+	.markdown table { border-collapse: collapse; width: 100%; margin: 16px 0 20px; font-size: 14.5px; }
+	.markdown th, .markdown td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+	.markdown th { background: color-mix(in srgb, var(--code) 60%, transparent); font-weight: 600; }
+	.markdown tr:nth-child(even) td { background: color-mix(in srgb, var(--code) 32%, transparent); }
+	.markdown blockquote { margin: 16px 0; padding: 2px 0 2px 16px; border-left: 3px solid var(--line); color: var(--muted); }
+	.markdown details { margin: 16px 0; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--code) 28%, transparent); }
+	.markdown summary { cursor: pointer; font-size: 14px; color: var(--muted); }
+	.markdown summary b { color: var(--ink); font-weight: 600; }
+	.markdown details[open] summary { margin-bottom: 12px; }
+	.markdown hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+	.markdown sub { color: var(--muted); font-size: 12.5px; }
+	.markdown td img { border-radius: 8px; }
+	/* ---------- stats ---------- */
+	.stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+	.chip {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 6px;
+		padding: 5px 11px;
+		border-radius: 999px;
+		border: 1px solid var(--line);
+		background: var(--card);
+		font-size: 12px;
+		color: var(--muted);
+	}
+	.chip b { font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums; }
+	footer.page { margin-top: 26px; color: var(--faint); font-size: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+	footer.page a { color: inherit; }
+	@media (max-width: 980px) {
+		.shell { grid-template-columns: minmax(0, 1fr); }
+		nav.toc { display: none; }
+		.article { padding: 30px 24px 40px; border-radius: 16px; }
+		.topbar { padding: 10px 16px; gap: 8px; }
+		.brand span { display: none; }
+	}
+</style>
+</head>
+<body>
+<div class="topbar">
+	<div class="brand"><b>dsh-ui-outline</b><span>README preview</span></div>
+	<div class="spacer"></div>
+	<div class="seg" role="group" aria-label="语言">
+		<button type="button" data-lang="zh" aria-pressed="true">中文</button>
+		<button type="button" data-lang="en" aria-pressed="false">English</button>
+	</div>
+	<div class="seg" role="group" aria-label="版本">
+		<button type="button" data-version="new" aria-pressed="true">新版</button>
+		<button type="button" data-version="old" aria-pressed="false">旧版</button>
+	</div>
+	<button type="button" class="iconBtn" id="theme" title="切换明暗" aria-label="切换明暗">
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="3.1"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M12.8 3.2l-1.1 1.1M4.3 11.7l-1.1 1.1"/></svg>
+	</button>
+</div>
+
+<div class="shell">
+	<nav class="toc" aria-label="目录">
+		<div class="tocHead"><b>On this page</b></div>
+		<ul class="tocList" id="toc"></ul>
+	</nav>
+
+	<main class="main">
+		<div class="compareNote" id="compareNote">
+			<b>旧版</b>：改动前的 README，用来对比可读性。图片沿用当时的示意 SVG。
+		</div>
+		<div class="stats" id="stats"></div>
+		<article class="article"><div class="markdown" id="doc"></div></article>
+		<footer class="page">
+			<span>本地预览 · 不经过 GitHub 渲染</span>
+			<a href="../img/board.webp">打开拼盒原图</a>
+			<a href="../../README.md">查看 README.md</a>
+		</footer>
+	</main>
+</div>
+
+<script src="marked.min.js"></script>
+<script>
+	const FILES = {
+		"zh:new": "../../README.md",
+		"en:new": "../../README.en.md",
+		"zh:old": "readme-old.md",
+		"en:old": "readme-old.en.md",
+	};
+	const RAW = "https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/";
+	const state = { lang: "zh", version: "new", theme: "auto" };
+	const $ = (s) => document.querySelector(s);
+	const docEl = document.documentElement;
+
+	/* GitHub-ish anchor so in-page links in the README keep working */
+	function slug(text) {
+		return text
+			.toLowerCase()
+			.replace(/[\u2000-\u206F\u2700-\u27BF\u2B00-\u2BFF!-,./:-@\[-`{-~]/g, "")
+			.replace(/\s+/g, "-")
+			.replace(/-+/g, "-");
+	}
+
+	function applyTheme() {
+		const dark = state.theme === "dark" || (state.theme === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+		docEl.dataset.theme = dark ? "dark" : "light";
+	}
+
+	function stats(md) {
+		const prose = md.replace(/```[\s\S]*?```/g, " ").replace(/<[^>]+>/g, " ");
+		const cjk = (prose.match(/[\u4e00-\u9fff]/g) || []).length;
+		const words = (prose.match(/[A-Za-z0-9][A-Za-z0-9'’_-]*/g) || []).length;
+		const paras = prose.split(/\n\s*\n/).map((p) => p.trim()).filter((p) => p && !/^[#|<\-\d]/.test(p));
+		const avg = paras.length ? Math.round(paras.reduce((n, p) => n + p.length, 0) / paras.length) : 0;
+		const longest = paras.reduce((n, p) => Math.max(n, p.length), 0);
+		const h2 = (md.match(/^## /gm) || []).length;
+		const chars = cjk + words * 2;
+		return [
+			["字数", chars, ""],
+			["二级标题", h2, "个"],
+			["段落", paras.length, "个"],
+			["段落均长", avg, "字符"],
+			["最长段落", longest, "字符"],
+		];
+	}
+
+	function renderStats(md) {
+		$("#stats").innerHTML = stats(md)
+			.map(([k, v, unit]) => `<span class="chip">${k} <b>${v}</b>${unit ? " " + unit : ""}</span>`)
+			.join("");
+	}
+
+	async function render() {
+		const res = await fetch(FILES[`${state.lang}:${state.version}`], { cache: "no-store" });
+		const md = await res.text();
+		const html = marked.parse(md, { gfm: true, breaks: false })
+			.replaceAll(RAW, "../img/")
+			/* the old README's demo assets live outside docs/ and were never
+			   committed; point them at the local video/ so the comparison
+			   still shows what the old page looked like */
+			.replaceAll(RAW.replace("/docs/img/", "/video/"), "../../video/");
+		const doc = $("#doc");
+		doc.innerHTML = html;
+		// The README's own language links point at README.md / README.en.md,
+		// which do not exist next to this preview (and docs/preview/README.md
+		// is this page's own doc, not the plugin readme). Treat them as the
+		// language switch instead of a 404.
+		doc.querySelectorAll("a").forEach((a) => {
+			const href = a.getAttribute("href") || "";
+			const m = href.match(/(?:^|\/)(README|readme)(\.en)?\.md$/);
+			if (!m) return;
+			a.addEventListener("click", (e) => {
+				e.preventDefault();
+				const lang = m[2] ? "en" : "zh";
+				if (lang === state.lang) return;
+				state.lang = lang;
+				document.querySelectorAll("[data-lang]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.lang === lang)));
+				render();
+			});
+		});
+		doc.querySelectorAll("img").forEach((img) => {
+			img.loading = "lazy";
+			img.decoding = "async";
+		});
+		// heading ids + toc
+		const toc = $("#toc");
+		toc.innerHTML = "";
+		doc.querySelectorAll("h2, h3").forEach((h) => {
+			const id = slug(h.textContent);
+			h.id = id;
+			const li = document.createElement("li");
+			const a = document.createElement("a");
+			a.href = "#" + id;
+			a.textContent = h.textContent;
+			if (h.tagName === "H3") a.className = "sub";
+			a.dataset.target = id;
+			li.appendChild(a);
+			toc.appendChild(li);
+		});
+		$("#compareNote").classList.toggle("on", state.version === "old");
+		renderStats(md);
+		spy();
+		window.scrollTo({ top: 0 });
+	}
+
+	/* scroll spy */
+	let io = null;
+	function spy() {
+		if (io) io.disconnect();
+		const links = new Map([...document.querySelectorAll("#toc a")].map((a) => [a.dataset.target, a]));
+		io = new IntersectionObserver((entries) => {
+			entries.forEach((e) => {
+				if (!e.isIntersecting) return;
+				links.forEach((a) => a.classList.remove("active"));
+				links.get(e.target.id)?.classList.add("active");
+			});
+		}, { rootMargin: "-80px 0px -70% 0px", threshold: 1 });
+		document.querySelectorAll("#doc h2, #doc h3").forEach((h) => io.observe(h));
+	}
+
+	/* controls */
+	document.querySelectorAll("[data-lang]").forEach((b) => b.addEventListener("click", () => {
+		state.lang = b.dataset.lang;
+		document.querySelectorAll("[data-lang]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+		render();
+	}));
+	document.querySelectorAll("[data-version]").forEach((b) => b.addEventListener("click", () => {
+		state.version = b.dataset.version;
+		document.querySelectorAll("[data-version]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+		render();
+	}));
+	$("#theme").addEventListener("click", () => {
+		state.theme = docEl.dataset.theme === "dark" ? "light" : "dark";
+		applyTheme();
+	});
+	matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
+	applyTheme();
+	render();
+</script>
+</body>
+</html>

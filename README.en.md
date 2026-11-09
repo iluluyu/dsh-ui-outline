@@ -2,77 +2,69 @@
 
 # dsh-ui-outline
 
-Never lose your place in long conversations. Place the rail your way, keep navigation in narrow columns, and search instantly with ⌘F / Ctrl+F.
+**Long conversations, without the scrolling.** Place the rail your way, keep it in narrow columns, search instantly with ⌘F.
 
 A turn navigation rail and conversation search for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
-<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-hero.svg" width="700" alt="Overview of turn navigation rail and frosted glass preview"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/board-en.webp" width="880" alt="Real UI board: turn rail with a glass preview card, the three materials, and ⌘F search results"></p>
 
-[Demo](#demo) · [Install](#install) · [Settings](#settings)
+[Features](#features) · [Install](#install) · [Settings](#settings)
 
-## Demo
+## Features
 
-<p align="center"><a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/video/outline-demo.gif" width="760" alt="dsh-ui-outline demo: ⌘F conversation search"></a></p>
+- **Turn rail** — dock it left or right, at compact or loose tick density. A wide magnetic hit strip means clicks and drags both glide; long sessions scroll inside the rail.
+- **Hover preview** — brush a tick to see that turn's prompt and response. The wheel steps turn by turn while **the conversation stays completely still**; click or press Enter to land with a flash.
+- **Stays in narrow columns** — when split view or a sidebar squeezes the column, the rail stays pinned by default. Prefer a clean view? Hide it and a small edge toggle remains.
+- **⌘F search** — a Spotlight-style bar that grows into a result card along the same corner radius. Whitespace AND, `"exact phrases"`, `-exclusions`, highlighted hits, full keyboard control (`↑` `↓` `↵` `esc`), and every answer step indexed — not just the last one.
 
-<p align="center"><b>47-second full demo</b>: turn rail · hover previews · wheel stepping · ⌘F search · three glass materials · narrow-column persistence. Chinese captions, no narration.</p>
-<p align="center"><a href="https://iluluyu.github.io/dsh-ui-outline/">Watch online</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-av1.mp4">AV1 download</a> · <a href="https://github.com/iluluyu/dsh-ui-outline/blob/main/video/outline-demo-h264-1440p.mp4">H.264 fallback</a></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/loop-rail-en.gif" width="460" alt="Wheel stepping: the cursor and preview move, the conversation stays put"></p>
+<p align="center"><sub>Wheel stepping · conversation stays put</sub></p>
 
-## A rail that fits how you read
-
-The rail hugs either edge of the conversation column, letting you combine docking side and tick density to match your reading habits. As illustrated below, **loose** density keeps ticks spaced and countable at a glance, while **compact** density accommodates hundreds of turns within a single viewport with smooth internal scrolling. The hit strip offers generous magnetic snapping so you never have to target thin lines—click anywhere or drag freely to glide across the session.
-
-<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-placement.svg" width="640" alt="Loose on left edge and compact on right edge placement scenarios"></p>
-
-## Hover previews, wheel-speed browsing
-
-Hover over any tick to reveal a frosted glass card showing that turn's prompt and response, confirming context before you jump. Rolling the wheel over the rail steps through turns sequentially: the dashed cursor and preview card travel with your scroll while **the conversation itself remains completely still**. Once you spot your target, click or press Enter to land with a subtle flash—glance first, commit second, eliminating weary back-and-forth paging in long sessions.
-
-<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/rail-interactions.svg" width="640" alt="Hover preview and wheel stepping: conversation stays put while cursor and preview walk"></p>
-
-## Navigation that stays in narrow columns
-
-Splitting your screen or opening a sidebar shrinks the conversation column and typically collapses native navigation; this rail stays pinned to the edge by default so rapid jumps never vanish. If you prefer an uncluttered reading layout, narrow columns can be configured to hide the rail automatically. Even when stowed, a subtle edge toggle remains in place so you can summon it back whenever needed.
-
-## ⌘F / Ctrl+F to search the conversation
-
-Press the shortcut to call up a Spotlight search bar; on the first keystroke, the capsule morphs seamlessly downward into a glass result card with identical corner curves. It supports whitespace-delimited AND matching, `"exact phrases"` and `-exclusions`, across languages with width/case folding (a CJK term still matches with a character or two inserted) and highlighted context snippets, fully operable via keyboard (`↑` `↓` to navigate, `↵` to jump with a flash, `Esc` to dismiss). Indexing covers every answer step, not just the last one, and background sliced building ensures silky typing regardless of conversation depth, while both the overlay and preview cards support live-switchable frosted glass, liquid glass, and opaque finishes.
-
-Three materials side by side — opaque, frosted glass, and liquid glass — over the same turn:
-
-<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/material-comparison.svg" width="640" alt="none / frost / liquid material comparison"></p>
-
-<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/search-spotlight.svg" width="640" alt="Capsule search bar expanding downward into a glass result card"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iluluyu/dsh-ui-outline/main/docs/img/loop-search-en.gif" width="760" alt="⌘F search with highlighted hits"></p>
+<p align="center"><sub>⌘F · hits as you type</sub></p>
 
 <details>
-<summary><b>Interaction details</b></summary>
+<summary><b>Query syntax and details</b></summary>
 
-- The search capsule is 52px high and shares one 26px corner radius across both states; the morph is a pure height growth with the radius never changing.
-- Wheel stepping: starts at the current turn; 100 normalized scroll units per step with a 150ms idle remainder reset; drags and focus take the cursor over instantly.
-- A 60ms input debounce plus sliced scanning keeps first-keystroke-to-results latency independent of conversation length.
-- Liquid-glass search keeps a minimum effective blur of 10px for readability.
+| Input | Meaning |
+| --- | --- |
+| `preview card` | Multiple words are ANDed; each may hit a different step of the same turn |
+| `"preview card height"` | Exact phrase, inside a single field |
+| `-draft` / `-"foo bar"` | Exclude a word / exclude a phrase |
+| `预览卡高度` | Pure CJK input (≥3 chars) tolerates 1–2 inserted characters, so it still finds `预览卡的高度` |
+
+- Normalization: NFKC, zero-width removal, case folding. Mixed-script words stay whole.
+- Every assistant step is indexed separately, so tool output and error text are searchable too; background sliced builds keep typing smooth.
+- Results read in document order, showing the 50 nearest to where you are reading, with the exact total in the footer.
 
 </details>
 
 ## Install
 
-Requires dsh `>= 0.2.0-rc.1`. Supports the web client and the desktop app that reuses it.
+Requires dsh `>= 0.2.0-rc.1`.
+
+**npm release**
 
 ```sh
 dsh plugin --profile web add dsh-ui-outline
 ```
 
-Restart `dsh web` after installation, then reload the page.
-
-<details>
-<summary><b>Other install methods</b></summary>
+**Latest GitHub commit**
 
 ```sh
 dsh plugin --profile web add github:iluluyu/dsh-ui-outline
-dsh plugin --profile web add .   # run from the plugin directory; relative paths resolve from the invoking directory
-dsh plugin --profile web add file:/absolute/path/to/plugin
 ```
 
-Uninstall: `dsh plugin --profile web remove dsh-ui-outline`.
+Restart `dsh web` after installation, then reload the page.
+
+<details>
+<summary><b>Local path and uninstall</b></summary>
+
+```sh
+dsh plugin --profile web add .   # run from the plugin directory; relative paths resolve from the invoking directory
+dsh plugin --profile web add file:/absolute/path/to/plugin
+dsh plugin --profile web remove dsh-ui-outline
+```
 
 </details>
 
@@ -82,15 +74,15 @@ Open **Plugins → dsh-ui-outline**; every option applies live.
 
 | Setting | Options and defaults |
 | --- | --- |
-| Dock edge | Left / Right; defaults to Right |
-| Tick density | Compact `compact` / Loose `loose`; defaults to Compact |
-| Preview material | Opaque `none` / Frosted glass `frost` / Liquid glass `liquid`; defaults to Frosted glass |
-| Narrow-column visibility | Show / Hide; defaults to Show |
+| Side | Left / Right; defaults to Right |
+| Material | None / Frosted / Liquid glass; defaults to Frosted |
+| Mark layout | Compact / Loose; defaults to Compact |
+| Narrow column | Show / Hide; defaults to Show |
 
 <details>
 <summary><b>Material parameters</b></summary>
 
-Frosted glass defaults to transparency **80**, blur **6**; liquid glass is thinner, with its Standard preset at transparency **75**, blur **4**. The **Airy / Standard / Misty** presets update both values together without flashing the custom sliders. The search overlay follows the preview material setting.
+Frosted glass defaults to transparency **80**, blur radius **6**; liquid glass standard is **75** / **4**. The **Airy / Standard / Misty** presets update both values together, without flashing the custom sliders. The search overlay follows the preview material.
 
 </details>
 
