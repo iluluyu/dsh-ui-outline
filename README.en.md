@@ -14,6 +14,7 @@ A turn navigation rail and conversation search for [DeepSeek Harness](https://gi
 
 - **Turn rail** — dock it left or right, at compact or loose tick density. A wide magnetic hit strip means clicks and drags both glide; long sessions scroll inside the rail.
 - **Hover preview** — brush a tick to see that turn's prompt and response. The wheel steps turn by turn while **the conversation stays completely still**; click or press Enter to land with a flash.
+- **Turn favorites** — toggle the star on a preview card to mark a turn; a dot on the inner side of the rail marks favorites. Favorites are stored in the current browser and do not sync across browsers or devices.
 - **Stays in narrow columns** — when split view or a sidebar squeezes the column, the rail stays pinned by default. Prefer a clean view? Hide it and a small edge toggle remains.
 - **⌘F search** — a Spotlight-style bar that grows into a result card along the same corner radius. Whitespace AND, `"exact phrases"`, `-exclusions`, highlighted hits, full keyboard control (`↑` `↓` `↵` `esc`), and every answer step indexed — not just the last one.
 

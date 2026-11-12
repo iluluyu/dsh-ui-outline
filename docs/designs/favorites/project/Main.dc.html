@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>Outline 轮次收藏</title><script src="./support.js"></script></head>
+<body><x-dc><helmet><style>body{margin:0}button{font:inherit}</style></helmet>
+<div style="width:1100px;height:720px;box-sizing:border-box;background:#f3f4f5;padding:54px 64px;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#191a1c;display:flex;flex-direction:column;gap:30px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:12px;letter-spacing:2px;color:#65676b;font-weight:700">OUTLINE · CONCEPT</div><div style="font-size:30px;font-weight:650;letter-spacing:-1px">把值得回看的轮次留下来</div></div><div style="font-size:13px;color:#64666a">收藏卡片，轨道同步标记</div></div>
+  <div style="height:486px;border:1px solid #e3e4e5;border-radius:22px;background:#fff;box-shadow:0 16px 48px rgba(0,0,0,.06);display:flex;position:relative;overflow:hidden">
+    <div style="width:180px;background:#fafafa;border-right:1px solid #eeeeef;padding:28px 22px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px"><div style="font-weight:650;font-size:15px">对话</div><div style="background:#eeeeef;border-radius:8px;padding:11px;font-size:12px;color:#55585c">模型训练与对齐</div><div style="font-size:12px;color:#75777a;padding-left:11px">上下文管理</div><div style="font-size:12px;color:#75777a;padding-left:11px">工具调用设计</div></div>
+    <div style="flex:1;position:relative;padding:38px 55px;box-sizing:border-box"><div style="font-size:13px;color:#73767a">模型训练与对齐</div><div style="margin-top:34px;font-size:18px;font-weight:650">对齐阶段的数据配比一般怎么定？</div><div style="margin-top:20px;width:430px;font-size:14px;color:#66696d;line-height:1.9">没有通用比例。通常先用足量高质量数据建立基础能力，再用偏好数据进行对齐。</div><div style="margin-top:32px;height:1px;background:#efeff0;width:450px"></div><div style="margin-top:27px;color:#929497;font-size:13px">继续阅读对话内容…</div>
+      <div style="position:absolute;right:75px;top:205px;width:395px;box-sizing:border-box;background:rgba(255,255,255,.96);border:1px solid #ededee;border-radius:18px;padding:21px 54px 23px 23px;box-shadow:0 12px 35px rgba(0,0,0,.13)"><div style="font-size:16px;font-weight:650;line-height:1.5">对齐阶段的数据配比一般怎么定？</div><div style="margin-top:10px;font-size:14px;color:#777a7d;line-height:1.6">没有通用比例。通常先用足量高质量数据建立基础能力…</div><button type="button" onClick="{{toggle}}" aria-label="{{label}}" aria-pressed="{{saved}}" style="position:absolute;right:12px;top:12px;width:40px;height:40px;border:0;border-radius:9px;background:transparent;cursor:pointer;color:#252729;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="{{fill}}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 3 2.75 5.6 6.18.9-4.47 4.35 1.06 6.15L12 17.1l-5.52 2.9 1.06-6.15L3.07 9.5l6.18-.9z"></path></svg></button></div>
+      <div style="position:absolute;right:21px;top:105px;width:34px;display:flex;flex-direction:column;align-items:flex-end;gap:24px"><div style="width:15px;height:2px;background:#d5d6d8;border-radius:2px"></div><div style="width:20px;height:2px;background:#d5d6d8;border-radius:2px"></div><div style="width:15px;height:2px;background:#d5d6d8;border-radius:2px"></div><div style="display:flex;align-items:center;gap:4px;height:6px"><sc-if value="{{saved}}" hint-placeholder-val="{{false}}"><div style="width:5px;height:5px;border-radius:50%;background:#1e2022"></div></sc-if><div style="width:24px;height:3px;background:#1e2022;border-radius:3px"></div></div><div style="width:20px;height:2px;background:#d5d6d8;border-radius:2px"></div><div style="width:15px;height:2px;background:#d5d6d8;border-radius:2px"></div><div style="width:20px;height:2px;background:#d5d6d8;border-radius:2px"></div></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;color:#63666a;font-size:13px"><div>点击预览卡右上角的星形图标，切换收藏状态。</div><div>空心星 / 实心星 · 刻度 / 刻度＋圆点</div></div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const saved = this.state?.saved ?? false;
+    return { saved, fill: saved ? 'currentColor' : 'none', label: saved ? '取消收藏' : '收藏此轮', toggle: () => this.setState({saved: !saved}) };
+  }
+}
+</script></body></html>
